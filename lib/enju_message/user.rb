@@ -13,7 +13,7 @@ module EnjuMessage
   end
 end
 
-class User << ActiveRecord::Base
+class User < ActiveRecord::Base
   include EnjuMessage::User
 
   has_many :sent_messages, :foreign_key => 'sender_id', :class_name => 'Message'
