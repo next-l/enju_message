@@ -3,7 +3,9 @@
 <div id="content_list">
   <fieldset>
 
-    <%= form_for :message, :url => messages_path do |f| -%>
+    <%= simple_form_for(@message, :url => messages_path, :validate => true) do |f| -%>
+      <%= f.error_notification -%>
+
       <div class="field">
         <label for="message_recepient"><%= t('message.recipient') -%>:</label>
         <%- if @message.recipient -%>
