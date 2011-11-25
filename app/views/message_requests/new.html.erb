@@ -18,6 +18,14 @@
     <%= f.label t('activerecord.models.message_template') -%><br />
     <%= f.select(:message_template_id, @message_templates.collect{|m| [m.title, m.id]}) -%>
   </div>
+  <div class="field">
+    <%= f.label t('activerecord.attributes.message.subject') -%><br />
+    <%= @message_request.subject -%>
+  </div>
+  <div class="field">
+    <%= f.label t('activerecord.attributes.message.body') -%><br />
+    <%= textilize(@message_request.body) -%>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
