@@ -3,7 +3,6 @@ class MessagesController < ApplicationController
   authorize_resource :only => :index
   before_filter :get_user_if_nil, :only => :index
   after_filter :solr_commit, :only => [:create, :update, :destroy, :destroy_selected]
-  cache_sweeper :page_sweeper, :only => [:create, :update, :destroy]
 
   # GET /messages
   # GET /messages.json
