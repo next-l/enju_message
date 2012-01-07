@@ -1,4 +1,4 @@
-require 'delayed_job'
+require 'delayed_job_active_record'
 require 'devise'
 require 'cancan'
 require 'state_machine'
@@ -12,6 +12,6 @@ require 'will_paginate'
 require 'sunspot_rails'
 
 module EnjuMessage
-  class Engine < Rails::Engine
+  class Engine < ::Rails::Engine
   end
 end

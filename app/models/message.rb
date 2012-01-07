@@ -10,7 +10,7 @@ class Message < ActiveRecord::Base
   before_save :set_receiver
   after_save :index
   after_destroy :remove_from_index
-  after_create :send_notification
+  #after_create :send_notification
 
   acts_as_nested_set
   attr_accessor :recipient
