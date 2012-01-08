@@ -44,4 +44,8 @@ ja:
     new_message_from_library: "%{library} から新しいお知らせが届いています"
     messages_were_deleted: "メッセージは削除されました。"
     select_messages: "メッセージを選択してください。"
+  message_request:
+    not_sent: "送信待ち"
+    sent: "送信済み"
+    all: "全てのメッセージ"
 

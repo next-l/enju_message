@@ -44,4 +44,8 @@ en:
     new_message_from_library: "New message arrived from %{library}"
     messages_were_deleted: "Messages were deleted."
     select_messages: "Select messages."
+  message_request:
+    not_sent: "Not sent"
+    sent: "Sent"
+    all: "All messages"
 
