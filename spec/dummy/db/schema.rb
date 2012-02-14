@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111201163718) do
+ActiveRecord::Schema.define(:version => 20120213092115) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20111201163718) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "queue"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
@@ -101,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20111201163718) do
     t.datetime "updated_at"
     t.integer  "lft"
     t.integer  "rgt"
+    t.integer  "depth"
   end
 
   add_index "messages", ["message_request_id"], :name => "index_messages_on_message_request_id"
