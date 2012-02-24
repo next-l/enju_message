@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.1"
   s.add_dependency "simple_form"
+  s.add_dependency "configatron"
   s.add_dependency "delayed_job_active_record"
   s.add_dependency "awesome_nested_set", "~> 2.1"
   s.add_dependency "friendly_id", "~> 4.0"
@@ -28,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_dependency "inherited_resources"
   s.add_dependency "addressable"
   s.add_dependency "attribute_normalizer", "~> 1.1"
-  s.add_dependency "configatron"
   s.add_dependency "sunspot_rails"
   s.add_dependency "sunspot_solr"
 

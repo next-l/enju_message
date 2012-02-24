@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.string   "iso_639_3"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "library_groups", :force => true do |t|
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.integer  "valid_period_for_new_user",   :default => 365,                      :null => false
     t.boolean  "post_to_union_catalog",       :default => false,                    :null => false
     t.integer  "country_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
     t.text     "admin_networks"
     t.boolean  "allow_bookmark_external_url", :default => false,                    :null => false
     t.integer  "position"
@@ -70,8 +70,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.datetime "deleted_at"
     t.text     "body"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "message_requests", ["state"], :name => "index_message_requests_on_state"
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.text     "body",                         :null => false
     t.integer  "position"
     t.string   "locale",     :default => "en"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   add_index "message_templates", ["status"], :name => "index_message_templates_on_status", :unique => true
@@ -97,8 +97,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.integer  "message_request_id"
     t.string   "state"
     t.integer  "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
@@ -114,8 +114,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "patrons", :force => true do |t|
@@ -131,8 +131,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.string   "full_name"
     t.text     "full_name_transcription"
     t.text     "full_name_alternative"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.datetime "deleted_at"
     t.string   "zip_code_1"
     t.string   "zip_code_2"
@@ -179,8 +179,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "user_groups", :force => true do |t|
@@ -188,15 +188,15 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "user_has_roles", :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -206,8 +206,8 @@ ActiveRecord::Schema.define(:version => 20120125050502) do
     t.text     "note"
     t.string   "locale"
     t.string   "user_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
     t.string   "reset_password_token"
