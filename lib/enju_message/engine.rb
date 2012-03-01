@@ -10,6 +10,7 @@ require 'friendly_id'
 require 'awesome_nested_set'
 require 'will_paginate'
 require 'sunspot_rails'
+require 'acts_as_list'
 
 module EnjuMessage
   class Engine < ::Rails::Engine
