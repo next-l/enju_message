@@ -61,9 +61,14 @@ class MessagesController < ApplicationController
     else
       @message.recipient = parent.sender.username if parent
     end
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render :json => @message }
+    end
   end
 
-  # GET /messages/1;edit
+  # GET /messages/1/edit
   def edit
     @message = current_user.received_messages.find(params[:id])
     @message.sm_read!
@@ -95,8 +100,8 @@ class MessagesController < ApplicationController
 
     if @message.update_attributes(params[:message])
       flash[:notice] = t('controller.successfully_updated', :model => t('activerecord.models.message'))
-      format.html { redirect_to message_url(@message) }
-      format.json { head :ok }
+      format.html { redirect_to @message }
+      format.json { head :no_content }
     else
       format.html { render :action => "edit" }
       format.json { render :json => @message.errors, :status => :unprocessable_entity }
@@ -111,7 +116,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to messages_url }
-      format.json { head :ok }
+      format.json { head :no_content }
     end
   end
 
