@@ -43,6 +43,8 @@ class MessageRequest < ActiveRecord::Base
         self.receiver.reserves.each do |reserve|
           reserve.update_attribute(:expiration_notice_to_patron, true)
         end
+      else
+        raise 'body is empty!'
       end
     end
     return message
