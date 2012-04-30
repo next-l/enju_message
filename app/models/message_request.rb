@@ -56,7 +56,7 @@ class MessageRequest < ActiveRecord::Base
 
   def save_message_body(options = {})
     options = {
-      :receiver => self.receiver.patron,
+      :receiver => self.receiver,
       :locale => self.receiver.locale
     }.merge(options)
     self.update_attributes!({:body => self.message_template.embed_body(options)})
