@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
     @messages = search.execute!.results
 
     respond_to do |format|
-      format.html # index.rhtml
+      format.html # index.html.erb
       format.json { render :json => @messages }
       format.rss
       format.atom
@@ -47,7 +47,7 @@ class MessagesController < ApplicationController
     @message.sm_read!
 
     respond_to do |format|
-      format.html # show.rhtml
+      format.html # show.html.erb
       format.json { render :json => @message }
     end
   end
@@ -83,8 +83,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        flash[:notice] = t('controller.successfully_created', :model => t('activerecord.models.message'))
-        format.html { redirect_to messages_url }
+        format.html { redirect_to messages_url, :notice => t('controller.successfully_created', :model => t('activerecord.models.message')) }
         format.json { render :json => @message, :status => :created, :location => @message }
       else
         format.html { render :action => "new" }
@@ -99,8 +98,7 @@ class MessagesController < ApplicationController
     @message = current_user.received_messages.find(params[:id])
 
     if @message.update_attributes(params[:message])
-      flash[:notice] = t('controller.successfully_updated', :model => t('activerecord.models.message'))
-      format.html { redirect_to @message }
+      format.html { redirect_to @message, :notice => t('controller.successfully_updated', :model => t('activerecord.models.message')) }
       format.json { head :no_content }
     else
       format.html { render :action => "edit" }
