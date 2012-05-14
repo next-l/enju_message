@@ -40,7 +40,7 @@ class MessageRequestsController < ApplicationController
       if @message_request.update_attributes(params[:message_request])
         flash[:notice] = t('controller.successfully_updated', :model => t('activerecord.models.message_request'))
         format.html { redirect_to(@message_request) }
-        format.json { head :ok }
+        format.json { head :no_content }
       else
         @message_templates = MessageTemplate.all
         format.html { render :action => "edit" }
@@ -55,8 +55,8 @@ class MessageRequestsController < ApplicationController
     @message_request.destroy
 
     respond_to do |format|
-      format.html { redirect_to(message_requests_url) }
-      format.json { head :ok }
+      format.html { redirect_to message_requests_url }
+      format.json { head :no_content }
     end
   end
 end
