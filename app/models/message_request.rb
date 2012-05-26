@@ -1,5 +1,7 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
+  attr_accessible :body
+  attr_accessible :sender, :receiver, :message_template, :as => :admin
   scope :not_sent, where('sent_at IS NULL AND state = ?', 'pending')
   scope :sent, where(:state => 'sent')
   scope :started, where(:state => 'started')
@@ -9,7 +11,7 @@ class MessageRequest < ActiveRecord::Base
   has_many :messages
 
   validates_associated :sender, :receiver, :message_template
-  validates_presence_of :sender, :receiver, :message_template
+  validates_presence_of :sender, :receiver, :message_template, :body
 
   state_machine :initial => :pending do
     before_transition any - :sent => :sent, :do => :send_message
@@ -56,7 +58,7 @@ class MessageRequest < ActiveRecord::Base
 
   def save_message_body(options = {})
     options = {
-      :receiver => self.receiver.patron,
+      :receiver => self.receiver,
       :locale => self.receiver.locale
     }.merge(options)
     self.update_attributes!({:body => self.message_template.embed_body(options)})

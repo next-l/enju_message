@@ -125,7 +125,7 @@ describe MessageRequestsController do
     before(:each) do
       @message_request = FactoryGirl.create(:message_request)
       @attrs = FactoryGirl.attributes_for(:message_request)
-      @invalid_attrs = {:sender_id => ''}
+      @invalid_attrs = {:body => ''}
     end
 
     describe "When logged in as Administrator" do
