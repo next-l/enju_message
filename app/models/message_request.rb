@@ -1,6 +1,7 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
   attr_accessible :body
+  attr_accessible :sender, :receiver, :message_template, :as => :admin
   scope :not_sent, where('sent_at IS NULL AND state = ?', 'pending')
   scope :sent, where(:state => 'sent')
   scope :started, where(:state => 'started')
