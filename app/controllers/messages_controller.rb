@@ -77,7 +77,8 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = current_user.sent_messages.new(params[:message])
+    @message = Message.new(params[:message])
+    @message.sender = current_user
     get_parent(@message.parent_id)
     @message.receiver = User.find(@message.recipient) rescue nil
 
