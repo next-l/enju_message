@@ -1,7 +1,7 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
   attr_accessible :body
-  attr_accessible :sender, :receiver, :message_template, :sent_at, :as => :admin
+  attr_accessible :sender, :receiver, :message_template, :as => :admin
   scope :not_sent, where('sent_at IS NULL AND state = ?', 'pending')
   scope :sent, where(:state => 'sent')
   scope :started, where(:state => 'started')
@@ -42,7 +42,8 @@ class MessageRequest < ActiveRecord::Base
       else
         raise 'body is empty!'
       end
-      self.update_attributes({:sent_at => Time.zone.now})
+      self.sent_at = Time.zone.now
+      save!
       if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(self.message_template.status)
         self.receiver.reserves.each do |reserve|
           reserve.update_attribute(:expiration_notice_to_patron, true)
