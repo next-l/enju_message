@@ -1,7 +1,7 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
   attr_accessible :body
-  attr_accessible :sender, :receiver, :message_template, :as => :admin
+  attr_accessible :sender, :receiver, :message_template, :body, :as => :admin
   scope :not_sent, where('sent_at IS NULL AND state = ?', 'pending')
   scope :sent, where(:state => 'sent')
   scope :started, where(:state => 'started')
@@ -11,7 +11,8 @@ class MessageRequest < ActiveRecord::Base
   has_many :messages
 
   validates_associated :sender, :receiver, :message_template
-  validates_presence_of :sender, :receiver, :message_template, :body
+  validates_presence_of :sender, :receiver, :message_template
+  validates_presence_of :body, :on => :update
 
   state_machine :initial => :pending do
     before_transition any - :sent => :sent, :do => :send_message
