@@ -26,14 +26,6 @@ load 'rails/tasks/engine.rake'
 
 Bundler::GemHelper.install_tasks
 
-require 'rspec/core'
-require 'rspec/core/rake_task'
-
-RSpec::Core::RakeTask.new(:spec) do |spec|
-    spec.pattern = FileList['spec/**/*_spec.rb']
-end
-
-task :default => :spec
 require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |t|
@@ -43,5 +35,12 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = false
 end
 
+require 'rspec/core'
+require 'rspec/core/rake_task'
 
-task :default => :test
+RSpec::Core::RakeTask.new(:spec) do |spec|
+    spec.pattern = FileList['spec/**/*_spec.rb']
+end
+
+
+task :default => :spec

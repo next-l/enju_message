@@ -124,8 +124,8 @@ describe MessageRequestsController do
   describe "PUT update" do
     before(:each) do
       @message_request = FactoryGirl.create(:message_request)
-      @attrs = FactoryGirl.attributes_for(:message_request)
-      @invalid_attrs = {:sender_id => ''}
+      @attrs = FactoryGirl.attributes_for(:message_request).merge(:body => 'test')
+      @invalid_attrs = {:body => ''}
     end
 
     describe "When logged in as Administrator" do
