@@ -26,7 +26,7 @@
         <%= link_to t('page.edit'), edit_message_template_path(message_template) -%>
       <% end %>
       <%- if can? :destroy, message_template -%>
-        <%= link_to t('page.destroy'), message_template, :confirm => t('page.are_you_sure'), :method => :delete -%>
+        <%= link_to t('page.destroy'), message_template, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%>
       <%- end -%>
     </td>
   </tr>
