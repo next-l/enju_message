@@ -16,7 +16,7 @@ module EnjuMessage
       def send_message(status, options = {})
         MessageRequest.transaction do
           request = MessageRequest.new
-          request.sender = self.find(1)
+          request.sender = self.class.find(1)
           request.receiver = self
           request.message_template = MessageTemplate.localized_template(status, self.locale)
           request.save_message_body(options)
