@@ -42,7 +42,7 @@
     <% end %>
     <li><%= link_to t('message.reply'), new_message_path(:parent_id => @message.id) -%></li>
     <% if can? :destroy, :message %>
-      <li><%= link_to t('page.destroy'), @message, :confirm => t('page.are_you_sure'), :method => :delete -%></li>
+      <li><%= link_to t('page.destroy'), @message, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%></li>
     <% end %>
   </ul>
 </div>
