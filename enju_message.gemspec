@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2"
   s.add_dependency "simple_form"
-  s.add_dependency "configatron"
   #s.add_dependency "delayed_job_active_record"
   s.add_dependency "awesome_nested_set", "~> 2.1"
   s.add_dependency "state_machine"

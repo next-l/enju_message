@@ -9,7 +9,8 @@ class Notifier < ActionMailer::Base
     default_url_options[:port] = configatron.enju.web_port_number if configatron.enju.web_port_number != 80
   end
 
-  def message_notification(message)
+  def message_notification(message_id)
+    message = Message.find(message_id)
     I18n.locale = message.receiver.locale.try(:to_sym) || I18n.default_locale
     from = "#{LibraryGroup.system_name(message.receiver.locale)} <#{LibraryGroup.site_config.email}>"
     if message.subject

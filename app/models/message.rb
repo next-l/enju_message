@@ -51,7 +51,7 @@ class Message < ActiveRecord::Base
   end
 
   def send_notification
-    Notifier.message_notification(self).deliver if receiver.try(:email).present?
+    Notifier.message_notification(id).deliver if receiver.try(:email).present?
   end
 
   def read
