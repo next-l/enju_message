@@ -1,4 +1,5 @@
 class Notifier < ActionMailer::Base
+  include Resque::Mailer
   if LibraryGroup.site_config.try(:url)
     uri = Addressable::URI.parse(LibraryGroup.site_config.url)
     default_url_options[:host] = uri.host
@@ -17,7 +18,7 @@ class Notifier < ActionMailer::Base
       subject = I18n.t('message.new_message_from_library', :library => LibraryGroup.system_name(message.receiver.user.locale))
     end
     if message.sender
-      @sender_name = message.sender.patron.full_name
+      @sender_name = message.sender.full_name
     else
       @sender_name = LibraryGroup.system_name(message.receiver.locale)
     end
