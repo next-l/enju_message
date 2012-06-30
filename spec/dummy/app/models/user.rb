@@ -12,9 +12,9 @@ class User < ActiveRecord::Base
   has_one :patron
   belongs_to :user_group
   belongs_to :required_role, :class_name => 'Role', :foreign_key => 'required_role_id'
-  has_many :sent_messages, :foreign_key => 'sender_id', :class_name => 'Message'
-  has_many :received_messages, :foreign_key => 'receiver_id', :class_name => 'Message'
   before_create :set_role_and_patron
+
+  enju_message_user
 
   extend FriendlyId
   friendly_id :username
@@ -40,14 +40,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def send_message(status, options = {})
-    MessageRequest.transaction do
-      request = MessageRequest.new
-      request.sender = User.find(1)
-      request.receiver = self
-      request.message_template = MessageTemplate.localized_template(status, self.locale)
-      request.save_message_body(options)
-      request.sm_send_message!
-    end
+  def full_name
+    username
   end
 end
