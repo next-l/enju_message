@@ -40,9 +40,7 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def self.per_page
-    10
-  end
+  paginates_per 10
 
   def set_receiver
     if self.recipient
