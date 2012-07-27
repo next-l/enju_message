@@ -45,7 +45,8 @@ class MessageRequest < ActiveRecord::Base
       save!
       if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(self.message_template.status)
         self.receiver.reserves.each do |reserve|
-          reserve.update_column(:expiration_notice_to_patron, true)
+          reserve.expiration_notice_to_patron = true
+          reserve.save
         end
       end
     end
