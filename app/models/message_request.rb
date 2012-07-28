@@ -36,17 +36,22 @@ class MessageRequest < ActiveRecord::Base
   def send_message
     message = nil
     MessageRequest.transaction do
-      if self.body
-        message = Message.create!(:sender => self.sender, :recipient => self.receiver.username, :subject => self.subject, :body => self.body)
+      if body
+        message = Message.new
+        message.sender = sender
+        message.recipient  = receiver.username
+        message.subject = subject
+        message.body = body
+        message.save!
       else
         raise 'body is empty!'
       end
       self.sent_at = Time.zone.now
-      save!
+      save(:validate => false)
       if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(self.message_template.status)
         self.receiver.reserves.each do |reserve|
           reserve.expiration_notice_to_patron = true
-          reserve.save
+          reserve.save(:validate => false)
         end
       end
     end
@@ -54,7 +59,7 @@ class MessageRequest < ActiveRecord::Base
   end
 
   def subject
-    self.message_template.title
+    message_template.title
   end
 
   def save_message_body(options = {})
