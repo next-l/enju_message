@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "awesome_nested_set", "~> 2.1"
   s.add_dependency "state_machine"
   s.add_dependency "inherited_resources"
-  s.add_dependency "enju_core"
+  s.add_dependency "enju_core", "~> 0.1.1.pre"
   s.add_dependency "resque_mailer"
 
   s.add_development_dependency "sqlite3"
