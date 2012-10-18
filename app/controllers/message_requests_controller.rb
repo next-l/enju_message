@@ -1,5 +1,5 @@
 class MessageRequestsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :create
 
   # GET /message_requests
   # GET /message_requests.json
