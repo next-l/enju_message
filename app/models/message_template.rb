@@ -23,19 +23,17 @@ class MessageTemplate < ActiveRecord::Base
   end
 end
 
-
-
 # == Schema Information
 #
 # Table name: message_templates
 #
-#  id         :integer         not null, primary key
-#  status     :string(255)     not null
-#  title      :text            not null
-#  body       :text            not null
+#  id         :integer          not null, primary key
+#  status     :string(255)      not null
+#  title      :text             not null
+#  body       :text             not null
 #  position   :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  locale     :string(255)     default("ja")
+#  locale     :string(255)      default("en")
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 

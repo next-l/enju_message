@@ -63,23 +63,23 @@ class Message < ActiveRecord::Base
   end
 end
 
-
 # == Schema Information
 #
 # Table name: messages
 #
-#  id                 :integer         not null, primary key
+#  id                 :integer          not null, primary key
 #  read_at            :datetime
 #  receiver_id        :integer
 #  sender_id          :integer
-#  subject            :string(255)     not null
+#  subject            :string(255)      not null
 #  body               :text
-#  created_at         :datetime
-#  updated_at         :datetime
 #  message_request_id :integer
 #  state              :string(255)
 #  parent_id          :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #  lft                :integer
 #  rgt                :integer
+#  depth              :integer
 #
 
