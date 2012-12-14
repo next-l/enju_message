@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = EnjuMessage::VERSION
   s.authors     = ["Kosuke Tanabe"]
   s.email       = ["tanabe@mwr.mediacom.keio.ac.jp"]
-  s.homepage    = "https://github.com/nabeta/enju_message"
+  s.homepage    = "https://github.com/next-l/enju_message"
   s.summary     = "enju_message plugin"
   s.description = "Message management for Next-L Enju"
 
