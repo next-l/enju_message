@@ -5,7 +5,7 @@ require "enju_message/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "enju_trunk_message"
+  s.name        = "enju_message"
   s.version     = EnjuMessage::VERSION
   s.authors     = ["Reiko Shinozuka"]
   s.email       = ["shinozuka.reiko@miraitsystems.jp"]
