@@ -68,18 +68,17 @@ message_template_00010:
   body: Item received
   position: 10
   locale: ja
-
-# == Schema Information
-#
-# Table name: message_templates
-#
-#  id         :integer          not null, primary key
-#  status     :string(255)      not null
-#  title      :text             not null
-#  body       :text             not null
-#  position   :integer
-#  locale     :string(255)      default("en")
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
+message_template_00011:
+  id: 11
+  status: reservation_postponed_for_patron
+  title: Reservation postponed
+  body: Reservation postponed
+  position: 11
+  locale: ja
+message_template_00012:
+  id: 12
+  status: reservation_postponed_for_library
+  title: Reservation postponed
+  body: Reservation postponed
+  position: 12
+  locale: ja
