@@ -6,20 +6,20 @@
       case user.try(:role).try(:name)
       when 'Administrator'
         can :manage, Message
-        can [:read, :update, :destroy], MessageRequest
+        can [:read, :update, :destroy, :delete], MessageRequest
         can [:read, :update], MessageTemplate
       when 'Librarian'
         can [:index, :create], Message
         can [:update], Message do |message|
           message.sender == user
         end
-        can [:show, :destroy], Message do |message|
+        can [:show, :destroy, :delete], Message do |message|
           message.receiver == user
         end
-        can [:read, :update, :destroy], MessageRequest
+        can [:read, :update, [:destroy, :delete]], MessageRequest
         can :read, MessageTemplate
       when 'User'
-        can [:read, :destroy], Message do |message|
+        can [:read, :destroy, :delete], Message do |message|
           message.receiver == user
         end
         can :index, Message
