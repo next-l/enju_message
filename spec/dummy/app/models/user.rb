@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   belongs_to :required_role, :class_name => 'Role', :foreign_key => 'required_role_id'
   before_create :set_role_and_patron
 
-  enju_message_user
+  enju_message_user_model
 
   extend FriendlyId
   friendly_id :username
