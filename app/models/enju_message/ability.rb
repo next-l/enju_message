@@ -1,4 +1,4 @@
-#module EnjuMessage
+module EnjuMessage
   class Ability
     include CanCan::Ability
       
@@ -29,4 +29,4 @@
       end
     end
   end
-#end
+end
