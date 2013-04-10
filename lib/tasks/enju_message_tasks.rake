@@ -1,5 +1,9 @@
 require 'active_record/fixtures'
-desc "copy fixtures for enju_message"
-task :enju_message => :environment do
-  ActiveRecord::Fixtures.create_fixtures(File.expand_path(File.dirname(__FILE__)) + '/../../db/fixtures/', File.basename('message_templates', '.yml'))
+desc "create initial records for enju_message"
+namespace :enju_message do
+  task :setup => :environment do
+    Dir.glob(Rails.root.to_s + '/db/fixtures/enju_message/*.yml').each do |file|
+      ActiveRecord::Fixtures.create_fixtures('db/fixtures/enju_message', File.basename(file, '.*'))
+    end
+  end
 end
