@@ -120,14 +120,14 @@ class MessagesController < ApplicationController
   end
 
   def destroy_selected
-    if current_user
-      unless current_user.has_role?('Librarian')
-        access_denied
-      end
-    else
-      redirect_to new_user_session_url
-      return
-    end
+#    if current_user
+#      unless current_user.has_role?('Librarian')
+#        access_denied
+#      end
+#    else
+#      redirect_to new_user_session_url
+#      return
+#    end
     respond_to do |format|
       if params[:delete].present?
         messages = params[:delete].map{|m| Message.find_by_id(m)}
@@ -155,5 +155,6 @@ class MessagesController < ApplicationController
     else
       parent
     end
+    parent
   end
 end

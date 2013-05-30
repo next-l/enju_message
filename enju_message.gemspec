@@ -7,11 +7,11 @@ require "enju_message/version"
 Gem::Specification.new do |s|
   s.name        = "enju_message"
   s.version     = EnjuMessage::VERSION
-  s.authors     = ["Kosuke Tanabe"]
-  s.email       = ["tanabe@mwr.mediacom.keio.ac.jp"]
-  s.homepage    = "https://github.com/next-l/enju_message"
-  s.summary     = "enju_message plugin"
-  s.description = "Message management for Next-L Enju"
+  s.authors     = ["Reiko Shinozuka"]
+  s.email       = ["shinozuka.reiko@miraitsystems.jp"]
+  s.homepage    = ""
+  s.summary     = "enju_trunk_message plugin"
+  s.description = "Message management for Enju Trunk"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/log/*"] - Dir["spec/dummy/solr/{data,pids}/*"]
