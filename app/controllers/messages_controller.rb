@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource :except => :index
-  authorize_resource :only => :index
+  load_and_authorize_resource :except => [:index, :show]
+  authorize_resource :only => [:index, :show]
   before_filter :get_user, :only => :index
   after_filter :solr_commit, :only => [:create, :update, :destroy, :destroy_selected]
 

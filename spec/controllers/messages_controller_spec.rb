@@ -86,9 +86,11 @@ describe MessagesController do
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
-        get :show, :id => message.id
-        assigns(:message).should eq(message)
-        response.should be_missing
+        lambda{
+          get :show, :id => message.id
+        }.should raise_error(ActiveRecord::RecordNotFound)
+        assigns(:message).should be_nil
+        #response.should be_missing
       end
     end
 
@@ -97,9 +99,11 @@ describe MessagesController do
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
-        get :show, :id => message.id
-        assigns(:message).should eq(message)
-        response.should be_forbidden
+        lambda{
+          get :show, :id => message.id
+        }.should raise_error(ActiveRecord::RecordNotFound)
+        assigns(:message).should be_nil
+        #response.should be_forbidden
       end
     end
 
@@ -112,8 +116,10 @@ describe MessagesController do
     end
 
       it "should should not show other user's message" do
-        get :show, :id => messages(:user1_to_user2_1).id
-        response.should be_forbidden
+        lambda{
+          get :show, :id => messages(:user1_to_user2_1).id
+        }.should raise_error(ActiveRecord::RecordNotFound)
+        #response.should be_missing
       end
     end
 
@@ -185,9 +191,11 @@ describe MessagesController do
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
-        get :edit, :id => message.id
+        lambda{
+          get :edit, :id => message.id
+        }.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should eq(message)
-        response.should be_missing
+        #response.should be_missing
       end
     end
 
@@ -320,24 +328,32 @@ describe MessagesController do
 
       describe "with valid params" do
         it "updates the requested message" do
-          put :update, :id => @message.id, :message => @attrs
+          lambda{
+            put :update, :id => @message.id, :message => @attrs
+          }.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it "assigns the requested message as @message" do
-          put :update, :id => @message.id, :message => @attrs
+          lambda{
+            put :update, :id => @message.id, :message => @attrs
+          }.should raise_error(ActiveRecord::RecordNotFound)
           assigns(:message).should eq(@message)
-          response.should be_missing
+          #response.should be_missing
         end
       end
 
       describe "with invalid params" do
         it "assigns the requested message as @message" do
-          put :update, :id => @message.id, :message => @invalid_attrs
+          lambda{
+            put :update, :id => @message.id, :message => @invalid_attrs
+          }.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it "re-renders the 'edit' template" do
-          put :update, :id => @message.id, :message => @invalid_attrs
-          response.should be_missing
+          lambda{
+            put :update, :id => @message.id, :message => @invalid_attrs
+          }.should raise_error(ActiveRecord::RecordNotFound)
+          #response.should be_missing
         end
       end
     end
