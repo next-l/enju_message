@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120213092115) do
+ActiveRecord::Schema.define(:version => 20120125050502) do
+
+  create_table "countries", :force => true do |t|
+    t.string  "name",         :null => false
+    t.text    "display_name"
+    t.string  "alpha_2"
+    t.string  "alpha_3"
+    t.string  "numeric_3"
+    t.text    "note"
+    t.integer "position"
+  end
+
+  add_index "countries", ["alpha_2"], :name => "index_countries_on_alpha_2"
+  add_index "countries", ["alpha_3"], :name => "index_countries_on_alpha_3"
+  add_index "countries", ["name"], :name => "index_countries_on_name"
+  add_index "countries", ["numeric_3"], :name => "index_countries_on_numeric_3"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -24,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20120213092115) do
     t.string   "locked_by"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.string   "queue"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
@@ -158,15 +172,13 @@ ActiveRecord::Schema.define(:version => 20120213092115) do
     t.integer  "patron_type_id",               :default => 1, :null => false
     t.integer  "lock_version",                 :default => 0, :null => false
     t.text     "note"
-    t.integer  "creates_count",                :default => 0, :null => false
-    t.integer  "realizes_count",               :default => 0, :null => false
-    t.integer  "produces_count",               :default => 0, :null => false
-    t.integer  "owns_count",                   :default => 0, :null => false
     t.integer  "required_role_id",             :default => 1, :null => false
     t.integer  "required_score",               :default => 0, :null => false
     t.string   "state"
     t.text     "email"
     t.text     "url"
+    t.string   "birth_date"
+    t.string   "death_date"
   end
 
   add_index "patrons", ["country_id"], :name => "index_patrons_on_country_id"
