@@ -1,4 +1,8 @@
 class MessagesController < ApplicationController
+  add_breadcrumb "I18n.t('page.listing', :model => I18n.t('activerecord.models.message'))", 'messages_path', :only => [:index]
+  add_breadcrumb "I18n.t('page.showing', :model => I18n.t('activerecord.models.message'))", 'message_path(params[:id])', :only => [:show]
+  add_breadcrumb "I18n.t('page.new', :model => I18n.t('activerecord.models.message'))", 'new_message_path', :only => [:new, :create]
+  add_breadcrumb "I18n.t('page.edit', :model => I18n.t('activerecord.models.message'))", 'edit_message_path(params[:id])', :only => [:edit, :update]
   load_and_authorize_resource :except => :index
   authorize_resource :only => :index
   before_filter :get_user, :only => :index
