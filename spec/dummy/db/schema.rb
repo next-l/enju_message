@@ -138,14 +138,12 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
     t.text     "my_networks"
     t.text     "login_banner"
     t.text     "note"
-    t.integer  "valid_period_for_new_user",   :default => 365,                      :null => false
-    t.boolean  "post_to_union_catalog",       :default => false,                    :null => false
     t.integer  "country_id"
+    t.integer  "position"
     t.datetime "created_at",                                                        :null => false
     t.datetime "updated_at",                                                        :null => false
     t.text     "admin_networks"
     t.boolean  "allow_bookmark_external_url", :default => false,                    :null => false
-    t.integer  "position"
     t.string   "url",                         :default => "http://localhost:3000/"
   end
 
@@ -350,6 +348,7 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
     t.integer  "position"
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+    t.datetime "deleted_at"
     t.integer  "valid_period_for_new_user", :default => 0, :null => false
     t.datetime "expired_at"
   end
