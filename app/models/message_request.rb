@@ -48,7 +48,7 @@ class MessageRequest < ActiveRecord::Base
       end
       self.sent_at = Time.zone.now
       save(:validate => false)
-      if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(self.message_template.status)
+      if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(message_template.status)
         self.receiver.reserves.each do |reserve|
           reserve.expiration_notice_to_patron = true
           reserve.save(:validate => false)
@@ -64,10 +64,10 @@ class MessageRequest < ActiveRecord::Base
 
   def save_message_body(options = {})
     options = {
-      :receiver => self.receiver,
-      :locale => self.receiver.locale
+      :receiver => receiver,
+      :locale => receiver.locale
     }.merge(options)
-    self.update_attributes!({:body => self.message_template.embed_body(options)})
+    self.update_attributes!({:body => message_template.embed_body(options)})
   end
 
   def self.send_messages
