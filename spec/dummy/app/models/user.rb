@@ -1,46 +1,13 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, #:registerable,
+         :recoverable, :rememberable, :trackable, #:validatable,
+         :lockable, :lock_strategy => :none, :unlock_strategy => :none
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
-  has_one :user_has_role
-  has_one :role, :through => :user_has_role
-  has_one :patron
-  belongs_to :user_group
-  belongs_to :required_role, :class_name => 'Role', :foreign_key => 'required_role_id'
-  before_create :set_role_and_patron
-
+  enju_leaf_user_model
   enju_message_user_model
-
-  extend FriendlyId
-  friendly_id :username
-
-  def set_role_and_patron
-    self.required_role = Role.where(:name => 'Librarian').first
-    self.locale = I18n.default_locale.to_s
-    unless self.patron
-      self.patron = Patron.create(:full_name => self.username) if self.username
-    end
-  end
-
-  def has_role?(role_in_question)
-    return false unless role
-    return true if role.name == role_in_question
-    case role.name
-    when 'Administrator'
-      return true
-    when 'Librarian'
-      return true if role_in_question == 'User'
-    else
-      false
-    end
-  end
-
-  def full_name
-    username
-  end
 end
