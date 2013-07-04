@@ -79,11 +79,14 @@ class MessageRequest < ActiveRecord::Base
   end
 
   def self.send_messages
+    return if Rails.cache.read('sending_message')
+    Rails.cache.write('sending_message', true)
     count = MessageRequest.not_sent.size
     MessageRequest.not_sent.each do |request|
-      request.start_sending_message
+       request.start_sending_message
     end
     logger.info "#{Time.zone.now} sent #{count} messages!"
+    Rails.cache.write('sending_message', false)
   end
 end
 
