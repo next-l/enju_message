@@ -1,6 +1,6 @@
-class CreatePatronTypes < ActiveRecord::Migration
+class CreateAgentTypes < ActiveRecord::Migration
   def self.up
-    create_table :patron_types do |t|
+    create_table :agent_types do |t|
       t.string :name, :null => false
       t.text :display_name
       t.text :note
@@ -11,6 +11,6 @@ class CreatePatronTypes < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :patron_types
+    drop_table :agent_types
   end
 end

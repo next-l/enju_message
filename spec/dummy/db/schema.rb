@@ -24,6 +24,69 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
   add_index "accepts", ["basket_id"], :name => "index_accepts_on_basket_id"
   add_index "accepts", ["item_id"], :name => "index_accepts_on_item_id"
 
+  create_table "agent_types", :force => true do |t|
+    t.string   "name",         :null => false
+    t.text     "display_name"
+    t.text     "note"
+    t.integer  "position"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "agents", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "last_name"
+    t.string   "middle_name"
+    t.string   "first_name"
+    t.string   "last_name_transcription"
+    t.string   "middle_name_transcription"
+    t.string   "first_name_transcription"
+    t.string   "corporate_name"
+    t.string   "corporate_name_transcription"
+    t.string   "full_name"
+    t.text     "full_name_transcription"
+    t.text     "full_name_alternative"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.datetime "deleted_at"
+    t.string   "zip_code_1"
+    t.string   "zip_code_2"
+    t.text     "address_1"
+    t.text     "address_2"
+    t.text     "address_1_note"
+    t.text     "address_2_note"
+    t.string   "telephone_number_1"
+    t.string   "telephone_number_2"
+    t.string   "fax_number_1"
+    t.string   "fax_number_2"
+    t.text     "other_designation"
+    t.text     "place"
+    t.string   "postal_code"
+    t.text     "street"
+    t.text     "locality"
+    t.text     "region"
+    t.datetime "date_of_birth"
+    t.datetime "date_of_death"
+    t.integer  "language_id",                  :default => 1, :null => false
+    t.integer  "country_id",                   :default => 1, :null => false
+    t.integer  "agent_type_id",                :default => 1, :null => false
+    t.integer  "lock_version",                 :default => 0, :null => false
+    t.text     "note"
+    t.integer  "required_role_id",             :default => 1, :null => false
+    t.integer  "required_score",               :default => 0, :null => false
+    t.string   "state"
+    t.text     "email"
+    t.text     "url"
+    t.string   "birth_date"
+    t.string   "death_date"
+  end
+
+  add_index "agents", ["country_id"], :name => "index_agents_on_country_id"
+  add_index "agents", ["full_name"], :name => "index_agents_on_full_name"
+  add_index "agents", ["language_id"], :name => "index_agents_on_language_id"
+  add_index "agents", ["required_role_id"], :name => "index_agents_on_required_role_id"
+  add_index "agents", ["user_id"], :name => "index_agents_on_user_id", :unique => true
+
   create_table "baskets", :force => true do |t|
     t.integer  "user_id"
     t.text     "note"
@@ -195,69 +258,6 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
   add_index "messages", ["parent_id"], :name => "index_messages_on_parent_id"
   add_index "messages", ["receiver_id"], :name => "index_messages_on_receiver_id"
   add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
-
-  create_table "patron_types", :force => true do |t|
-    t.string   "name",         :null => false
-    t.text     "display_name"
-    t.text     "note"
-    t.integer  "position"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "patrons", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "last_name"
-    t.string   "middle_name"
-    t.string   "first_name"
-    t.string   "last_name_transcription"
-    t.string   "middle_name_transcription"
-    t.string   "first_name_transcription"
-    t.string   "corporate_name"
-    t.string   "corporate_name_transcription"
-    t.string   "full_name"
-    t.text     "full_name_transcription"
-    t.text     "full_name_alternative"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
-    t.datetime "deleted_at"
-    t.string   "zip_code_1"
-    t.string   "zip_code_2"
-    t.text     "address_1"
-    t.text     "address_2"
-    t.text     "address_1_note"
-    t.text     "address_2_note"
-    t.string   "telephone_number_1"
-    t.string   "telephone_number_2"
-    t.string   "fax_number_1"
-    t.string   "fax_number_2"
-    t.text     "other_designation"
-    t.text     "place"
-    t.string   "postal_code"
-    t.text     "street"
-    t.text     "locality"
-    t.text     "region"
-    t.datetime "date_of_birth"
-    t.datetime "date_of_death"
-    t.integer  "language_id",                  :default => 1, :null => false
-    t.integer  "country_id",                   :default => 1, :null => false
-    t.integer  "patron_type_id",               :default => 1, :null => false
-    t.integer  "lock_version",                 :default => 0, :null => false
-    t.text     "note"
-    t.integer  "required_role_id",             :default => 1, :null => false
-    t.integer  "required_score",               :default => 0, :null => false
-    t.string   "state"
-    t.text     "email"
-    t.text     "url"
-    t.string   "birth_date"
-    t.string   "death_date"
-  end
-
-  add_index "patrons", ["country_id"], :name => "index_patrons_on_country_id"
-  add_index "patrons", ["full_name"], :name => "index_patrons_on_full_name"
-  add_index "patrons", ["language_id"], :name => "index_patrons_on_language_id"
-  add_index "patrons", ["required_role_id"], :name => "index_patrons_on_required_role_id"
-  add_index "patrons", ["user_id"], :name => "index_patrons_on_user_id", :unique => true
 
   create_table "request_status_types", :force => true do |t|
     t.string   "name",         :null => false
