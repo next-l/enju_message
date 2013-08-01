@@ -33,6 +33,13 @@ class MessageRequest < ActiveRecord::Base
     sm_send_message!
   end
 
+  def self.send_notice_message(status, recieve_usernames, options = {})
+    receivers = recieve_usernames.gsub(' ','').split(',').map{|username| User.where(:username => username).first}
+    receivers.each do |receiver|
+      receiver.send_message(status, options)
+    end
+  end
+
   def self.send_notice_to_librarians(status, options = {})
     system_user = User.find(1)
     receivers = SystemConfiguration.get('notice_receiver').gsub(' ','').split(',').map{|username| User.where(:username => username).first}
