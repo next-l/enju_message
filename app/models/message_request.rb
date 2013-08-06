@@ -2,9 +2,9 @@ require 'erubis'
 class MessageRequest < ActiveRecord::Base
   attr_accessible :body
   attr_accessible :sender, :receiver, :message_template, :body, :as => :admin
-  scope :not_sent, where('sent_at IS NULL AND state = ?', 'pending')
-  scope :sent, where(:state => 'sent')
-  scope :started, where(:state => 'started')
+  scope :not_sent, -> {where('sent_at IS NULL AND state = ?', 'pending')}
+  scope :sent, -> {where(:state => 'sent')}
+  scope :started, -> {where(:state => 'started')}
   belongs_to :message_template, :validate => true
   belongs_to :sender, :class_name => "User", :foreign_key => "sender_id", :validate => true
   belongs_to :receiver, :class_name => "User", :foreign_key => "receiver_id", :validate => true
