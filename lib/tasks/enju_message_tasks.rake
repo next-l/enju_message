@@ -9,8 +9,6 @@ namespace :enju_message do
 
   desc "Send messages"
   task :send => :environment do
-    exception_notify{
-      MessageRequest.send_messages if defined?(EnjuMessage)
-    }
+    MessageRequest.send_messages if defined?(EnjuMessage)
   end
 end
