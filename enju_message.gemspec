@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name        = "enju_message"
   s.version     = EnjuMessage::VERSION
   s.authors     = ["Kosuke Tanabe"]
-  s.email       = ["tanabe@mwr.mediacom.keio.ac.jp"]
+  s.email       = ["kosuke@e23.jp"]
   s.homepage    = "https://github.com/next-l/enju_message"
   s.summary     = "enju_message plugin"
   s.description = "Message management for Next-L Enju"
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/log/*"] - Dir["spec/dummy/solr/{data,pids}/*"]
 
-  s.add_dependency "enju_core", "~> 0.1.1.pre6"
+  s.add_dependency "enju_seed", "~> 0.1.1.pre8"
   s.add_dependency "simple_form"
   s.add_dependency "awesome_nested_set", "~> 2.1"
   s.add_dependency "state_machine"
