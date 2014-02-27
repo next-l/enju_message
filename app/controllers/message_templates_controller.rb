@@ -1,6 +1,11 @@
 class MessageTemplatesController < InheritedResources::Base
   respond_to :html, :json
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:index, :create]
+  authorize_resource only: [:index, :create]
+
+  def index
+    @message_templates = MessageTemplate.page(params[:page])
+  end
 
   def update
     @message_template = MessageTemplate.find(params[:id])
@@ -11,7 +16,12 @@ class MessageTemplatesController < InheritedResources::Base
     update!
   end
 
-  def index
-    @message_templates = MessageTemplate.page(params[:page])
+  private
+  def permitted_params
+    params.require(:message_template).permit(
+      :message_template => [
+        :status, :title, :body, :locale
+      ]
+    )
   end
 end

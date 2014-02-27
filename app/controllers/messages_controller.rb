@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource :except => [:index, :show]
-  authorize_resource :only => [:index, :show]
+  load_and_authorize_resource :except => [:index, :show, :create]
+  authorize_resource :only => [:index, :show, :create]
   before_filter :get_user, :only => :index
   after_filter :solr_commit, :only => [:create, :update, :destroy, :destroy_selected]
 
@@ -77,7 +77,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(params[:message])
+    @message = Message.new(message_params)
     @message.sender = current_user
     get_parent(@message.parent_id)
     @message.receiver = User.find(@message.recipient) rescue nil
@@ -98,7 +98,7 @@ class MessagesController < ApplicationController
   def update
     @message = current_user.received_messages.find(params[:id])
 
-    if @message.update_attributes(params[:message])
+    if @message.update_attributes(message_params)
       format.html { redirect_to @message, :notice => t('controller.successfully_updated', :model => t('activerecord.models.message')) }
       format.json { head :no_content }
     else
@@ -155,5 +155,11 @@ class MessagesController < ApplicationController
     else
       parent
     end
+  end
+
+  def message_params
+    params.require(:message).permit(
+      :subject, :body, :sender, :recipient
+    )
   end
 end
