@@ -1,6 +1,6 @@
-class CreateAgentTypes < ActiveRecord::Migration
+class CreateExtents < ActiveRecord::Migration
   def change
-    create_table :agent_types do |t|
+    create_table :extents do |t|
       t.string :name, :null => false
       t.text :display_name
       t.text :note

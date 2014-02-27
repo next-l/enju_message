@@ -1,8 +1,8 @@
-class CreateAgentTypes < ActiveRecord::Migration
+class CreateLicenses < ActiveRecord::Migration
   def change
-    create_table :agent_types do |t|
+    create_table :licenses do |t|
       t.string :name, :null => false
-      t.text :display_name
+      t.string :display_name
       t.text :note
       t.integer :position
 
