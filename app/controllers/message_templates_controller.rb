@@ -18,7 +18,7 @@ class MessageTemplatesController < InheritedResources::Base
 
   private
   def permitted_params
-    params.require(:message_template).permit(
+    params.permit(
       :message_template => [
         :status, :title, :body, :locale
       ]
