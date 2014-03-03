@@ -9,21 +9,21 @@ class User < ActiveRecord::Base
 
   has_one :user_has_role
   has_one :role, :through => :user_has_role
-  has_one :patron
+  has_one :agent
   belongs_to :user_group
   belongs_to :required_role, :class_name => 'Role', :foreign_key => 'required_role_id'
-  before_create :set_role_and_patron
+  before_create :set_role_and_agent
 
   enju_message_user
 
   extend FriendlyId
   friendly_id :username
 
-  def set_role_and_patron
+  def set_role_and_agent
     self.required_role = Role.where(:name => 'Librarian').first
     self.locale = I18n.default_locale.to_s
-    unless self.patron
-      self.patron = Patron.create(:full_name => self.username) if self.username
+    unless self.agent
+      self.agent = Agent.create(:full_name => self.username) if self.username
     end
   end
 

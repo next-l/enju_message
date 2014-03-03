@@ -1,12 +1,12 @@
-class PatronType < ActiveRecord::Base
+class AgentType < ActiveRecord::Base
   include MasterModel
-  default_scope :order => "patron_types.position"
-  has_many :patrons
+  default_scope :order => "agent_types.position"
+  has_many :agents
 end
 
 # == Schema Information
 #
-# Table name: patron_types
+# Table name: agent_types
 #
 #  id           :integer         not null, primary key
 #  name         :string(255)     not null

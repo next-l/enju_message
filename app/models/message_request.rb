@@ -63,9 +63,9 @@ class MessageRequest < ActiveRecord::Base
       end
       self.sent_at = Time.zone.now
       save(:validate => false)
-      if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(self.message_template.status)
+      if ['reservation_expired_for_agent', 'reservation_expired_for_agent'].include?(self.message_template.status)
         self.receiver.reserves.each do |reserve|
-          reserve.expiration_notice_to_patron = true
+          reserve.expiration_notice_to_agent = true
           reserve.save(:validate => false)
         end
       end

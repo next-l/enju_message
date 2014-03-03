@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
-class Patron < ActiveRecord::Base
+class Agent < ActiveRecord::Base
   scope :readable_by, lambda{|user| {:conditions => ['required_role_id <= ?', user.try(:user_has_role).try(:role_id) || Role.where(:name => 'Guest').select(:id).first.id]}}
   belongs_to :user
-  belongs_to :patron_type
+  belongs_to :agent_type
   belongs_to :required_role, :class_name => 'Role', :foreign_key => 'required_role_id', :validate => true
 
-  validates_presence_of :patron_type
-  validates_associated :patron_type
+  validates_presence_of :agent_type
+  validates_associated :agent_type
   validates :full_name, :presence => true, :length => {:maximum => 255}
   validates :user_id, :uniqueness => true, :allow_nil => true
   validates :email, :format => {:with => /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i}, :allow_blank => true
@@ -33,10 +33,10 @@ class Patron < ActiveRecord::Base
     integer :work_ids, :multiple => true
     integer :expression_ids, :multiple => true
     integer :manifestation_ids, :multiple => true
-    integer :patron_merge_list_ids, :multiple => true if defined?(EnjuResourceMerge)
-    integer :original_patron_ids, :multiple => true
+    integer :agent_merge_list_ids, :multiple => true if defined?(EnjuResourceMerge)
+    integer :original_agent_ids, :multiple => true
     integer :required_role_id
-    integer :patron_type_id
+    integer :agent_type_id
   end
 
   def self.per_page
@@ -143,25 +143,25 @@ class Patron < ActiveRecord::Base
     owns.where(:item_id => item.id)
   end
 
-  def self.import_patrons(patron_lists)
+  def self.import_agents(agent_lists)
     list = []
-    patron_lists.each do |patron_list|
-      patron = Patron.where(:full_name => patron_list[:full_name]).first
-      unless patron
-        patron = Patron.new(
-          :full_name => patron_list[:full_name],
-          :full_name_transcription => patron_list[:full_name_transcription],
+    agent_lists.each do |agent_list|
+      agent = Agent.where(:full_name => agent_list[:full_name]).first
+      unless agent
+        agent = Agent.new(
+          :full_name => agent_list[:full_name],
+          :full_name_transcription => agent_list[:full_name_transcription],
           :language_id => 1
         )
-        patron.required_role = Role.where(:name => 'Guest').first
-        patron.save
+        agent.required_role = Role.where(:name => 'Guest').first
+        agent.save
       end
-      list << patron
+      list << agent
     end
     list
   end
 
-  def patrons
-    self.original_patrons + self.derived_patrons
+  def agents
+    self.original_agents + self.derived_agents
   end
 end

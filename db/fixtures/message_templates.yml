@@ -1,20 +1,20 @@
 message_template_00001:
   id: 1
-  status: reservation_accepted_for_patron
+  status: reservation_accepted_for_agent
   title: Reservation accepted
   body: Reservation accepted
   position: 1
   locale: ja
 message_template_00002:
   id: 2
-  status: item_received_for_patron
+  status: item_received_for_agent
   title: Item received
   body: Item received
   position: 2
   locale: ja
 message_template_00003:
   id: 3
-  status: reservation_expired_for_patron
+  status: reservation_expired_for_agent
   title: Reservation expired
   body: Reservation expired
   position: 3
@@ -28,7 +28,7 @@ message_template_00004:
   locale: ja
 message_template_00005:
   id: 5
-  status: reservation_canceled_for_patron
+  status: reservation_canceled_for_agent
   title: Reservation canceled
   body: Reservation canceled
   position: 5
