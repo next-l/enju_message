@@ -1,6 +1,5 @@
 require 'enju_seed'
 require 'state_machine'
-require 'inherited_resources'
 require 'awesome_nested_set'
 require 'resque_mailer'
 

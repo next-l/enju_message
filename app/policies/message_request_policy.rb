@@ -1,0 +1,2 @@
+class MessageRequestPolicy < AdminPolicy
+end

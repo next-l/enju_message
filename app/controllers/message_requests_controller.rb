@@ -1,6 +1,7 @@
 class MessageRequestsController < ApplicationController
-  load_and_authorize_resource except: [:index, :create]
-  authorize_resource only: [:index, :create]
+  before_action :set_message_request, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, :only => :index
 
   # GET /message_requests
   # GET /message_requests.json
@@ -31,7 +32,7 @@ class MessageRequestsController < ApplicationController
 
   # GET /message_requests/1/edit
   def edit
-    @message_templates = MessageTemplate.all
+    @message_requests = MessageTemplate.all
   end
 
   # PUT /message_requests/1
@@ -43,7 +44,7 @@ class MessageRequestsController < ApplicationController
         format.html { redirect_to(@message_request) }
         format.json { head :no_content }
       else
-        @message_templates = MessageTemplate.all
+        @message_requests = MessageTemplate.all
         format.html { render :action => "edit" }
         format.json { render :json => @message_request.errors, :status => :unprocessable_entity }
       end
@@ -62,6 +63,11 @@ class MessageRequestsController < ApplicationController
   end
 
   private
+  def set_message_request
+    @message_request = MessageRequest.find(params[:id])
+    authorize @message_request
+  end
+
   def message_request_params
     params.require(:message_request).permit(:body)
   end

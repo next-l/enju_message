@@ -1,12 +1,13 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource :except => [:index, :show, :create]
-  authorize_resource :only => [:index, :show, :create]
-  before_filter :get_user, :only => :index
-  after_filter :solr_commit, :only => [:create, :update, :destroy, :destroy_selected]
+  before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_action :get_user, :only => :index
+  after_action :verify_authorized
+  after_action :solr_commit, :only => [:create, :update, :destroy, :destroy_selected]
 
   # GET /messages
   # GET /messages.json
   def index
+    authorize Message
     query = params[:query].to_s.strip
     search = Sunspot.new_search(Message)
     user = current_user
@@ -54,17 +55,13 @@ class MessagesController < ApplicationController
 
   # GET /messages/new
   def new
+    authorize Message
     parent = get_parent(params[:parent_id])
     @message = current_user.sent_messages.new
     if params[:recipient] && current_user.has_role?('Librarian')
       @message.recipient = params[:recipient]
     else
       @message.recipient = parent.sender.username if parent
-    end
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @message }
     end
   end
 
@@ -77,6 +74,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
+    authorize Message
     @message = Message.new(message_params)
     @message.sender = current_user
     get_parent(@message.parent_id)
@@ -146,6 +144,11 @@ class MessagesController < ApplicationController
   end
 
   private
+  def set_message
+    @message = Message.find(params[:id])
+    authorize @message
+  end
+
   def get_parent(id)
     parent = Message.where(:id => id).first
     unless current_user.has_role?('Librarian')
