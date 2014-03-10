@@ -74,8 +74,8 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    authorize Message
     @message = Message.new(message_params)
+    authorize @message
     @message.sender = current_user
     get_parent(@message.parent_id)
     @message.receiver = User.find(@message.recipient) rescue nil

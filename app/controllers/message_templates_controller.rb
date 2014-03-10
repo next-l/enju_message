@@ -6,7 +6,7 @@ class MessageTemplatesController < ApplicationController
   # GET /message_templates
   def index
     authorize MessageTemplate
-    @message_templates = policy_scope(MessageTemplate).order(:position)
+    @message_templates = policy_scope(MessageTemplate).order(:position).page(params[:page])
   end
 
   # GET /message_templates/1

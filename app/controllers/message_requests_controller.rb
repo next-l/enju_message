@@ -6,6 +6,7 @@ class MessageRequestsController < ApplicationController
   # GET /message_requests
   # GET /message_requests.json
   def index
+    authorize MessageRequest
     case params[:mode]
     when 'sent'
       @message_requests = MessageRequest.sent.order('created_at DESC').page(params[:page])
