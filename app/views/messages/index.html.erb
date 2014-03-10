@@ -19,7 +19,7 @@
   <%- @messages.each do |message| -%>
     <tr class="line<%= cycle("0", "1") -%>">
       <td>
-        <% if can? :delete, message %>
+        <% if policy(message).destroy? %>
           <input id="delete_<%=h message.id -%>" name="delete[]" type="checkbox" value="<%=h message.id %>" class="checkbox" />
         <% end %>
       </td>
@@ -59,7 +59,7 @@
   </ul>
 
   <ul>
-    <% if can? :create, Message %>
+    <% if policy(Message).create? %>
       <li><%= link_to t('page.new', :model => t('activerecord.models.message')), new_message_path -%></li>
     <% end %>
   </ul>
