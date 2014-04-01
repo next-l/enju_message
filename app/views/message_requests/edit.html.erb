@@ -23,7 +23,7 @@
   </div>
   <div class="field">
     <%= f.label t('activerecord.attributes.message.body') -%><br />
-    <%= textilize(@message_request.body) -%>
+    <%= markdown(@message_request.body) -%>
   </div>
   <div class="actions">
     <%= f.submit %>
