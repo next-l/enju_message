@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
-  attr_accessible :subject, :body, :sender, :recipient
-  scope :unread, where(:state => 'unread')
+  scope :unread, -> {where(:state => 'unread')}
   belongs_to :message_request
   belongs_to :sender, :class_name => 'User'
   belongs_to :receiver, :class_name => 'User'
@@ -44,7 +43,7 @@ class Message < ActiveRecord::Base
 
   def set_receiver
     if self.recipient
-      self.receiver = User.find(self.recipient)
+      self.receiver = User.friendly.find(self.recipient)
     end
   end
 

@@ -1,6 +1,5 @@
 class MessageTemplate < ActiveRecord::Base
-  attr_accessible :status, :title, :body, :locale
-  default_scope :order => "message_templates.position"
+  default_scope {order("message_templates.position")}
   has_many :message_requests
 
   validates_uniqueness_of :status

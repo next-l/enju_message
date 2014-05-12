@@ -1,4 +1,4 @@
-<div id="content_detail" class="ui-corner-all">
+<div id="content_detail" class="ui-corner-all ui-widget-content">
 <h1 class="title"><%= t('page.listing', :model => t('activerecord.models.message_request')) -%></h1>
 <div id="content_list">
 
@@ -37,11 +37,11 @@
 <%- end -%>
 </table>
 
-<%= paginate(@message_requests) -%>
+<%= paginate(@message_requests, :theme => 'enju_leaf') -%>
 </div>
 </div>
 
-<div id="submenu" class="ui-corner-all">
+<div id="submenu" class="ui-corner-all ui-widget-content">
   <ul>
     <%- case params[:mode] when 'sent' -%>
       <li><%= link_to t('message_request.not_sent'), message_requests_path(:mode => 'not_sent') -%></li>

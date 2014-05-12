@@ -11,7 +11,7 @@ describe MessageTemplatesController do
 
       it "assigns all message_templates as @message_templates" do
         get :index
-        assigns(:message_templates).should eq(MessageTemplate.page(1))
+        assigns(:message_templates).should eq(MessageTemplate.order(:position).page(1))
       end
     end
 
@@ -20,24 +20,24 @@ describe MessageTemplatesController do
 
       it "assigns all message_templates as @message_templates" do
         get :index
-        assigns(:message_templates).should eq(MessageTemplate.page(1))
+        assigns(:message_templates).should eq(MessageTemplate.order(:position).page(1))
       end
     end
 
     describe "When logged in as User" do
       login_user
 
-      it "assigns empty as @message_templates" do
+      it "assigns nil as @message_templates" do
         get :index
-        assigns(:message_templates).should be_empty
+        assigns(:message_templates).should be_nil
         response.should be_forbidden
       end
     end
 
     describe "When not logged in" do
-      it "assigns empty as @message_templates" do
+      it "assigns nil as @message_templates" do
         get :index
-        assigns(:message_templates).should be_empty
+        assigns(:message_templates).should be_nil
         response.should redirect_to(new_user_session_url)
       end
     end

@@ -27,16 +27,18 @@ describe MessageRequestsController do
     describe "When logged in as User" do
       login_user
 
-      it "assigns all message_requests as @message_requests" do
+      it "assigns nil as @message_requests" do
         get :index
-        assigns(:message_requests).should be_empty
+        assigns(:message_requests).should be_nil
+        response.should be_forbidden
       end
     end
 
     describe "When not logged in" do
-      it "assigns all message_requests as @message_requests" do
+      it "assigns nil as @message_requests" do
         get :index
-        assigns(:message_requests).should be_empty
+        assigns(:message_requests).should be_nil
+        response.should redirect_to new_user_session_url
       end
     end
   end

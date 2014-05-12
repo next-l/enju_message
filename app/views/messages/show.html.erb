@@ -1,4 +1,4 @@
-<div id="content_detail" class="ui-corner-all">
+<div id="content_detail" class="ui-corner-all ui-widget-content">
 <h1 class="title"><%= t('activerecord.models.message') -%></h1>
 <div id="content_list">
 <p id="notice"><%= notice %></p>
@@ -33,7 +33,7 @@
 </div>
 </div>
 
-<div id="submenu" class="ui-corner-all">
+<div id="submenu" class="ui-corner-all ui-widget-content">
   <ul>
     <% if request.referer %>
       <li><%= link_to t('page.back'), :back -%></li>
@@ -41,7 +41,7 @@
       <li><%= link_to t('page.listing', :model => t('activerecord.models.message')), messages_path -%></li>
     <% end %>
     <li><%= link_to t('message.reply'), new_message_path(:parent_id => @message.id) -%></li>
-    <% if can? :delete, :message %>
+    <% if policy(@message).destroy? %>
       <li><%= link_to t('page.destroy'), @message, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%></li>
     <% end %>
   </ul>

@@ -1,0 +1,2 @@
+class MessageTemplatePolicy < AdminPolicy
+end

@@ -1,12 +1,8 @@
+# -*- encoding: utf-8 -*-
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, #:registerable,
-         :recoverable, :rememberable, :trackable, #:validatable,
-         :lockable, :lock_strategy => :none, :unlock_strategy => :none
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+    :recoverable, :rememberable, :trackable, #, :validatable
+    :lockable, :lock_strategy => :none, :unlock_strategy => :none
 
   enju_leaf_user_model
   enju_message_user_model
