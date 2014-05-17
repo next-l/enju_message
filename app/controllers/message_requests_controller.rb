@@ -1,7 +1,6 @@
 class MessageRequestsController < ApplicationController
   before_action :set_message_request, only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
-  after_action :verify_policy_scoped, :only => :index
 
   # GET /message_requests
   # GET /message_requests.json

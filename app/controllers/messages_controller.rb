@@ -78,7 +78,7 @@ class MessagesController < ApplicationController
     authorize @message
     @message.sender = current_user
     get_parent(@message.parent_id)
-    @message.receiver = User.find(@message.recipient) rescue nil
+    @message.receiver = User.where(:username => @message.recipient).first
 
     respond_to do |format|
       if @message.save
