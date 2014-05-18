@@ -15,19 +15,6 @@ class Message < ActiveRecord::Base
   acts_as_nested_set
   attr_accessor :recipient
 
-  state_machine :initial => :unread do
-    before_transition any => :read, :do => :read
-    before_transition :read => :unread, :do => :unread
-
-    event :sm_read do
-      transition any => :read
-    end
-
-    event :sm_unread do
-      transition :read => :unread
-    end
-  end
-
   searchable do
     text :body, :subject
     string :subject
@@ -41,6 +28,15 @@ class Message < ActiveRecord::Base
 
   paginates_per 10
 
+  has_many :message_transitions
+
+  def state_machine
+    @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
+  end
+
+  delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
+    to: :state_machine
+
   def set_receiver
     if self.recipient
       self.receiver = User.friendly.find(self.recipient)
@@ -52,12 +48,10 @@ class Message < ActiveRecord::Base
   end
 
   def read
-    self.read_at = Time.zone.now unless self.read_at
-    self.save(:validate => false)
   end
 
   def read?
-    return true if state == 'read'
+    return true if current_state == 'read'
     false
   end
 end

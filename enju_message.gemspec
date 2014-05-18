@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "enju_seed", "~> 0.2.0.pre5"
   s.add_dependency "simple_form", "~> 3.0"
   s.add_dependency "awesome_nested_set", "~> 3.0.0.rc5"
-  s.add_dependency "state_machine"
+  s.add_dependency "statesman"
   s.add_dependency "resque_mailer"
   s.add_dependency "rails_autolink"
 

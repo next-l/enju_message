@@ -12,19 +12,25 @@ class MessageRequest < ActiveRecord::Base
   validates_presence_of :sender, :receiver, :message_template
   validates_presence_of :body, :on => :update
 
-  state_machine :initial => :pending do
-    before_transition any - :sent => :sent, :do => :send_message
-
-    event :sm_send_message do
-      transition any - :sent => :sent
-    end
-
-    event :sm_start do
-      transition :pending => :started
-    end
-  end
+  #state_machine :initial => :pending do
+  #  before_transition any - :sent => :sent, :do => :send_message
+#
+#    event :sm_send_message do
+#      transition any - :sent => :sent
+#    end
+#
+##    event :sm_start do
+#      transition :pending => :started
+#    end
+#  end
 
   paginates_per 10
+
+  has_many :message_request_transitions
+
+  def state_machine
+    @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
+  end
 
   def start_sending_message
     sm_start!

@@ -1,5 +1,5 @@
 require 'enju_seed'
-require 'state_machine'
+require 'statesman'
 require 'awesome_nested_set'
 require 'resque_mailer'
 
