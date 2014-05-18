@@ -1,8 +1,9 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
-  scope :not_sent, -> {where('sent_at IS NULL AND state = ?', 'pending')}
-  scope :sent, -> {where(:state => 'sent')}
-  scope :started, -> {where(:state => 'started')}
+  include Statesman::Adapters::ActiveRecordModel
+
+  scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}
+  scope :sent, -> {in_state(:sent)}
   belongs_to :message_template, :validate => true
   belongs_to :sender, :class_name => "User", :foreign_key => "sender_id", :validate => true
   belongs_to :receiver, :class_name => "User", :foreign_key => "receiver_id", :validate => true
@@ -12,30 +13,16 @@ class MessageRequest < ActiveRecord::Base
   validates_presence_of :sender, :receiver, :message_template
   validates_presence_of :body, :on => :update
 
-  #state_machine :initial => :pending do
-  #  before_transition any - :sent => :sent, :do => :send_message
-#
-#    event :sm_send_message do
-#      transition any - :sent => :sent
-#    end
-#
-##    event :sm_start do
-#      transition :pending => :started
-#    end
-#  end
-
   paginates_per 10
 
   has_many :message_request_transitions
 
   def state_machine
-    @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
+    @state_machine ||= MessageRequestStateMachine.new(self, transition_class: MessageRequestTransition)
   end
 
-  def start_sending_message
-    sm_start!
-    sm_send_message!
-  end
+  delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
+    to: :state_machine
 
   def send_message
     message = nil
@@ -77,9 +64,14 @@ class MessageRequest < ActiveRecord::Base
   def self.send_messages
     count = MessageRequest.not_sent.size
     MessageRequest.not_sent.each do |request|
-      request.start_sending_message
+      request.transition_to!(:sent)
     end
     logger.info "#{Time.zone.now} sent #{count} messages!"
+  end
+
+  private
+  def self.transition_class
+    MessageRequestTransition
   end
 end
 
