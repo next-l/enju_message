@@ -86,11 +86,11 @@ describe MessagesController do
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
-        lambda{
+        #lambda{
           get :show, :id => message.id
-        }.should raise_error(ActiveRecord::RecordNotFound)
-        assigns(:message).should be_nil
-        #response.should be_missing
+        #}.should raise_error(ActiveRecord::RecordNotFound)
+        assigns(:message).should eq message
+        response.should be_forbidden
       end
     end
 
@@ -99,11 +99,11 @@ describe MessagesController do
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
-        lambda{
+        #lambda{
           get :show, :id => message.id
-        }.should raise_error(ActiveRecord::RecordNotFound)
-        assigns(:message).should be_nil
-        #response.should be_forbidden
+        #}.should raise_error(ActiveRecord::RecordNotFound)
+        assigns(:message).should eq message
+        response.should be_forbidden
       end
     end
 
@@ -116,10 +116,8 @@ describe MessagesController do
     end
 
       it "should should not show other user's message" do
-        lambda{
-          get :show, :id => messages(:user1_to_user2_1).id
-        }.should raise_error(ActiveRecord::RecordNotFound)
-        #response.should be_missing
+        get :show, :id => messages(:user1_to_user2_1).id
+        response.should be_forbidden
       end
     end
 

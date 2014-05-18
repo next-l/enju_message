@@ -44,7 +44,6 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    @message = current_user.received_messages.find(params[:id])
     @message.sm_read!
 
     respond_to do |format|
@@ -55,14 +54,15 @@ class MessagesController < ApplicationController
 
   # GET /messages/new
   def new
-    authorize Message
     parent = get_parent(params[:parent_id])
-    @message = current_user.sent_messages.new
+    @message = Message.new
+    @message.sender = current_user
     if params[:recipient] && current_user.has_role?('Librarian')
       @message.recipient = params[:recipient]
     else
       @message.recipient = parent.sender.username if parent
     end
+    authorize @message
   end
 
   # GET /messages/1/edit
@@ -77,9 +77,8 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     authorize @message
     @message.sender = current_user
-    get_parent(@message.parent_id)
+    #get_parent(@message.parent_id)
     @message.receiver = User.where(:username => @message.recipient).first
-
     respond_to do |format|
       if @message.save
         format.html { redirect_to messages_url, :notice => t('controller.successfully_created', :model => t('activerecord.models.message')) }
@@ -150,14 +149,7 @@ class MessagesController < ApplicationController
   end
 
   def get_parent(id)
-    parent = Message.where(:id => id).first
-    unless current_user.has_role?('Librarian')
-      unless parent.try(:receiver) == current_user
-        access_denied; return
-      end
-    else
-      parent
-    end
+    Message.where(:id => id).first
   end
 
   def message_params
