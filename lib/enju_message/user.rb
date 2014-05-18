@@ -20,7 +20,7 @@ module EnjuMessage
           request.receiver = self
           request.message_template = MessageTemplate.localized_template(status, self.locale)
           request.save_message_body(options)
-          request.sm_send_message!
+          request.transition_to!(:sent)
         end
       end
     end
