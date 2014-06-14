@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
+  include Statesman::Adapters::ActiveRecordModel
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request
   belongs_to :sender, :class_name => 'User'
@@ -14,6 +15,13 @@ class Message < ActiveRecord::Base
 
   acts_as_nested_set
   attr_accessor :recipient
+
+  def state_machine
+    ResourceImportFileStateMachine.new(self, transition_class: ResourceImportFileTransition)
+  end
+
+  delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
+    to: :state_machine
 
   searchable do
     text :body, :subject
@@ -53,6 +61,11 @@ class Message < ActiveRecord::Base
   def read?
     return true if current_state == 'read'
     false
+  end
+
+  private
+  def self.transition_class
+    MessageTransition
   end
 end
 
