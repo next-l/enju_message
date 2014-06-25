@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/log/*"] - Dir["spec/dummy/solr/{data,pids}/*"]
 
-  s.add_dependency "enju_seed", "~> 0.2.0.pre5"
+  s.add_dependency "enju_seed", "~> 0.2.0.pre6"
   s.add_dependency "simple_form", "~> 3.0"
   s.add_dependency "awesome_nested_set", "~> 3.0.0.rc5"
   s.add_dependency "statesman"
@@ -27,6 +27,5 @@ Gem::Specification.new do |s|
   #s.add_development_dependency "enju_leaf", "~> 1.2.0.pre1"
   s.add_development_dependency "rspec-rails", "2.99"
   s.add_development_dependency "factory_girl_rails"
-  s.add_development_dependency "sunspot_solr", "~> 2.1"
-  s.add_development_dependency "sunspot-rails-tester"
+  s.add_development_dependency "elasticsearch-extensions"
 end
