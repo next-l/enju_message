@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   include Statesman::Adapters::ActiveRecordModel
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request
@@ -9,8 +11,6 @@ class Message < ActiveRecord::Base
   validates_presence_of :recipient, :on => :create
   validates_presence_of :receiver, :on => :update
   before_save :set_receiver
-  after_save :index
-  after_destroy :remove_from_index
   after_create :send_notification
 
   acts_as_nested_set
@@ -23,15 +23,35 @@ class Message < ActiveRecord::Base
   delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
     to: :state_machine
 
-  searchable do
-    text :body, :subject
-    string :subject
-    integer :receiver_id
-    integer :sender_id
-    time :created_at
-    boolean :is_read do
-      self.read?
+  index_name "#{name.downcase.pluralize}-#{Rails.env}"
+
+  after_commit on: :create do
+    index_document
+  end
+
+  after_commit on: :update do
+    update_document
+  end
+
+  after_commit on: :destroy do
+    delete_document
+  end
+
+  settings do
+    mappings dynamic: 'false', _routing: {required: false} do
+      indexes :body
+      indexes :subject
+      indexes :receiver_id, type: 'integer'
+      indexes :sender_id, type: 'integer'
+      indexes :created_at, type: 'date'
+      indexes :is_read, type: 'boolean'
     end
+  end
+
+  def as_indexed_json(options={})
+    as_json.merge(
+      is_read: read?
+    )
   end
 
   paginates_per 10

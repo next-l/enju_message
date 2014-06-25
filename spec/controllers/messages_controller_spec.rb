@@ -3,9 +3,10 @@ require 'spec_helper'
 describe MessagesController do
   fixtures :all
 
-  describe "GET index", :solr => true do
+  describe "GET index" do
     before do
-      Message.reindex
+      Message.__elasticsearch__.create_index!
+      Message.import
     end
 
     describe "When logged in as Administrator" do

@@ -2,7 +2,6 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
   before_action :get_user, :only => :index
   after_action :verify_authorized
-  after_action :solr_commit, :only => [:create, :update, :destroy, :destroy_selected]
 
   # GET /messages
   # GET /messages.json
