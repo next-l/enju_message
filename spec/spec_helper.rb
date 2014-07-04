@@ -40,6 +40,8 @@ RSpec.configure do |config|
     Sunspot.session = $original_sunspot_session
     Sunspot.remove_all!
   end
+
+  config.infer_spec_type_from_file_location!
 end
 
 FactoryGirl.definition_file_paths << "#{::Rails.root}/../../spec/factories"
