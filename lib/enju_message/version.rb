@@ -1,3 +1,3 @@
 module EnjuMessage
-  VERSION = "0.1.14.pre13"
+  VERSION = "0.1.14.pre14"
 end
