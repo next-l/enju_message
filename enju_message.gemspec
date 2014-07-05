@@ -18,15 +18,16 @@ Gem::Specification.new do |s|
 
   s.add_dependency "enju_seed", "~> 0.2.0.pre6"
   s.add_dependency "simple_form", "~> 3.0"
-  s.add_dependency "awesome_nested_set", "~> 3.0.0.rc5"
+  s.add_dependency "awesome_nested_set", "~> 3.0.0.rc6"
   s.add_dependency "statesman"
   s.add_dependency "resque_mailer"
   s.add_dependency "rails_autolink"
 
   s.add_development_dependency "sqlite3"
   #s.add_development_dependency "enju_leaf", "~> 1.2.0.pre1"
-  s.add_development_dependency "rspec-rails", "2.99"
+  s.add_development_dependency "rspec-rails", "~> 3.0"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "simplecov"
   s.add_development_dependency "elasticsearch-extensions"
+  s.add_development_dependency "rspec-activemodel-mocks"
 end
