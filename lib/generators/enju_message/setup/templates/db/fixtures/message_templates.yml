@@ -82,3 +82,17 @@ message_template_00012:
   body: Reservation postponed
   position: 12
   locale: ja
+message_template_00013:
+  id: 13
+  status: import_completed
+  title: インポートが完了しました
+  body: インポートが完了しました。
+  position: 13
+  locale: ja
+message_template_00013:
+  id: 14
+  status: counting_completed
+  title: 集計が完了しました
+  body: 集計が完了しました
+  position: 14
+  locale: ja
