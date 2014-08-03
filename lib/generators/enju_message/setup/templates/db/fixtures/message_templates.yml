@@ -89,7 +89,7 @@ message_template_00013:
   body: インポートが完了しました。
   position: 13
   locale: ja
-message_template_00013:
+message_template_00014:
   id: 14
   status: counting_completed
   title: 集計が完了しました
