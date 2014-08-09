@@ -30,10 +30,10 @@ describe Message do
   
   it "should set read_at" do
     message = messages(:user2_to_user1_1)
-    message.sm_read!
+    message.transition_to!(:read)
     message.read_at.should be_truthy
     message.read?.should be_truthy
-    message.state.should eq 'read'
+    message.current_state.should eq 'read'
   end
 end
 
@@ -48,7 +48,6 @@ end
 #  subject            :string(255)      not null
 #  body               :text
 #  message_request_id :integer
-#  state              :string(255)
 #  parent_id          :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -56,4 +55,3 @@ end
 #  rgt                :integer
 #  depth              :integer
 #
-

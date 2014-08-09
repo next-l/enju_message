@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412083556) do
+ActiveRecord::Schema.define(:version => 20140518135713) do
 
   create_table "accepts", :force => true do |t|
     t.integer  "basket_id"
@@ -212,6 +212,18 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
 
   add_index "library_groups", ["short_name"], :name => "index_library_groups_on_short_name"
 
+  create_table "message_request_transitions", :force => true do |t|
+    t.string   "to_state"
+    t.text     "metadata",           :default => "{}"
+    t.integer  "sort_key"
+    t.integer  "message_request_id"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "message_request_transitions", ["message_request_id"], :name => "index_message_request_transitions_on_message_request_id"
+  add_index "message_request_transitions", ["sort_key", "message_request_id"], :name => "index_message_request_transitions_on_sort_key_and_request_id", :unique => true
+
   create_table "message_requests", :force => true do |t|
     t.integer  "sender_id"
     t.integer  "receiver_id"
@@ -219,12 +231,9 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
     t.datetime "sent_at"
     t.datetime "deleted_at"
     t.text     "body"
-    t.string   "state"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
-
-  add_index "message_requests", ["state"], :name => "index_message_requests_on_state"
 
   create_table "message_templates", :force => true do |t|
     t.string   "status",                       :null => false
@@ -238,6 +247,18 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
 
   add_index "message_templates", ["status"], :name => "index_message_templates_on_status", :unique => true
 
+  create_table "message_transitions", :force => true do |t|
+    t.string   "to_state"
+    t.text     "metadata",   :default => "{}"
+    t.integer  "sort_key"
+    t.integer  "message_id"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "message_transitions", ["message_id"], :name => "index_message_transitions_on_message_id"
+  add_index "message_transitions", ["sort_key", "message_id"], :name => "index_message_transitions_on_sort_key_and_message_id", :unique => true
+
   create_table "messages", :force => true do |t|
     t.datetime "read_at"
     t.integer  "receiver_id"
@@ -245,7 +266,6 @@ ActiveRecord::Schema.define(:version => 20130412083556) do
     t.string   "subject",            :null => false
     t.text     "body"
     t.integer  "message_request_id"
-    t.string   "state"
     t.integer  "parent_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false

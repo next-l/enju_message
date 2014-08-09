@@ -44,7 +44,7 @@ class MessagesController < ApplicationController
   # GET /messages/1.json
   def show
     @message = current_user.received_messages.find(params[:id])
-    @message.sm_read!
+    @message.transition_to!(:read)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -71,7 +71,7 @@ class MessagesController < ApplicationController
   # GET /messages/1/edit
   def edit
     @message = current_user.received_messages.find(params[:id])
-    @message.sm_read!
+    @message.transition_to!(:read)
   end
 
   # POST /messages

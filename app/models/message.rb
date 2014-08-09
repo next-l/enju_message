@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
+  include Statesman::Adapters::ActiveRecordModel
   attr_accessible :subject, :body, :sender, :recipient
-  scope :unread, where(:state => 'unread')
+  scope :unread, -> {in_state('unread')}
   belongs_to :message_request
   belongs_to :sender, :class_name => 'User'
   belongs_to :receiver, :class_name => 'User'
@@ -16,18 +17,12 @@ class Message < ActiveRecord::Base
   acts_as_nested_set
   attr_accessor :recipient
 
-  state_machine :initial => :unread do
-    before_transition any => :read, :do => :read
-    before_transition :read => :unread, :do => :unread
-
-    event :sm_read do
-      transition any => :read
-    end
-
-    event :sm_unread do
-      transition :read => :unread
-    end
+  def state_machine
+    ResourceImportFileStateMachine.new(self, transition_class: ResourceImportFileTransition)
   end
+
+  delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
+    to: :state_machine
 
   searchable do
     text :body, :subject
@@ -36,15 +31,23 @@ class Message < ActiveRecord::Base
     integer :sender_id
     time :created_at
     boolean :is_read do
-      self.read?
+      read?
     end
   end
 
   paginates_per 10
+  has_many :message_transitions
+
+  def state_machine
+    @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
+  end
+
+  delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
+    to: :state_machine
 
   def set_receiver
-    if self.recipient
-      self.receiver = User.find(self.recipient)
+    if recipient
+      self.receiver = User.find(recipient)
     end
   end
 
@@ -53,13 +56,18 @@ class Message < ActiveRecord::Base
   end
 
   def read
-    self.read_at = Time.zone.now unless self.read_at
-    self.save(:validate => false)
+    self.read_at = Time.zone.now unless read_at
+    save(validate: false)
   end
 
   def read?
-    return true if state == 'read'
+    return true if current_state == 'read'
     false
+  end
+
+  private
+  def self.transition_class
+    MessageTransition
   end
 end
 
@@ -74,7 +82,6 @@ end
 #  subject            :string(255)      not null
 #  body               :text
 #  message_request_id :integer
-#  state              :string(255)
 #  parent_id          :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -82,4 +89,3 @@ end
 #  rgt                :integer
 #  depth              :integer
 #
-
