@@ -96,3 +96,10 @@ message_template_00014:
   body: 集計が完了しました。
   position: 14
   locale: ja
+message_template_00015:
+  id: 15
+  status: export_completed
+  title: エクスポートが完了しました
+  body: エクスポートが完了しました。
+  position: 15
+  locale: ja
