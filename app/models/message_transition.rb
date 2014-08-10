@@ -3,6 +3,7 @@ class MessageTransition < ActiveRecord::Base
 
   
   belongs_to :message, inverse_of: :message_transitions
+  attr_accessible :to_state, :sort_key, :metadata
 end
 
 # == Schema Information
