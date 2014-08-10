@@ -44,7 +44,7 @@ class MessagesController < ApplicationController
   # GET /messages/1.json
   def show
     @message = current_user.received_messages.find(params[:id])
-    @message.transition_to!(:read)
+    @message.transition_to!(:read) if @message.current_state != 'read'
 
     respond_to do |format|
       format.html # show.html.erb
