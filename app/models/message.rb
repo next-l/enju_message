@@ -2,7 +2,7 @@
 class Message < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordModel
   attr_accessible :subject, :body, :sender, :recipient
-  scope :unread, -> {in_state('unread')}
+  scope :unread, -> {where(state: 'unread')}
   belongs_to :message_request
   belongs_to :sender, :class_name => 'User'
   belongs_to :receiver, :class_name => 'User'
@@ -56,8 +56,7 @@ class Message < ActiveRecord::Base
   end
 
   def read
-    self.read_at = Time.zone.now unless read_at
-    save(validate: false)
+    transition_to!(:read)
   end
 
   def read?
