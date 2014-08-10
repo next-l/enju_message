@@ -2,7 +2,7 @@
 class Message < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordModel
   attr_accessible :subject, :body, :sender, :recipient
-  scope :unread, -> {where(state: 'unread')}
+  scope :unread, -> {in_state('unread')}
   belongs_to :message_request
   belongs_to :sender, :class_name => 'User'
   belongs_to :receiver, :class_name => 'User'
