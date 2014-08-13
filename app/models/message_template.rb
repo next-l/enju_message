@@ -13,13 +13,13 @@ class MessageTemplate < ActiveRecord::Base
   def embed_body(options = {})
     template = Erubis::Eruby.new(body)
     context = {
-      :library_group => LibraryGroup.site_config
+      library_group: LibraryGroup.site_config
     }.merge(options)
     template.evaluate(context)
   end
 
   def self.localized_template(status, locale)
-    MessageTemplate.where(:status => status, :locale => locale).first || MessageTemplate.where(:status => status).first
+    MessageTemplate.where(status: status, locale: locale).first || MessageTemplate.where(status: status).first
   end
 end
 

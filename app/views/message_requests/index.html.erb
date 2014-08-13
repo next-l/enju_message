@@ -1,5 +1,5 @@
 <div id="content_detail" class="ui-corner-all ui-widget-content">
-<h1 class="title"><%= t('page.listing', :model => t('activerecord.models.message_request')) -%></h1>
+<h1 class="title"><%= t('page.listing', model: t('activerecord.models.message_request')) -%></h1>
 <div id="content_list">
 
 <table class="table table-striped index">
@@ -31,7 +31,7 @@
     <td>
       <%= link_to t('page.show'), message_request -%>
       <%= link_to t('page.edit'), edit_message_request_path(message_request) -%>
-      <%= link_to t('page.destroy'), message_request, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%>
+      <%= link_to t('page.destroy'), message_request, data: {confirm: t('page.are_you_sure')}, method: :delete -%>
     </td>
   </tr>
 <%- end -%>
@@ -44,14 +44,14 @@
 <div id="submenu" class="ui-corner-all ui-widget-content">
   <ul>
     <%- case params[:mode] when 'sent' -%>
-      <li><%= link_to t('message_request.not_sent'), message_requests_path(:mode => 'not_sent') -%></li>
-      <li><%= link_to t('message_request.all'), message_requests_path(:mode => 'all') -%></li>
+      <li><%= link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent') -%></li>
+      <li><%= link_to t('message_request.all'), message_requests_path(mode: 'all') -%></li>
     <%- when 'all' -%>
-      <li><%= link_to t('message_request.not_sent'), message_requests_path(:mode => 'not_sent') -%></li>
-      <li><%= link_to t('message_request.sent'), message_requests_path(:mode => 'sent') -%></li>
+      <li><%= link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent') -%></li>
+      <li><%= link_to t('message_request.sent'), message_requests_path(mode: 'sent') -%></li>
     <%- else -%>
-      <li><%= link_to t('message_request.sent'), message_requests_path(:mode => 'sent') -%></li>
-      <li><%= link_to t('message_request.all'), message_requests_path(:mode => 'all') -%></li>
+      <li><%= link_to t('message_request.sent'), message_requests_path(mode: 'sent') -%></li>
+      <li><%= link_to t('message_request.all'), message_requests_path(mode: 'all') -%></li>
     <%- end -%>
   </ul>
 </div>

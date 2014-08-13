@@ -1,8 +1,8 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource :except => [:index, :show]
-  authorize_resource :only => [:index, :show]
-  before_filter :get_user, :only => :index
-  after_filter :solr_commit, :only => [:create, :update, :destroy, :destroy_selected]
+  authorize_resource only: [:index, :show]
+  before_filter :get_user, only: :index
+  after_filter :solr_commit, only: [:create, :update, :destroy, :destroy_selected]
 
   # GET /messages
   # GET /messages.json
@@ -84,7 +84,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to messages_url, :notice => t('controller.successfully_created', :model => t('activerecord.models.message')) }
+        format.html { redirect_to messages_url, notice: t('controller.successfully_created', :model => t('activerecord.models.message')) }
         format.json { render :json => @message, :status => :created, :location => @message }
       else
         format.html { render :action => "new" }
@@ -99,7 +99,7 @@ class MessagesController < ApplicationController
     @message = current_user.received_messages.find(params[:id])
 
     if @message.update_attributes(params[:message])
-      format.html { redirect_to @message, :notice => t('controller.successfully_updated', :model => t('activerecord.models.message')) }
+      format.html { redirect_to @message, notice: t('controller.successfully_updated', :model => t('activerecord.models.message')) }
       format.json { head :no_content }
     else
       format.html { render :action => "edit" }

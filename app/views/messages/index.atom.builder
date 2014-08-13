@@ -3,9 +3,9 @@ atom_feed do |feed|
   feed.updated(@messages.first ? @messages.first.created_at : Time.zone.now)
 
   @messages.each do |message|
-    feed.entry(message, :url => message_url(message)) do |entry|
+    feed.entry(message, url: message_url(message)) do |entry|
      entry.title   message.subject
-      entry.content message.body, :type => 'html'
+      entry.content message.body, type: 'html'
 
       entry.author do |author|
         author.name message.sender.login

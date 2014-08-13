@@ -4,11 +4,11 @@ class Message < ActiveRecord::Base
   attr_accessible :subject, :body, :sender, :recipient
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request
-  belongs_to :sender, :class_name => 'User'
-  belongs_to :receiver, :class_name => 'User'
+  belongs_to :sender, class_name: 'User'
+  belongs_to :receiver, class_name: 'User'
   validates_presence_of :subject, :body #, :sender
-  validates_presence_of :recipient, :on => :create
-  validates_presence_of :receiver, :on => :update
+  validates_presence_of :recipient, on: :create
+  validates_presence_of :receiver, on: :update
   before_save :set_receiver
   after_save :index
   after_destroy :remove_from_index
