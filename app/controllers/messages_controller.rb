@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource :except => [:index, :show]
+  load_and_authorize_resource except: [:index, :show]
   authorize_resource only: [:index, :show]
   before_filter :get_user, only: :index
   after_filter :solr_commit, only: [:create, :update, :destroy, :destroy_selected]
@@ -34,7 +34,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @messages }
+      format.json { render json: @messages }
       format.rss
       format.atom
     end
@@ -48,7 +48,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @message }
+      format.json { render json: @message }
     end
   end
 
@@ -64,7 +64,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @message }
+      format.json { render json: @message }
     end
   end
 
@@ -84,11 +84,11 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to messages_url, notice: t('controller.successfully_created', :model => t('activerecord.models.message')) }
-        format.json { render :json => @message, :status => :created, :location => @message }
+        format.html { redirect_to messages_url, notice: t('controller.successfully_created', model: t('activerecord.models.message')) }
+        format.json { render json: @message, status: :created, location: @message }
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @message.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.json { render json: @message.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -99,11 +99,11 @@ class MessagesController < ApplicationController
     @message = current_user.received_messages.find(params[:id])
 
     if @message.update_attributes(params[:message])
-      format.html { redirect_to @message, notice: t('controller.successfully_updated', :model => t('activerecord.models.message')) }
+      format.html { redirect_to @message, notice: t('controller.successfully_updated', model: t('activerecord.models.message')) }
       format.json { head :no_content }
     else
-      format.html { render :action => "edit" }
-      format.json { render :json => @message.errors, :status => :unprocessable_entity }
+      format.html { render action: "edit" }
+      format.json { render json: @message.errors, status: :unprocessable_entity }
     end
   end
 
@@ -147,7 +147,7 @@ class MessagesController < ApplicationController
 
   private
   def get_parent(id)
-    parent = Message.where(:id => id).first
+    parent = Message.where(id: id).first
     unless current_user.has_role?('Librarian')
       unless parent.try(:receiver) == current_user
         access_denied; return

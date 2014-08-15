@@ -15,7 +15,7 @@ class MessageRequestsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @message_requests }
+      format.json { render json: @message_requests }
     end
   end
 
@@ -24,7 +24,7 @@ class MessageRequestsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @message_request }
+      format.json { render json: @message_request }
     end
   end
 
@@ -38,13 +38,13 @@ class MessageRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @message_request.update_attributes(params[:message_request])
-        flash[:notice] = t('controller.successfully_updated', :model => t('activerecord.models.message_request'))
+        flash[:notice] = t('controller.successfully_updated', model: t('activerecord.models.message_request'))
         format.html { redirect_to(@message_request) }
         format.json { head :no_content }
       else
         @message_templates = MessageTemplate.all
-        format.html { render :action => "edit" }
-        format.json { render :json => @message_request.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.json { render json: @message_request.errors, status: :unprocessable_entity }
       end
     end
   end
