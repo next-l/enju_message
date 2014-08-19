@@ -1,7 +1,7 @@
-class CreateAgentTypes < ActiveRecord::Migration
+class CreateIdentifierTypes < ActiveRecord::Migration
   def change
-    create_table :agent_types do |t|
-      t.string :name, :null => false
+    create_table :identifier_types do |t|
+      t.string :name
       t.text :display_name
       t.text :note
       t.integer :position

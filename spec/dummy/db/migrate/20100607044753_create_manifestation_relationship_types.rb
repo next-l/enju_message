@@ -1,6 +1,6 @@
-class CreateAgentTypes < ActiveRecord::Migration
+class CreateManifestationRelationshipTypes < ActiveRecord::Migration
   def change
-    create_table :agent_types do |t|
+    create_table :manifestation_relationship_types do |t|
       t.string :name, :null => false
       t.text :display_name
       t.text :note

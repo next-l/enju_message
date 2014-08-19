@@ -5,6 +5,10 @@ FactoryGirl.define do
     f.sequence(:user_number){|n| "user_number_#{n}"}
     f.library_id 2
     f.locale "ja"
-    f.user{FactoryGirl.create(:user)}
+    after(:create) do |profile|
+      user = FactoryGirl.create(:user)
+      profile.user = user
+      profile.save
+    end
   end
 end
