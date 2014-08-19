@@ -30,7 +30,7 @@ class MessageRequestsController < ApplicationController
 
   # GET /message_requests/1/edit
   def edit
-    @message_templates = MessageTemplate.all
+    @message_requests = MessageTemplate.all
   end
 
   # PUT /message_requests/1
@@ -42,7 +42,7 @@ class MessageRequestsController < ApplicationController
         format.html { redirect_to(@message_request) }
         format.json { head :no_content }
       else
-        @message_templates = MessageTemplate.all
+        @message_requests = MessageTemplate.all
         format.html { render action: "edit" }
         format.json { render json: @message_request.errors, status: :unprocessable_entity }
       end
@@ -55,7 +55,7 @@ class MessageRequestsController < ApplicationController
     @message_request.destroy
 
     respond_to do |format|
-      format.html { redirect_to message_requests_url }
+      format.html { redirect_to message_requests_url, notice: t('controller.successfully_deleted', model: t('activerecord.models.message_request')) }
       format.json { head :no_content }
     end
   end
