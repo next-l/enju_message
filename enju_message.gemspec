@@ -16,9 +16,9 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/log/*"] - Dir["spec/dummy/solr/{data,pids}/*"]
 
-  s.add_dependency "enju_seed", "~> 0.1.1.pre10"
+  s.add_dependency "enju_seed", "~> 0.1.1.pre11"
   s.add_dependency "simple_form"
-  s.add_dependency "awesome_nested_set", "~> 2.1"
+  s.add_dependency "awesome_nested_set"
   s.add_dependency "statesman"
   s.add_dependency "resque_mailer"
   s.add_dependency "rails_autolink"
