@@ -37,7 +37,7 @@ class Message < ActiveRecord::Base
 
   paginates_per 10
   has_many :message_transitions
-  before_create :set_default_state
+  after_create :set_default_state
 
   def state_machine
     @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
@@ -71,7 +71,7 @@ class Message < ActiveRecord::Base
   end
 
   def set_default_state
-    transition_to(:unread)
+    transition_to!(:unread)
   end
 end
 
