@@ -12,7 +12,6 @@ class MessageStateMachine
 
   before_transition(from: :pending, to: :read) do |message|
     message.read_at = Time.zone.now unless message.read_at
-    message.index!
   end
 
   before_transition(from: :unread, to: :read) do |message|
@@ -22,6 +21,18 @@ class MessageStateMachine
 
   before_transition(from: :read, to: :unread) do |message|
     message.read_at = nil
+    message.index!
+  end
+
+  after_transition(from: :pending, to: :read) do |message|
+    message.index!
+  end
+
+  after_transition(from: :unread, to: :read) do |message|
+    message.index!
+  end
+
+  after_transition(from: :read, to: :unread) do |message|
     message.index!
   end
 end
