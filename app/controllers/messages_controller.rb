@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     query = @query = params[:query].to_s.strip
-    search = Sunspot.new_search(Message)
+    search = Sunspot.new_search(Message, include: [:sender])
     user = current_user
     case params[:mode]
     when 'read'
