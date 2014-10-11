@@ -46,15 +46,18 @@
 <div id="submenu" class="ui-corner-all ui-widget-content">
   <ul>
     <% mode = params[:mode].to_s %>
-    <%- @message_facet.each do |facet| -%>
-      <li>
-        <% facet.value ? facet_mode = 'read' : facet_mode = 'unread' %>
-        <%- if facet_mode == mode -%><strong><%- end -%>
-          <%= link_to t("message.#{facet_mode}"), url_for(params.merge(page: nil, mode: facet_mode, only_path: true)) -%>
-        (<%= facet.count -%>)
-        <%- if facet_mode == mode -%></strong><%- end -%>
-      </li>
-    <%- end -%>
+    <li>
+      <%- if mode == 'unread' -%><strong><%- end -%>
+        <%= link_to t('message.unread'), url_for(params.merge(page: nil, mode: 'unread', only_path: true)) -%>
+      (<%= @message_facet['false'] -%>)
+      <%- if mode == 'unread' -%></strong><%- end -%>
+    </li>
+    <li>
+      <%- if mode == 'read' -%><strong><%- end -%>
+        <%= link_to t('message.read'), url_for(params.merge(page: nil, mode: 'read', only_path: true)) -%>
+      (<%= @message_facet['true'] -%>)
+      <%- if mode == 'read' -%></strong><%- end -%>
+    </li>
     <% if mode.present? %>
       <li><%= link_to t('page.remove_this_facet'), url_for(params.merge(mode: nil, page: nil, only_path: true)) -%></li>
     <% end %>

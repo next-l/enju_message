@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
       with(:receiver_id).equal_to user.id
       facet(:is_read)
     end
-    @message_facet = search.execute!.facet('is_read').rows
+    @message_facet =  Hash[*search.execute!.facet_response['facet_fields']['is_read_b']]
     search.build do
       with(:is_read).equal_to is_read unless is_read.nil?
     end
