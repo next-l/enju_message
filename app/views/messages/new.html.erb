@@ -9,7 +9,7 @@
       <div class="field">
         <label for="message_recepient"><%= t('message.recipient') -%>:</label>
         <%- if @message.recipient -%>
-          <%= link_to @message.recipient, user_path(@message.recipient) -%>
+          <%= link_to @message.receiver.username, profile_path(@message.receiver) -%>
           <%= f.hidden_field :recipient, value: @message.recipient -%>
         <%- else -%>
           <%= f.text_field :recipient, class: 'resource_title', value: @message.recipient -%>

@@ -61,6 +61,7 @@ class MessagesController < ApplicationController
     else
       @message.recipient = parent.sender.username if parent
     end
+    @message.receiver = User.where(username: @message.recipient).first if @message.recipient
 
     respond_to do |format|
       format.html # new.html.erb
@@ -80,7 +81,7 @@ class MessagesController < ApplicationController
     @message = Message.new(params[:message])
     @message.sender = current_user
     get_parent(@message.parent_id)
-    @message.receiver = User.find(@message.recipient) rescue nil
+    @message.receiver = User.where(username: @message.recipient).first
 
     respond_to do |format|
       if @message.save
