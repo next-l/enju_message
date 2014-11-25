@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
-  include Statesman::Adapters::ActiveRecordModel
+  include Statesman::Adapters::ActiveRecordQueries
   attr_accessible :subject, :body, :sender, :recipient
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request
