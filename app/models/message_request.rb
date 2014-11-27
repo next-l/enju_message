@@ -74,6 +74,10 @@ class MessageRequest < ActiveRecord::Base
   def self.transition_class
     MessageRequestTransition
   end
+
+  def self.initial_state
+    :pending
+  end
 end
 
 # == Schema Information

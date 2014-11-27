@@ -17,10 +17,6 @@ class Message < ActiveRecord::Base
   acts_as_nested_set
   attr_accessor :recipient
 
-  def state_machine
-    ResourceImportFileStateMachine.new(self, transition_class: ResourceImportFileTransition)
-  end
-
   delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
     to: :state_machine
 
@@ -68,6 +64,10 @@ class Message < ActiveRecord::Base
   private
   def self.transition_class
     MessageTransition
+  end
+
+  def self.initial_state
+    :pending
   end
 
   def set_default_state
