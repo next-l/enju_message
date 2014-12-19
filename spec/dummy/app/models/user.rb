@@ -6,8 +6,6 @@ class User < ActiveRecord::Base
          :lockable, :lock_strategy => :none, :unlock_strategy => :none
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-
   enju_leaf_user_model
   enju_message_user_model
 end

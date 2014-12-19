@@ -78,7 +78,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(params[:message])
+    @message = Message.new(message_params)
     @message.sender = current_user
     get_parent(@message.parent_id)
     @message.receiver = User.where(username: @message.recipient).first
@@ -99,7 +99,7 @@ class MessagesController < ApplicationController
   def update
     @message = current_user.received_messages.find(params[:id])
 
-    if @message.update_attributes(params[:message])
+    if @message.update_attributes(message_params)
       format.html { redirect_to @message, notice: t('controller.successfully_updated', model: t('activerecord.models.message')) }
       format.json { head :no_content }
     else
@@ -147,6 +147,12 @@ class MessagesController < ApplicationController
   end
 
   private
+  def message_params
+    params.require(:message).permit(
+      :subject, :body, :sender, :recipient, :parent_id
+    )
+  end
+
   def get_parent(id)
     parent = Message.where(id: id).first
     unless current_user.has_role?('Librarian')

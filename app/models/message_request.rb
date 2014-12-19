@@ -1,8 +1,6 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordQueries
-  attr_accessible :body
-  attr_accessible :sender, :receiver, :message_template, :body, as: :admin
   scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}
   scope :sent, -> {in_state(:sent)}
   belongs_to :message_template, validate: true

@@ -1,5 +1,4 @@
 class MessageTemplate < ActiveRecord::Base
-  attr_accessible :status, :title, :body, :locale
   default_scope {order("message_templates.position")}
   has_many :message_requests
 
