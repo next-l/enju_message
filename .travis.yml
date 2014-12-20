@@ -12,6 +12,7 @@ services:
 gemfile:
   - gemfiles/rails3_2.gemfile
   - gemfiles/rails4_1.gemfile
+  - gemfiles/rails4_2.gemfile
 env:
   - DB=sqlite
   - DB=mysql
