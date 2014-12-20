@@ -1,6 +1,10 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
-  include Statesman::Adapters::ActiveRecordQueries
+  if Rails::VERSION::MAJOR >= 4
+    include Statesman::Adapters::ActiveRecordQueries
+  else
+    include Statesman::Adapters::ActiveRecordModel
+  end
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request
   belongs_to :sender, class_name: 'User'
