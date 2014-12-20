@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - 1.9.3
   - 2.0.0
-  - 2.1.3
+  - 2.1.5
 before_script:
   - mysql -e 'create database enju_test'
   - psql -c 'create database enju_test;' -U postgres
@@ -20,8 +20,15 @@ matrix:
   exclude:
   - rvm: 1.9.3
     gemfile: gemfiles/rails4_1.gemfile
-  - rvm: 2.1.3
+  - rvm: 1.9.3
+    gemfile: gemfiles/rails4_2.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/rails3_2.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/rails4_2.gemfile
+  - rvm: 2.1.5
     gemfile: gemfiles/rails3_2.gemfile
 notifications:
   slack:
     secure: fRmrMSClIcaF14h4mqbiGT46zYVTKGw7KfyLEHilkz0ny9WEiMYHqQtlbdEfF0r7SE37jghzGTM7Prji3LoZiYlw3DpWh69XLfeBm7gMOv0OxIh/YHYjTHyNGVcEtL6Ab87sApI1BRwf4dHpQxtyENIL49Tce6awzY7l17p0AWg=
+sudo: false
