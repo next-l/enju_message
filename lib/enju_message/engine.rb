@@ -1,4 +1,3 @@
-require 'enju_seed'
 require 'statesman'
 require 'awesome_nested_set'
 require 'resque_mailer'
