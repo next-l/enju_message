@@ -1,9 +1,9 @@
-<%= simple_form_for(@message_template, :validate => true) do |f| %>
+<%= simple_form_for(@message_template, validate: true) do |f| %>
   <%= f.error_notification %>
 
   <div class="field">
     <%= f.label :status %><br />
-    <%= f.text_field :status, :class => 'resource_title' %>
+    <%= f.text_field :status, class: 'resource_title' %>
   </div>
 
   <div class="field">
@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= f.label :title %><br />
-    <%= f.text_field :title, :class => 'resource_title' %>
+    <%= f.text_field :title, class: 'resource_title' %>
   </div>
 
   <div class="field">
     <%= f.label :body %><br />
-    <%= f.text_area :body, :class => 'resource_textarea' %>
+    <%= f.text_area :body, class: 'resource_textarea' %>
   </div>
 
   <div class="actions">

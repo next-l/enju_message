@@ -17,8 +17,6 @@ end
 #  sent_at             :datetime
 #  deleted_at          :datetime
 #  body                :text
-#  state               :string(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
-

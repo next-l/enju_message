@@ -1,17 +1,16 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
-  include Statesman::Adapters::ActiveRecordModel
-
+  include Statesman::Adapters::ActiveRecordQueries
   scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}
   scope :sent, -> {in_state(:sent)}
-  belongs_to :message_template, :validate => true
-  belongs_to :sender, :class_name => "User", :foreign_key => "sender_id", :validate => true
-  belongs_to :receiver, :class_name => "User", :foreign_key => "receiver_id", :validate => true
+  belongs_to :message_template, validate: true
+  belongs_to :sender, class_name: "User", foreign_key: "sender_id", validate: true
+  belongs_to :receiver, class_name: "User", foreign_key: "receiver_id", validate: true
   has_many :messages
 
   validates_associated :sender, :receiver, :message_template
   validates_presence_of :sender, :receiver, :message_template
-  validates_presence_of :body, :on => :update
+  validates_presence_of :body, on: :update
 
   paginates_per 10
 
@@ -38,11 +37,11 @@ class MessageRequest < ActiveRecord::Base
         raise 'body is empty!'
       end
       self.sent_at = Time.zone.now
-      save(:validate => false)
+      save(validate: false)
       if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(message_template.status)
         self.receiver.reserves.each do |reserve|
           reserve.expiration_notice_to_patron = true
-          reserve.save(:validate => false)
+          reserve.save(validate: false)
         end
       end
     end
@@ -55,10 +54,10 @@ class MessageRequest < ActiveRecord::Base
 
   def save_message_body(options = {})
     options = {
-      :receiver => receiver,
-      :locale => receiver.locale
+      receiver: receiver,
+      locale: receiver.profile.locale
     }.merge(options)
-    self.update_attributes!({:body => message_template.embed_body(options)})
+    self.update_attributes!({body: message_template.embed_body(options)})
   end
 
   def self.send_messages
@@ -73,6 +72,10 @@ class MessageRequest < ActiveRecord::Base
   def self.transition_class
     MessageRequestTransition
   end
+
+  def self.initial_state
+    :pending
+  end
 end
 
 # == Schema Information
@@ -86,8 +89,6 @@ end
 #  sent_at             :datetime
 #  deleted_at          :datetime
 #  body                :text
-#  state               :string(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
-

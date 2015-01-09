@@ -1,11 +1,13 @@
 require 'spec_helper'
+require 'sunspot/rails/spec_helper'
 
 describe MessageRequestsController do
   fixtures :all
+  disconnect_sunspot
 
   describe "GET index" do
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       it "assigns all message_requests as @message_requests" do
         get :index
@@ -14,7 +16,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as Librarian" do
-      login_librarian
+      login_fixture_librarian
 
       it "assigns all message_requests as @message_requests" do
         get :index
@@ -23,27 +25,25 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as User" do
-      login_user
+      login_fixture_user
 
-      it "assigns nil as @message_requests" do
+      it "assigns all message_requests as @message_requests" do
         get :index
-        assigns(:message_requests).should be_nil
-        response.should be_forbidden
+        assigns(:message_requests).should be_empty
       end
     end
 
     describe "When not logged in" do
-      it "assigns nil as @message_requests" do
+      it "assigns all message_requests as @message_requests" do
         get :index
-        assigns(:message_requests).should be_nil
-        response.should redirect_to new_user_session_url
+        assigns(:message_requests).should be_empty
       end
     end
   end
 
   describe "GET show" do
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
@@ -53,7 +53,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as Librarian" do
-      login_librarian
+      login_fixture_librarian
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
@@ -63,7 +63,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as User" do
-      login_user
+      login_fixture_user
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
@@ -83,7 +83,7 @@ describe MessageRequestsController do
 
   describe "GET edit" do
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
@@ -93,7 +93,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as Librarian" do
-      login_librarian
+      login_fixture_librarian
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
@@ -103,7 +103,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as User" do
-      login_user
+      login_fixture_user
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
@@ -129,7 +129,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       describe "with valid params" do
         it "updates the requested message_request" do
@@ -151,7 +151,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as Librarian" do
-      login_librarian
+      login_fixture_librarian
 
       describe "with valid params" do
         it "updates the requested message_request" do
@@ -174,7 +174,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as User" do
-      login_user
+      login_fixture_user
 
       describe "with valid params" do
         it "updates the requested message_request" do
@@ -223,7 +223,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       it "destroys the requested message_request" do
         delete :destroy, :id => @message_request.id
@@ -236,7 +236,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as Librarian" do
-      login_librarian
+      login_fixture_librarian
 
       it "destroys the requested message_request" do
         delete :destroy, :id => @message_request.id
@@ -249,7 +249,7 @@ describe MessageRequestsController do
     end
 
     describe "When logged in as User" do
-      login_user
+      login_fixture_user
 
       it "destroys the requested message_request" do
         delete :destroy, :id => @message_request.id

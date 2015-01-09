@@ -3,17 +3,13 @@ require 'spec_helper'
 describe MessagesController do
   fixtures :all
 
-  describe "GET index" do
+  describe "GET index", :solr => true do
     before do
-      Message.__elasticsearch__.create_index!
-      Message.import
+      Message.reindex
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        @user = FactoryGirl.create(:admin)
-        sign_in @user
-      end
+      login_fixture_admin
 
       it "should get its own messages" do
         get :index
@@ -30,10 +26,7 @@ describe MessagesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        @user = FactoryGirl.create(:librarian)
-        sign_in @user
-      end
+      login_fixture_librarian
 
       it "should get its own messages" do
         get :index
@@ -87,11 +80,11 @@ describe MessagesController do
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
-        #lambda{
+        lambda{
           get :show, :id => message.id
-        #}.should raise_error(ActiveRecord::RecordNotFound)
-        assigns(:message).should eq message
-        response.should be_forbidden
+        }.should raise_error(ActiveRecord::RecordNotFound)
+        assigns(:message).should be_nil
+        #response.should be_missing
       end
     end
 
@@ -100,11 +93,11 @@ describe MessagesController do
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
-        #lambda{
+        lambda{
           get :show, :id => message.id
-        #}.should raise_error(ActiveRecord::RecordNotFound)
-        assigns(:message).should eq message
-        response.should be_forbidden
+        }.should raise_error(ActiveRecord::RecordNotFound)
+        assigns(:message).should be_nil
+        #response.should be_forbidden
       end
     end
 
@@ -117,8 +110,10 @@ describe MessagesController do
     end
 
       it "should should not show other user's message" do
-        get :show, :id => messages(:user1_to_user2_1).id
-        response.should be_forbidden
+        lambda{
+          get :show, :id => messages(:user1_to_user2_1).id
+        }.should raise_error(ActiveRecord::RecordNotFound)
+        #response.should be_missing
       end
     end
 
@@ -132,7 +127,7 @@ describe MessagesController do
   
   describe "GET new" do
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       it "assigns the requested message as @message" do
         get :new
@@ -141,7 +136,7 @@ describe MessagesController do
     end
 
     describe "When logged in as Librarian" do
-      login_librarian
+      login_fixture_librarian
 
       it "should not assign the requested message as @message" do
         get :new
@@ -186,7 +181,7 @@ describe MessagesController do
 
   describe "GET edit" do
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
@@ -199,7 +194,7 @@ describe MessagesController do
     end
 
     describe "When logged in as Librarian" do
-      login_librarian
+      login_fixture_librarian
 
       it "assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
@@ -237,7 +232,7 @@ describe MessagesController do
     end
 
     describe "When logged in as Administrator" do
-      login_admin
+      login_fixture_admin
 
       describe "with valid params" do
         it "assigns a newly created message as @message" do

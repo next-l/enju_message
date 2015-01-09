@@ -1,22 +1,34 @@
 class MessageTemplatesController < ApplicationController
-  before_action :set_message_template, only: [:show, :edit, :update, :destroy]
-  after_action :verify_authorized
-  after_action :verify_policy_scoped, :only => :index
-
+  load_and_authorize_resource
   # GET /message_templates
+  # GET /message_templates.json
   def index
-    authorize MessageTemplate
-    @message_templates = policy_scope(MessageTemplate).order(:position).page(params[:page])
+    @message_templates = MessageTemplate.page(params[:page])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @message_templates }
+    end
   end
 
   # GET /message_templates/1
+  # GET /message_templates/1.json
   def show
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @message_template }
+    end
   end
 
   # GET /message_templates/new
+  # GET /message_templates/new.json
   def new
     @message_template = MessageTemplate.new
-    authorize @message_template
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @message_template }
+    end
   end
 
   # GET /message_templates/1/edit
@@ -24,45 +36,53 @@ class MessageTemplatesController < ApplicationController
   end
 
   # POST /message_templates
+  # POST /message_templates.json
   def create
     @message_template = MessageTemplate.new(message_template_params)
-    authorize @message_template
 
-    if @message_template.save
-      redirect_to @message_template, notice:  t('controller.successfully_created', :model => t('activerecord.models.message_template'))
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @message_template.save
+        format.html { redirect_to @message_template, notice:  t('controller.successfully_created', model:  t('activerecord.models.message_template')) }
+        format.json { render json: @message_template, status: :created, location: @message_template }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @message_template.errors, status: :unprocessable_entity }
+      end
     end
   end
 
-  # PATCH/PUT /message_templates/1
+  # PUT /message_templates/1
+  # PUT /message_templates/1.json
   def update
     if params[:move]
       move_position(@message_template, params[:move])
       return
     end
-    if @message_template.update(message_template_params)
-      redirect_to @message_template, notice:  t('controller.successfully_updated', :model => t('activerecord.models.message_template'))
-    else
-      render action: 'edit'
+
+    respond_to do |format|
+      if @message_template.update_attributes(message_template_params)
+        format.html { redirect_to @message_template, notice:  t('controller.successfully_updated', model:  t('activerecord.models.message_template')) }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @message_template.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # DELETE /message_templates/1
+  # DELETE /message_templates/1.json
   def destroy
     @message_template.destroy
-    redirect_to message_templates_url, notice: 'Message template was successfully destroyed.'
+
+    respond_to do |format|
+      format.html { redirect_to message_templates_url, notice: t('controller.successfully_deleted', model: t('activerecord.models.message_template')) }
+      format.json { head :no_content }
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_message_template
-      @message_template = MessageTemplate.find(params[:id])
-      authorize @message_template
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def message_template_params
-      params.require(:message_template).permit(:status, :title, :body, :locale)
-    end
+  def message_template_params
+    params.require(:message_template).permit(:status, :title, :body, :locale)
+  end
 end

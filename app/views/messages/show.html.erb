@@ -6,11 +6,11 @@
   <fieldset>
       <p>
         <label for="message_receiver_name" ><strong><%= t('message.receiver') -%>:</strong></label>
-        <%= link_to @message.receiver.username, @message.receiver -%>
+        <%= link_to @message.receiver.username, @message.receiver.profile if @message.receiver.try(:profile) -%>
       </p>
       <p>
         <label for="message_sender_name" ><strong><%= t('message.sender') -%>:</strong></label>
-        <%= link_to @message.sender.username, @message.sender -%>
+        <%= link_to @message.sender.username, @message.sender.profile if @message.sender.try(:profile) -%>
       </p>
 
       <p>
@@ -38,11 +38,11 @@
     <% if request.referer %>
       <li><%= link_to t('page.back'), :back -%></li>
     <% else %>
-      <li><%= link_to t('page.listing', :model => t('activerecord.models.message')), messages_path -%></li>
+      <li><%= link_to t('page.listing', model: t('activerecord.models.message')), messages_path -%></li>
     <% end %>
-    <li><%= link_to t('message.reply'), new_message_path(:parent_id => @message.id) -%></li>
-    <% if policy(@message).destroy? %>
-      <li><%= link_to t('page.destroy'), @message, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%></li>
+    <li><%= link_to t('message.reply'), new_message_path(parent_id: @message.id) -%></li>
+    <% if can? :delete, :message %>
+      <li><%= link_to t('page.destroy'), @message, data: {confirm: t('page.are_you_sure')}, method: :delete -%></li>
     <% end %>
   </ul>
 </div>

@@ -5,7 +5,8 @@ class MessageStateMachine
   state :unread
   state :read
 
-  transition from: :pending, to: [:read, :unread]
+  transition from: :pending, to: :unread
+  transition from: :pending, to: :read
   transition from: :unread, to: :read
   transition from: :read, to: :unread
 
@@ -19,5 +20,17 @@ class MessageStateMachine
 
   before_transition(from: :read, to: :unread) do |message|
     message.read_at = nil
+  end
+
+  after_transition(from: :pending, to: :read) do |message|
+    message.index!
+  end
+
+  after_transition(from: :unread, to: :read) do |message|
+    message.index!
+  end
+
+  after_transition(from: :read, to: :unread) do |message|
+    message.index!
   end
 end

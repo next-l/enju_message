@@ -1,62 +1,38 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  include Statesman::Adapters::ActiveRecordModel
+  include Statesman::Adapters::ActiveRecordQueries
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request
-  belongs_to :sender, :class_name => 'User'
-  belongs_to :receiver, :class_name => 'User'
+  belongs_to :sender, class_name: 'User'
+  belongs_to :receiver, class_name: 'User'
   validates_presence_of :subject, :body #, :sender
-  validates_presence_of :recipient, :on => :create
-  validates_presence_of :receiver, :on => :update
+  validates_presence_of :recipient, on: :create
+  validates_presence_of :receiver, on: :update
   before_save :set_receiver
+  after_save :index
+  after_destroy :remove_from_index
   after_create :send_notification
 
   acts_as_nested_set
   attr_accessor :recipient
 
-  def state_machine
-    ResourceImportFileStateMachine.new(self, transition_class: ResourceImportFileTransition)
-  end
-
   delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
     to: :state_machine
 
-  index_name "#{name.downcase.pluralize}-#{Rails.env}"
-
-  after_commit on: :create do
-    index_document
-  end
-
-  after_commit on: :update do
-    update_document
-  end
-
-  after_commit on: :destroy do
-    delete_document
-  end
-
-  settings do
-    mappings dynamic: 'false', _routing: {required: false} do
-      indexes :body
-      indexes :subject
-      indexes :receiver_id, type: 'integer'
-      indexes :sender_id, type: 'integer'
-      indexes :created_at, type: 'date'
-      indexes :is_read, type: 'boolean'
+  searchable do
+    text :body, :subject
+    string :subject
+    integer :receiver_id
+    integer :sender_id
+    time :created_at
+    boolean :is_read do
+      read?
     end
   end
 
-  def as_indexed_json(options={})
-    as_json.merge(
-      is_read: read?
-    )
-  end
-
   paginates_per 10
-
   has_many :message_transitions
+  after_create :set_default_state
 
   def state_machine
     @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
@@ -66,8 +42,8 @@ class Message < ActiveRecord::Base
     to: :state_machine
 
   def set_receiver
-    if self.recipient
-      self.receiver = User.friendly.find(self.recipient)
+    if recipient
+      self.receiver = User.find(recipient)
     end
   end
 
@@ -76,6 +52,7 @@ class Message < ActiveRecord::Base
   end
 
   def read
+    transition_to!(:read)
   end
 
   def read?
@@ -86,6 +63,14 @@ class Message < ActiveRecord::Base
   private
   def self.transition_class
     MessageTransition
+  end
+
+  def self.initial_state
+    :pending
+  end
+
+  def set_default_state
+    transition_to!(:unread)
   end
 end
 
@@ -100,7 +85,6 @@ end
 #  subject            :string(255)      not null
 #  body               :text
 #  message_request_id :integer
-#  state              :string(255)
 #  parent_id          :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -108,4 +92,3 @@ end
 #  rgt                :integer
 #  depth              :integer
 #
-

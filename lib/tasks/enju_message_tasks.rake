@@ -1,4 +1,6 @@
 require 'active_record/fixtures'
+require 'tasks/message_template'
+
 namespace :enju_message do
   desc "create initial records for enju_message"
   task :setup => :environment do
@@ -10,5 +12,13 @@ namespace :enju_message do
   desc "Send messages"
   task :send => :environment do
     MessageRequest.send_messages if defined?(EnjuMessage)
+  end
+
+  desc "upgrade enju_message"
+  task :upgrade => :environment do
+    MessageTemplate.transaction do
+      update_message_template
+    end
+    puts 'enju_message: The upgrade completed successfully.'
   end
 end
