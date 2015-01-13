@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "simple_form"
   s.add_dependency "awesome_nested_set"
-  s.add_dependency "resque_mailer"
   s.add_dependency "rails_autolink"
 
   s.add_development_dependency "sqlite3"
