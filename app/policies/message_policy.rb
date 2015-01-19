@@ -6,7 +6,7 @@ class MessagePolicy < ApplicationPolicy
   def show?
     case user.try(:role).try(:name)
     when 'Administrator'
-      true if record.receiver == user
+      true
     when 'Librarian'
       true if record.receiver == user
     when 'User'

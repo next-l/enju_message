@@ -78,13 +78,13 @@ describe MessagesController do
     describe "When logged in as Administrator" do
       login_fixture_admin
 
-      it "should not assign the requested message as @message" do
+      it "should assigns the requested message as @message" do
         message = messages(:user1_to_user2_1)
         #lambda{
           get :show, :id => message.id
         #}.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_valid
-        response.should be_forbidden
+        response.should be_success
       end
     end
 
