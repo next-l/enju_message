@@ -1,5 +1,7 @@
 class MessageTemplatesController < ApplicationController
-  load_and_authorize_resource
+  before_action :set_message_template, only: [:show, :edit, :update, :destroy]
+  before_action :check_policy, only: [:index, :new, :create]
+
   # GET /message_templates
   # GET /message_templates.json
   def index
@@ -82,6 +84,16 @@ class MessageTemplatesController < ApplicationController
   end
 
   private
+  def set_message_template
+    @message_template = MessageTemplate.find(params[:id])
+    authorize @message_template
+    access_denied unless LibraryGroup.site_config.network_access_allowed?(request.ip)
+  end
+
+  def check_policy
+    authorize MessageTemplate
+  end
+
   def message_template_params
     params.require(:message_template).permit(:status, :title, :body, :locale)
   end

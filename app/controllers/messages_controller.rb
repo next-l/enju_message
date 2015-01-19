@@ -1,8 +1,8 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource except: [:index, :show]
-  authorize_resource only: [:index, :show]
-  before_filter :get_user, only: :index
-  after_filter :solr_commit, only: [:create, :update, :destroy, :destroy_selected]
+  before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_action :check_policy, only: [:index, :new, :create]
+  before_action :get_user, only: :index
+  after_action :solr_commit, only: [:create, :update, :destroy, :destroy_selected]
 
   # GET /messages
   # GET /messages.json
@@ -43,7 +43,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    @message = current_user.received_messages.find(params[:id])
+    #@message = current_user.received_messages.find(params[:id])
     @message.transition_to!(:read) if @message.current_state != 'read'
 
     respond_to do |format|
@@ -147,6 +147,15 @@ class MessagesController < ApplicationController
   end
 
   private
+  def set_message
+    @message = Message.find(params[:id])
+    authorize @message
+  end
+
+  def check_policy
+    authorize Message
+  end
+
   def message_params
     params.require(:message).permit(
       :subject, :body, :sender, :recipient, :parent_id

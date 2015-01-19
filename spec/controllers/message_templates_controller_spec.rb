@@ -27,17 +27,17 @@ describe MessageTemplatesController do
     describe "When logged in as User" do
       login_fixture_user
 
-      it "assigns empty as @message_templates" do
+      it "assigns nil as @message_templates" do
         get :index
-        assigns(:message_templates).should be_empty
+        assigns(:message_templates).should be_nil
         response.should be_forbidden
       end
     end
 
     describe "When not logged in" do
-      it "assigns empty as @message_templates" do
+      it "assigns nil as @message_templates" do
         get :index
-        assigns(:message_templates).should be_empty
+        assigns(:message_templates).should be_nil
         response.should redirect_to(new_user_session_url)
       end
     end
@@ -89,7 +89,7 @@ describe MessageTemplatesController do
 
       it "assigns the requested message_template as @message_template" do
         get :new
-        assigns(:message_template).should_not be_valid
+        assigns(:message_template).should be_nil
         response.should be_forbidden
       end
     end
@@ -99,7 +99,7 @@ describe MessageTemplatesController do
 
       it "should not assign the requested message_template as @message_template" do
         get :new
-        assigns(:message_template).should_not be_valid
+        assigns(:message_template).should be_nil
         response.should be_forbidden
       end
     end
@@ -109,7 +109,7 @@ describe MessageTemplatesController do
 
       it "should not assign the requested message_template as @message_template" do
         get :new
-        assigns(:message_template).should_not be_valid
+        assigns(:message_template).should be_nil
         response.should be_forbidden
       end
     end
@@ -117,7 +117,7 @@ describe MessageTemplatesController do
     describe "When not logged in" do
       it "should not assign the requested message_template as @message_template" do
         get :new
-        assigns(:message_template).should_not be_valid
+        assigns(:message_template).should be_nil
         response.should redirect_to(new_user_session_url)
       end
     end
@@ -175,7 +175,7 @@ describe MessageTemplatesController do
       describe "with valid params" do
         it "assigns a newly created message_template as @message_template" do
           post :create, :message_template => @attrs
-          assigns(:message_template).should be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do
@@ -187,7 +187,7 @@ describe MessageTemplatesController do
       describe "with invalid params" do
         it "assigns a newly created but unsaved message_template as @message_template" do
           post :create, :message_template => @invalid_attrs
-          assigns(:message_template).should_not be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do
@@ -203,7 +203,7 @@ describe MessageTemplatesController do
       describe "with valid params" do
         it "assigns a newly created message_template as @message_template" do
           post :create, :message_template => @attrs
-          assigns(:message_template).should be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do
@@ -215,7 +215,7 @@ describe MessageTemplatesController do
       describe "with invalid params" do
         it "assigns a newly created but unsaved message_template as @message_template" do
           post :create, :message_template => @invalid_attrs
-          assigns(:message_template).should_not be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do
@@ -231,7 +231,7 @@ describe MessageTemplatesController do
       describe "with valid params" do
         it "assigns a newly created message_template as @message_template" do
           post :create, :message_template => @attrs
-          assigns(:message_template).should be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do
@@ -243,7 +243,7 @@ describe MessageTemplatesController do
       describe "with invalid params" do
         it "assigns a newly created but unsaved message_template as @message_template" do
           post :create, :message_template => @invalid_attrs
-          assigns(:message_template).should_not be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do
@@ -257,7 +257,7 @@ describe MessageTemplatesController do
       describe "with valid params" do
         it "assigns a newly created message_template as @message_template" do
           post :create, :message_template => @attrs
-          assigns(:message_template).should be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do
@@ -269,7 +269,7 @@ describe MessageTemplatesController do
       describe "with invalid params" do
         it "assigns a newly created but unsaved message_template as @message_template" do
           post :create, :message_template => @invalid_attrs
-          assigns(:message_template).should_not be_valid
+          assigns(:message_template).should be_nil
         end
 
         it "should be forbidden" do

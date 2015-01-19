@@ -29,14 +29,14 @@ describe MessageRequestsController do
 
       it "assigns all message_requests as @message_requests" do
         get :index
-        assigns(:message_requests).should be_empty
+        assigns(:message_requests).should be_nil
       end
     end
 
     describe "When not logged in" do
       it "assigns all message_requests as @message_requests" do
         get :index
-        assigns(:message_requests).should be_empty
+        assigns(:message_requests).should be_nil
       end
     end
   end

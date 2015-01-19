@@ -1,5 +1,6 @@
 class MessageRequestsController < ApplicationController
-  load_and_authorize_resource
+  before_action :set_message_request, only: [:show, :edit, :update, :destroy]
+  before_action :check_policy, only: [:index, :new, :create]
 
   # GET /message_requests
   # GET /message_requests.json
@@ -61,6 +62,16 @@ class MessageRequestsController < ApplicationController
   end
 
   private
+  def set_message_request
+    @message_request = MessageRequest.find(params[:id])
+    authorize @message_request
+    access_denied unless LibraryGroup.site_config.network_access_allowed?(request.ip)
+  end
+
+  def check_policy
+    authorize MessageRequest
+  end
+
   def message_request_params
     params.require(:message_request).permit(
       :body,
