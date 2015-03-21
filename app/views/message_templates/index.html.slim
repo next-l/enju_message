@@ -1,0 +1,40 @@
+#content_detail.ui-corner-all.ui-widget-content
+  h1.title
+    = t('page.listing', model: t('activerecord.models.message_template'))
+  #content_list
+    p#notice
+      = notice
+    table.table.table-striped.index
+      tr
+        th#position
+        th
+          = t('activerecord.attributes.message_template.status')
+        th
+          = t('activerecord.attributes.message_template.locale')
+        th
+          = t('activerecord.attributes.message_template.title')
+        th
+      - @message_templates.each do |message_template|
+        |  <tr class="line
+        = cycle("0", "1")
+        | "> 
+        td
+          - if policy(message_template).update?
+            = move_position(message_template)
+        td
+          = link_to message_template.status, message_template
+        td
+          = message_template.locale
+        td
+          = message_template.title
+        td
+          - if policy(message_template).update?
+            = link_to t('page.edit'), edit_message_template_path(message_template)
+          - if policy(message_template).destroy?
+            = link_to t('page.destroy'), message_template, data: {confirm: t('page.are_you_sure')}, method: :delete
+    = paginate(@message_templates)
+#submenu.ui-corner-all.ui-widget-content
+  ul
+    - if policy(MessageTemplate).create?
+      li
+        = link_to t('page.new', model: t('activerecord.models.message_template')), new_message_template_path

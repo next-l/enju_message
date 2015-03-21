@@ -1,0 +1,32 @@
+#content_detail.ui-corner-all.ui-widget-content
+  h1.title
+    = t('page.new', model: t('activerecord.models.message'))
+  #content_list
+    fieldset
+      = simple_form_for(@message, url: messages_path, validate: true) do |f|
+        = f.error_notification
+        .field
+          label[for="message_recepient"]
+            = t('message.recipient')
+            | :
+          - if @message.recipient
+            = link_to @message.receiver.username, profile_path(@message.receiver)
+            = f.hidden_field :recipient, value: @message.recipient
+          - else
+            = f.text_field :recipient, class: 'resource_title', value: @message.recipient
+        .field
+          = f.label :subject
+          | : 
+          = f.text_field :subject, class: 'resource_title'
+        .field
+          = f.label :body
+          | :
+          br
+          = f.text_area :body, id: 'message_body'
+        .field
+          = f.hidden_field :parent_id
+          = f.submit t('message.send')
+#submenu.ui-corner-all.ui-widget-content
+  ul
+    li
+      = link_to t('page.listing', model: t('activerecord.models.message')), messages_path

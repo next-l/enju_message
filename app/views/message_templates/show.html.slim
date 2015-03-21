@@ -1,0 +1,33 @@
+#content_detail.ui-corner-all.ui-widget-content
+  h1.title
+    = t('page.showing', model: t('activerecord.models.message_template'))
+  #content_list
+    p#notice
+      = notice
+    p
+      strong
+        = t('activerecord.attributes.message_template.status')
+        | :
+      = @message_template.status
+    p
+      strong
+        = t('activerecord.attributes.message_template.locale')
+        | :
+      = @message_template.locale
+    p
+      strong
+        = t('activerecord.attributes.message_template.title')
+        | :
+      = @message_template.title
+    p
+      strong
+        = t('activerecord.attributes.message_template.body')
+        | :
+      br
+      =raw @message_template.body.gsub("\n", '<br />')
+#submenu.ui-corner-all.ui-widget-content
+  ul
+    li
+      = link_to t('page.edit'), edit_message_template_path(@message_template)
+    li
+      = back_to_index(flash[:page_info])
