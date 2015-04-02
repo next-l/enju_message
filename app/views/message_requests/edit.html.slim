@@ -1,7 +1,7 @@
-#content_detail.ui-corner-all.ui-widget-content
-  h1.title
-    = t('page.editing', model: t('activerecord.models.message_request'))
+.row
   #content_list
+    h1.title
+      = t('page.editing', model: t('activerecord.models.message_request'))
     = form_for(@message_request) do |f|
       = f.error_messages
       .field
@@ -26,9 +26,9 @@
         = textilize(@message_request.body)
       .actions
         = f.submit
-#submenu.ui-corner-all.ui-widget-content
-  ul
-    li
-      = link_to t('page.show'), @message_request
-    li
-      = link_to t('page.back'), message_requests_path
+  #submenu.col-md-3
+    ul
+      li
+        = link_to t('page.show'), @message_request
+      li
+        = link_to t('page.back'), message_requests_path

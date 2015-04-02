@@ -1,7 +1,7 @@
-#content_detail.ui-corner-all.ui-widget-content
-  h1.title
-    = t('page.listing', model: t('activerecord.models.message_template'))
+.row
   #content_list
+    h1.title
+      = t('page.listing', model: t('activerecord.models.message_template'))
     p#notice
       = notice
     table.table.table-striped.index
@@ -33,8 +33,8 @@
           - if policy(message_template).destroy?
             = link_to t('page.destroy'), message_template, data: {confirm: t('page.are_you_sure')}, method: :delete
     = paginate(@message_templates)
-#submenu.ui-corner-all.ui-widget-content
-  ul
-    - if policy(MessageTemplate).create?
-      li
-        = link_to t('page.new', model: t('activerecord.models.message_template')), new_message_template_path
+  #submenu.col-md-3
+    ul
+      - if policy(MessageTemplate).create?
+        li
+          = link_to t('page.new', model: t('activerecord.models.message_template')), new_message_template_path

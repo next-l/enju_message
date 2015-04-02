@@ -1,7 +1,7 @@
-#content_detail.ui-corner-all.ui-widget-content
-  h1.title
-    = t('activerecord.models.message')
+.row
   #content_list
+    h1.title
+      = t('activerecord.models.message')
     p#notice
       = notice
     = form_for :messages, url: messages_path, html: {method: 'get'} do
@@ -44,29 +44,29 @@
         td[colspan="4"]
           = submit_tag t('message.delete')
       = paginate(@messages)
-#submenu.ui-corner-all.ui-widget-content
-  ul
-    - mode = params[:mode].to_s
-    li
-      - if mode == 'unread'
-        strong
-          = link_to t('message.unread'), url_for(params.merge(page: nil, mode: 'unread', only_path: true))
-          |  (
-          = @message_facet['false'].to_i
-          | ) 
-          - if mode == 'unread'
-    li
-      - if mode == 'read'
-        strong
-          = link_to t('message.read'), url_for(params.merge(page: nil, mode: 'read', only_path: true))
-          |  (
-          = @message_facet['true'].to_i
-          | ) 
-          - if mode == 'read'
-    - if mode.present?
+    #submenu.col-md-3
+    ul
+      - mode = params[:mode].to_s
       li
-        = link_to t('page.remove_this_facet'), url_for(params.merge(mode: nil, page: nil, only_path: true))
-  ul
-    - if policy(Message).create?
+        - if mode == 'unread'
+          strong
+            = link_to t('message.unread'), url_for(params.merge(page: nil, mode: 'unread', only_path: true))
+            |  (
+            = @message_facet['false'].to_i
+            | ) 
+            - if mode == 'unread'
       li
-        = link_to t('page.new', model: t('activerecord.models.message')), new_message_path
+        - if mode == 'read'
+          strong
+            = link_to t('message.read'), url_for(params.merge(page: nil, mode: 'read', only_path: true))
+            |  (
+            = @message_facet['true'].to_i
+            | ) 
+            - if mode == 'read'
+      - if mode.present?
+        li
+          = link_to t('page.remove_this_facet'), url_for(params.merge(mode: nil, page: nil, only_path: true))
+    ul
+      - if policy(Message).create?
+        li
+          = link_to t('page.new', model: t('activerecord.models.message')), new_message_path

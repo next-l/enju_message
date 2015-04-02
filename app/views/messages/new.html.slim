@@ -1,7 +1,7 @@
-#content_detail.ui-corner-all.ui-widget-content
-  h1.title
-    = t('page.new', model: t('activerecord.models.message'))
+.row
   #content_list
+    h1.title
+      = t('page.new', model: t('activerecord.models.message'))
     fieldset
       = simple_form_for(@message, url: messages_path, validate: true) do |f|
         = f.error_notification
@@ -26,7 +26,7 @@
         .field
           = f.hidden_field :parent_id
           = f.submit t('message.send')
-#submenu.ui-corner-all.ui-widget-content
+  #submenu.col-md-3
   ul
     li
       = link_to t('page.listing', model: t('activerecord.models.message')), messages_path

@@ -1,7 +1,7 @@
-#content_detail.ui-corner-all.ui-widget-content
-  h1.title
-    = t('activerecord.models.message')
+.row
   #content_list
+    h1.title
+      = t('activerecord.models.message')
     p#notice
       = notice
     fieldset
@@ -35,7 +35,7 @@
             = t('activerecord.attributes.message.body')
             | :
         = raw auto_link(simple_format(h(@message.body)))
-#submenu.ui-corner-all.ui-widget-content
+  #submenu.col-md-3
   ul
     - if request.referer
       li
