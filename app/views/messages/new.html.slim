@@ -1,11 +1,11 @@
 .row
-  #content_list
+  #content_list.col-md-9
     h1.title
       = t('page.new', model: t('activerecord.models.message'))
     fieldset
       = simple_form_for(@message, url: messages_path, validate: true) do |f|
         = f.error_notification
-        .field
+        .form-group
           label[for="message_recepient"]
             = t('message.recipient')
             | :
@@ -14,19 +14,19 @@
             = f.hidden_field :recipient, value: @message.recipient
           - else
             = f.text_field :recipient, class: 'resource_title', value: @message.recipient
-        .field
+        .form-group
           = f.label :subject
           | : 
           = f.text_field :subject, class: 'resource_title'
-        .field
+        .form-group
           = f.label :body
           | :
           br
           = f.text_area :body, id: 'message_body'
-        .field
+        .form-group
           = f.hidden_field :parent_id
           = f.submit t('message.send')
   #submenu.col-md-3
-  ul
-    li
-      = link_to t('page.listing', model: t('activerecord.models.message')), messages_path
+    ul
+      li
+        = link_to t('page.listing', model: t('activerecord.models.message')), messages_path

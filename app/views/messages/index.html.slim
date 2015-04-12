@@ -1,5 +1,5 @@
 .row
-  #content_list
+  #content_list.col-md-9
     h1.title
       = t('activerecord.models.message')
     p#notice
@@ -44,7 +44,7 @@
         td[colspan="4"]
           = submit_tag t('message.delete')
       = paginate(@messages)
-    #submenu.col-md-3
+  #submenu.col-md-3
     ul
       - mode = params[:mode].to_s
       li
