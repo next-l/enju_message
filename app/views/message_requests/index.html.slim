@@ -1,4 +1,21 @@
 .row
+  #submenu.col-md-3
+    ul
+      - case params[:mode] when 'sent'
+        li
+          = link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent')
+        li
+          = link_to t('message_request.all'), message_requests_path(mode: 'all')
+      - when 'all'
+        li
+          = link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent')
+        li
+          = link_to t('message_request.sent'), message_requests_path(mode: 'sent')
+      - else
+        li
+          = link_to t('message_request.sent'), message_requests_path(mode: 'sent')
+        li
+          = link_to t('message_request.all'), message_requests_path(mode: 'all')
   #content_list.col-md-9
     h1.title
       = t('page.listing', model: t('activerecord.models.message_request'))
@@ -41,20 +58,3 @@
           = link_to t('page.edit'), edit_message_request_path(message_request)
           = link_to t('page.destroy'), message_request, data: {confirm: t('page.are_you_sure')}, method: :delete
     = paginate(@message_requests)
-  #submenu.col-md-3
-    ul
-      - case params[:mode] when 'sent'
-        li
-          = link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent')
-        li
-          = link_to t('message_request.all'), message_requests_path(mode: 'all')
-      - when 'all'
-        li
-          = link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent')
-        li
-          = link_to t('message_request.sent'), message_requests_path(mode: 'sent')
-      - else
-        li
-          = link_to t('message_request.sent'), message_requests_path(mode: 'sent')
-        li
-          = link_to t('message_request.all'), message_requests_path(mode: 'all')

@@ -1,4 +1,17 @@
 .row
+  #submenu.col-md-3
+    ul
+      - if request.referer
+        li
+          = link_to t('page.back'), :back
+      - else
+        li
+          = link_to t('page.listing', model: t('activerecord.models.message')), messages_path
+      li
+        = link_to t('message.reply'), new_message_path(parent_id: @message.id)
+      - if policy(message).destroy?
+        li
+          = link_to t('page.destroy'), @message, data: {confirm: t('page.are_you_sure')}, method: :delete
   #content_list.col-md-9
     h1.title
       = t('activerecord.models.message')
@@ -35,16 +48,3 @@
             = t('activerecord.attributes.message.body')
             | :
         = raw auto_link(simple_format(h(@message.body)))
-  #submenu.col-md-3
-    ul
-      - if request.referer
-        li
-          = link_to t('page.back'), :back
-      - else
-        li
-          = link_to t('page.listing', model: t('activerecord.models.message')), messages_path
-      li
-        = link_to t('message.reply'), new_message_path(parent_id: @message.id)
-      - if policy(message).destroy?
-        li
-          = link_to t('page.destroy'), @message, data: {confirm: t('page.are_you_sure')}, method: :delete

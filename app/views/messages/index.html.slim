@@ -1,4 +1,28 @@
 .row
+  #submenu.col-md-3
+    ul
+      - mode = params[:mode].to_s
+        li
+          - if mode == 'unread'
+             strong
+               = link_to t('message.unread'), url_for(params.merge(page: nil, mode: 'unread', only_path: true))
+               |  (
+               = @message_facet['false'].to_i
+               | ) 
+        li
+          - if mode == 'read'
+            strong
+              = link_to t('message.read'), url_for(params.merge(page: nil, mode: 'read', only_path: true))
+              |  (
+              = @message_facet['true'].to_i
+              | ) 
+        - if mode.present?
+          li
+            = link_to t('page.remove_this_facet'), url_for(params.merge(mode: nil, page: nil, only_path: true))
+    ul
+      - if policy(Message).create?
+        li
+          = link_to t('page.new', model: t('activerecord.models.message')), new_message_path
   #content_list.col-md-9
     h1.title
       = t('activerecord.models.message')
@@ -33,40 +57,13 @@
                 | " class="checkbox" /> 
             td
               - unless message.read?
-              strong
-          = link_to message.subject, message
-          - unless message.read?
-      td
-        = link_to message.sender.username, message.sender.profile if message.sender.try(:profile)
-      td
-        = l(message.created_at)
-      tr
-        td[colspan="4"]
-          = submit_tag t('message.delete')
+                strong
+                  = link_to message.subject, message
+            td
+              = link_to message.sender.username, message.sender.profile if message.sender.try(:profile)
+            td
+              = l(message.created_at)
+          tr
+            td[colspan="4"]
+              = submit_tag t('message.delete')
       = paginate(@messages)
-  #submenu.col-md-3
-    ul
-      - mode = params[:mode].to_s
-      li
-        - if mode == 'unread'
-          strong
-            = link_to t('message.unread'), url_for(params.merge(page: nil, mode: 'unread', only_path: true))
-            |  (
-            = @message_facet['false'].to_i
-            | ) 
-            - if mode == 'unread'
-      li
-        - if mode == 'read'
-          strong
-            = link_to t('message.read'), url_for(params.merge(page: nil, mode: 'read', only_path: true))
-            |  (
-            = @message_facet['true'].to_i
-            | ) 
-            - if mode == 'read'
-      - if mode.present?
-        li
-          = link_to t('page.remove_this_facet'), url_for(params.merge(mode: nil, page: nil, only_path: true))
-    ul
-      - if policy(Message).create?
-        li
-          = link_to t('page.new', model: t('activerecord.models.message')), new_message_path

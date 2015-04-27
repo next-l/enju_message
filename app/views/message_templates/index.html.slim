@@ -1,4 +1,9 @@
 .row
+  #submenu.col-md-3
+    ul
+      - if policy(MessageTemplate).create?
+        li
+          = link_to t('page.new', model: t('activerecord.models.message_template')), new_message_template_path
   #content_list.col-md-9
     h1.title
       = t('page.listing', model: t('activerecord.models.message_template'))
@@ -33,8 +38,3 @@
           - if policy(message_template).destroy?
             = link_to t('page.destroy'), message_template, data: {confirm: t('page.are_you_sure')}, method: :delete
     = paginate(@message_templates)
-  #submenu.col-md-3
-    ul
-      - if policy(MessageTemplate).create?
-        li
-          = link_to t('page.new', model: t('activerecord.models.message_template')), new_message_template_path

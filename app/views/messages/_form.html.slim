@@ -8,21 +8,21 @@
         - @message.errors.full_messages.each do |msg|
           li
             = msg
-  .form-group
+  .field
     = f.label :sender_id
     br
     = f.text_field :sender_id
-  .form-group
+  .field
     = f.label :receiver_id
     br
     = f.text_field :receiver_id
-  .form-group
+  .field
     = f.label :subject
     br
     = f.text_field :subject
-  .form-group
+  .field
     = f.label :body
     br
     = f.text_area :body
-  .form-control
+  .actions
     = f.submit class: 'btn btn-default'

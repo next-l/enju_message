@@ -3,7 +3,7 @@
   .form-group
     = f.label :status
     br
-    = f.text_field :status, class: 'resource_title'
+    = f.text_field :status, class: 'form-control'
   .form-group
     = f.label :locale
     br
@@ -11,10 +11,10 @@
   .form-group
     = f.label :title
     br
-    = f.text_field :title, class: 'resource_title'
+    = f.text_field :title, class: 'form-control'
   .form-group
     = f.label :body
     br
-    = f.text_area :body, class: 'resource_textarea'
-  .form-control
+    = f.text_area :body, class: 'form-control'
+  .form-group
     = f.submit class: 'btn btn-default'
