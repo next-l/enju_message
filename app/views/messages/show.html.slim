@@ -1,16 +1,16 @@
 .row
   #submenu.col-md-3
-    ul
+    ul.list-group
       - if request.referer
-        li
+        li.list-group-item
           = link_to t('page.back'), :back
       - else
-        li
+        li.list-group-item
           = link_to t('page.listing', model: t('activerecord.models.message')), messages_path
-      li
+      li.list-group-item
         = link_to t('message.reply'), new_message_path(parent_id: @message.id)
       - if policy(message).destroy?
-        li
+        li.list-group-item
           = link_to t('page.destroy'), @message, data: {confirm: t('page.are_you_sure')}, method: :delete
   #content_list.col-md-9
     h1.title

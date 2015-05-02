@@ -1,15 +1,15 @@
 .row
   #submenu.col-md-3
-    ul
+    ul.list-group
       - mode = params[:mode].to_s
-        li
+        li.list-group-item
           - if mode == 'unread'
              strong
                = link_to t('message.unread'), url_for(params.merge(page: nil, mode: 'unread', only_path: true))
                |  (
                = @message_facet['false'].to_i
                | ) 
-        li
+        li.list-group-item
           - if mode == 'read'
             strong
               = link_to t('message.read'), url_for(params.merge(page: nil, mode: 'read', only_path: true))
@@ -17,11 +17,11 @@
               = @message_facet['true'].to_i
               | ) 
         - if mode.present?
-          li
+          li.list-group-item
             = link_to t('page.remove_this_facet'), url_for(params.merge(mode: nil, page: nil, only_path: true))
-    ul
+    ul.list-group
       - if policy(Message).create?
-        li
+        li.list-group-item
           = link_to t('page.new', model: t('activerecord.models.message')), new_message_path
   #content_list.col-md-9
     h1.title

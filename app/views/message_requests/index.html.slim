@@ -1,20 +1,20 @@
 .row
   #submenu.col-md-3
-    ul
+    ul.list-group
       - case params[:mode] when 'sent'
-        li
+        li.list-group-item
           = link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent')
-        li
+        li.list-group-item
           = link_to t('message_request.all'), message_requests_path(mode: 'all')
       - when 'all'
-        li
+        li.list-group-item
           = link_to t('message_request.not_sent'), message_requests_path(mode: 'not_sent')
-        li
+        li.list-group-item
           = link_to t('message_request.sent'), message_requests_path(mode: 'sent')
       - else
-        li
+        li.list-group-item
           = link_to t('message_request.sent'), message_requests_path(mode: 'sent')
-        li
+        li.list-group-item
           = link_to t('message_request.all'), message_requests_path(mode: 'all')
   #content_list.col-md-9
     h1.title
