@@ -38,7 +38,7 @@ describe MessageTemplatesController do
       it "assigns nil as @message_templates" do
         get :index
         assigns(:message_templates).should be_nil
-        response.should redirect_to(new_user_session_url)
+        response.should redirect_to(new_session_url)
       end
     end
   end
@@ -118,7 +118,7 @@ describe MessageTemplatesController do
       it "should not assign the requested message_template as @message_template" do
         get :new
         assigns(:message_template).should be_nil
-        response.should redirect_to(new_user_session_url)
+        response.should redirect_to(new_session_url)
       end
     end
   end
@@ -158,7 +158,7 @@ describe MessageTemplatesController do
       it "should not assign the requested message_template as @message_template" do
         message_template = FactoryGirl.create(:message_template)
         get :edit, :id => message_template.id
-        response.should redirect_to(new_user_session_url)
+        response.should redirect_to(new_session_url)
       end
     end
   end
@@ -262,7 +262,7 @@ describe MessageTemplatesController do
 
         it "should be forbidden" do
           post :create, :message_template => @attrs
-          response.should redirect_to(new_user_session_url)
+          response.should redirect_to(new_session_url)
         end
       end
 
@@ -274,7 +274,7 @@ describe MessageTemplatesController do
 
         it "should be forbidden" do
           post :create, :message_template => @invalid_attrs
-          response.should redirect_to(new_user_session_url)
+          response.should redirect_to(new_session_url)
         end
       end
     end
@@ -368,14 +368,14 @@ describe MessageTemplatesController do
 
         it "should be forbidden" do
           put :update, :id => @message_template.id, :message_template => @attrs
-          response.should redirect_to(new_user_session_url)
+          response.should redirect_to(new_session_url)
         end
       end
 
       describe "with invalid params" do
         it "assigns the requested message_template as @message_template" do
           put :update, :id => @message_template.id, :message_template => @invalid_attrs
-          response.should redirect_to(new_user_session_url)
+          response.should redirect_to(new_session_url)
         end
       end
     end
@@ -432,7 +432,7 @@ describe MessageTemplatesController do
 
       it "should be forbidden" do
         delete :destroy, :id => @message_template.id
-        response.should redirect_to(new_user_session_url)
+        response.should redirect_to(new_session_url)
       end
     end
   end

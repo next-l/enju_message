@@ -10,6 +10,7 @@ one:
   position: 1
   login_banner: "*Next-L Enju*"
   admin_networks: 0.0.0.0/0
+  settings: "{\"max_number_of_results\":200,\"family_name_first\":true}"
 
 # == Schema Information
 #
