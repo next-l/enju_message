@@ -69,7 +69,7 @@ describe MessagesController do
       it "assigns all messages as @messages" do
         get :index
         assigns(:messages).should be_nil
-        response.should redirect_to(new_session_url)
+        response.should redirect_to(new_user_session_url)
       end
     end
   end
@@ -120,7 +120,7 @@ describe MessagesController do
     describe "When not logged in" do
       it "assigns the requested message as @message" do
         get :show, :id => messages(:user1_to_user2_1).id
-        response.should redirect_to new_session_url
+        response.should redirect_to new_user_session_url
       end
     end
   end
@@ -174,7 +174,7 @@ describe MessagesController do
       it "should not assign the requested message as @message" do
         get :new
         assigns(:message).should be_nil
-        response.should redirect_to(new_session_url)
+        response.should redirect_to(new_user_session_url)
       end
     end
   end
@@ -220,7 +220,7 @@ describe MessagesController do
         message = FactoryGirl.create(:message)
         get :edit, :id => message.id
         assigns(:message).should eq(message)
-        response.should redirect_to new_session_url
+        response.should redirect_to new_user_session_url
       end
     end
   end
@@ -290,9 +290,9 @@ describe MessagesController do
           assigns(:message).should be_nil
         end
 
-        it "should redirect to new_session_url" do
+        it "should redirect to new_user_session_url" do
           post :create, :message => @attrs
-          response.should redirect_to(new_session_url)
+          response.should redirect_to(new_user_session_url)
         end
       end
 
@@ -302,9 +302,9 @@ describe MessagesController do
           assigns(:message).should be_nil
         end
 
-        it "should redirect to new_session_url" do
+        it "should redirect to new_user_session_url" do
           post :create, :message => @invalid_attrs
-          response.should redirect_to(new_session_url)
+          response.should redirect_to(new_user_session_url)
         end
       end
     end
@@ -421,7 +421,7 @@ describe MessagesController do
     describe "When not logged in" do
       it "assigns the requested message as @message" do
         put :update, :id => 2, :message => { }
-        response.should redirect_to new_session_url
+        response.should redirect_to new_user_session_url
       end
     end
   end
@@ -446,9 +446,9 @@ describe MessagesController do
         delete :destroy, :id => 1
       end
 
-      it "should be redirected to new_session_url" do
+      it "should be redirected to new_user_session_url" do
         delete :destroy, :id =>  1
-        response.should redirect_to(new_session_url)
+        response.should redirect_to(new_user_session_url)
       end
     end
   end

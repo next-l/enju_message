@@ -116,7 +116,7 @@ describe MessageRequestsController do
       it "should not assign the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
         get :edit, :id => message_request.id
-        response.should redirect_to(new_session_url)
+        response.should redirect_to(new_user_session_url)
       end
     end
   end
@@ -204,14 +204,14 @@ describe MessageRequestsController do
 
         it "should be forbidden" do
           put :update, :id => @message_request.id, :message_request => @attrs
-          response.should redirect_to(new_session_url)
+          response.should redirect_to(new_user_session_url)
         end
       end
 
       describe "with invalid params" do
         it "assigns the requested message_request as @message_request" do
           put :update, :id => @message_request.id, :message_request => @invalid_attrs
-          response.should redirect_to(new_session_url)
+          response.should redirect_to(new_user_session_url)
         end
       end
     end
@@ -268,7 +268,7 @@ describe MessageRequestsController do
 
       it "should be forbidden" do
         delete :destroy, :id => @message_request.id
-        response.should redirect_to(new_session_url)
+        response.should redirect_to(new_user_session_url)
       end
     end
   end
