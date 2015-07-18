@@ -8,7 +8,7 @@ class Message < ActiveRecord::Base
   validates_presence_of :subject, :body #, :sender
   validates_presence_of :recipient, on: :create
   validates_presence_of :receiver, on: :update
-  validate :valid_recipient?, on: :create
+  validate :valid_recipient?
   before_save :set_receiver
   after_save :index
   after_destroy :remove_from_index
