@@ -35,6 +35,11 @@ describe Message do
     message.read?.should be_truthy
     message.current_state.should eq 'read'
   end
+
+  it "should require valid recipient" do
+    @message.recipient = 'invalidusername'
+    @message.valid?.should be_falsy
+  end
 end
 
 # == Schema Information

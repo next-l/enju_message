@@ -8,6 +8,7 @@ class Message < ActiveRecord::Base
   validates_presence_of :subject, :body #, :sender
   validates_presence_of :recipient, on: :create
   validates_presence_of :receiver, on: :update
+  validate :valid_recipient?
   before_save :set_receiver
   after_save :index
   after_destroy :remove_from_index
@@ -58,6 +59,12 @@ class Message < ActiveRecord::Base
   def read?
     return true if current_state == 'read'
     false
+  end
+
+  def valid_recipient?
+    if User.where(username: recipient).empty?
+      errors.add(:recipient)
+    end
   end
 
   private
