@@ -12,7 +12,7 @@
         label[for="message_recepient"]
           = t('message.recipient')
           | :
-        - if @message.recipient
+        - if @message.receiver
           = link_to @message.receiver.username, profile_path(@message.receiver)
           = f.hidden_field :recipient, value: @message.recipient
         - else
