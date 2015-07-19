@@ -62,8 +62,10 @@ class Message < ActiveRecord::Base
   end
 
   def valid_recipient?
-    if User.where(username: recipient).empty?
-      errors.add(:recipient)
+    if recipient
+      if User.where(username: recipient).empty?
+        errors.add(:recipient)
+      end
     end
   end
 
