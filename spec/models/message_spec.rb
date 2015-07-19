@@ -38,7 +38,7 @@ describe Message do
 
   it "should require valid recipient" do
     @message.recipient = 'invalidusername'
-    @message.valid?.should be_falsy
+    @message.save.should be_falsy
   end
 end
 
