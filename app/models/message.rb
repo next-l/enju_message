@@ -6,10 +6,8 @@ class Message < ActiveRecord::Base
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
   validates_presence_of :subject, :body #, :sender
-  validates_presence_of :recipient, on: :create
-  validates_presence_of :receiver, on: :update
-  validate :valid_recipient?
-  before_save :set_receiver
+  validates_presence_of :receiver
+  before_validation :set_receiver
   after_save :index
   after_destroy :remove_from_index
   after_create :send_notification
@@ -44,7 +42,7 @@ class Message < ActiveRecord::Base
 
   def set_receiver
     if recipient
-      self.receiver = User.find(recipient)
+      self.receiver = User.where(username: recipient).first
     end
   end
 
@@ -59,14 +57,6 @@ class Message < ActiveRecord::Base
   def read?
     return true if current_state == 'read'
     false
-  end
-
-  def valid_recipient?
-    if recipient
-      if User.where(username: recipient).empty?
-        errors.add(:recipient)
-      end
-    end
   end
 
   private
