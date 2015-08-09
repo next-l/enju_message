@@ -4,7 +4,7 @@
   <fieldset>
 
     <%= simple_form_for(@message, url: messages_path, validate: true) do |f| -%>
-      <%= f.error_notification -%>
+      <%= f.error_messages -%>
 
       <div class="field">
         <label for="message_recepient"><%= t('message.recipient') -%>:</label>
