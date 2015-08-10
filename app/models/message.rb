@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
   validates_presence_of :subject, :body #, :sender
-  validates_presence_of :receiver
+  validates_presence_of :receiver, message: :invalid
   before_validation :set_receiver
   after_save :index
   after_destroy :remove_from_index
@@ -14,6 +14,7 @@ class Message < ActiveRecord::Base
 
   acts_as_nested_set
   attr_accessor :recipient
+  validates :recipient, presence: true, on: :create
 
   delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
     to: :state_machine
