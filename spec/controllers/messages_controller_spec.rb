@@ -229,6 +229,8 @@ describe MessagesController do
     before(:each) do
       @attrs = {:recipient => users(:user1).username, :subject => 'test',:body => 'test'}
       @invalid_attrs = {:recipient => users(:user1).username, :subject => 'test', :body => ''}
+      @invalid_user_attrs = {:recipient => "invalid_user", :subject => 'test', :body => 'test'}
+      @blank_user_attrs   = {:recipient => "", :subject => 'test', :body => 'test'}
     end
 
     describe "When logged in as Administrator" do
@@ -256,6 +258,24 @@ describe MessagesController do
           post :create, :message => @invalid_attrs, :user_id => users(:user1).username
           response.should render_template("new")
           response.should be_success
+        end
+      end
+      describe "with invalid recipient" do
+        it "re-renders the 'new' template" do
+          post :create, :message => @invalid_user_attrs
+          message = assigns(:message)
+          message.should_not be_valid
+          message.errors.should have_key :receiver
+          message.errors.added?(:receiver, :invalid).should be_truthy
+          response.should render_template("new")
+        end
+        it "re-renders the 'new' template" do
+          post :create, :message => @blank_user_attrs
+          message = assigns(:message)
+          message.should_not be_valid
+          message.errors.should have_key :recipient
+          message.errors.added?(:recipient, :blank).should be_truthy
+          response.should render_template("new")
         end
       end
     end

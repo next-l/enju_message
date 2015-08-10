@@ -11,6 +11,7 @@ en:
         body: Body
         sender: Sender
         receiver: Receiver
+        recipient: Recipient
       message_template:
         status: Status
         locale: Locale
