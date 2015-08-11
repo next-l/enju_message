@@ -131,7 +131,7 @@ class MessagesController < ApplicationController
     end
     respond_to do |format|
       if params[:delete].present?
-        messages = params[:delete].map{|m| Message.find_by_id(m)}
+        messages = params[:delete].map{|m| Message.where(id: m).first}
       end
       if messages.present?
         messages.each do |message|

@@ -30,4 +30,7 @@ class MessagePolicy < ApplicationPolicy
   def destroy?
     show?
   end
+
+  def destroy_selected?
+  end
 end
