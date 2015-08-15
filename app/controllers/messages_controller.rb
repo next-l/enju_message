@@ -121,11 +121,7 @@ class MessagesController < ApplicationController
   end
 
   def destroy_selected
-    if current_user
-      unless current_user.has_role?('Librarian')
-        access_denied
-      end
-    else
+    unless current_user
       redirect_to new_user_session_url
       return
     end
