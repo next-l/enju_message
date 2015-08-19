@@ -445,12 +445,22 @@ describe MessagesController do
   end
 
   describe "DELETE destroy" do
+    describe "When logged in as Librarian" do
+      login_fixture_librarian
+
+      it "should destroy own message" do
+        @message = FactoryGirl.create(:message, recipient: @user.username)
+        delete :destroy, :id => @message.id
+        response.should redirect_to messages_url
+      end
+    end
     describe "When logged in as User" do
       login_fixture_user
 
       it "should destroy own message" do
         delete :destroy, :id => 2
         response.should redirect_to messages_url
+        response.should_not be_forbidden
       end
 
       it "should not destroy other user's message" do
@@ -462,11 +472,34 @@ describe MessagesController do
     describe "When not logged in" do
       it "destroys the requested message" do
         delete :destroy, :id => 1
+        response.should redirect_to(new_user_session_url)
       end
 
       it "should be redirected to new_user_session_url" do
         delete :destroy, :id =>  1
         response.should redirect_to(new_user_session_url)
+      end
+    end
+  end
+
+  describe "POST destroy_selected" do
+    describe "When logged in as Librarian" do
+      login_fixture_librarian
+      it "should destroy own message" do
+        message = FactoryGirl.create(:message, recipient: @user.username)
+        post :destroy_selected, delete: [ message.id ]
+        response.should_not be_forbidden
+        response.should redirect_to(messages_url)
+      end
+    end
+
+    describe "When logged in as User" do
+      login_fixture_user
+      it "should destroy own message" do
+        message = FactoryGirl.create(:message, recipient: @user.username)
+        post :destroy_selected, delete: [ message.id ]
+        response.should_not be_forbidden
+        response.should redirect_to(messages_url)
       end
     end
   end
