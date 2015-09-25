@@ -1,6 +1,7 @@
 = EnjuMessage
 {<img src="https://travis-ci.org/next-l/enju_message.svg?branch=master" alt="Build Status" />}[http://travis-ci.org/next-l/enju_message]
-{<img src="https://img.shields.io/coveralls/next-l/enju_message.svg" alt="Coverage Status" />}[https://coveralls.io/r/next-l/enju_message?branch=master]
+{<img src="https://codeclimate.com/github/next-l/enju_message/badges/gpa.svg" />}[https://codeclimate.com/github/next-l/enju_message]
+{<img src="https://codeclimate.com/github/next-l/enju_message/badges/coverage.svg" />}[https://codeclimate.com/github/next-l/enju_message/coverage]
 {<img src="https://hakiri.io/github/next-l/enju_message/master.svg" alt="security" />}[https://hakiri.io/github/next-l/enju_message/master]
 
 This project rocks and uses MIT-LICENSE.
