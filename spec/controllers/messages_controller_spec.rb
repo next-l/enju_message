@@ -105,9 +105,9 @@ describe MessagesController do
       login_fixture_user
 
       it "should show my message" do
-      get :show, :id => messages(:user2_to_user1_1).id
-      response.should be_success
-    end
+        get :show, :id => messages(:user2_to_user1_1).id
+        response.should be_success
+      end
 
       it "should should not show other user's message" do
         lambda{
