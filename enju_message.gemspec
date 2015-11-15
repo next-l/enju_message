@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "simple_form"
   s.add_dependency "awesome_nested_set"
-  s.add_dependency "statesman"
+  s.add_dependency "statesman", "~> 1.3"
   s.add_dependency "resque_mailer"
   s.add_dependency "rails_autolink"
 
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "mysql2", "~> 0.3.20"
   s.add_development_dependency "pg"
   s.add_development_dependency "enju_leaf", "~> 1.1.0"
-  s.add_development_dependency "rspec-rails", "~> 3.3"
+  s.add_development_dependency "rspec-rails", "~> 3.4"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "simplecov"
   s.add_development_dependency "sunspot_solr", "~> 2.2"
