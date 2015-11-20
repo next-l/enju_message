@@ -19,11 +19,10 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form"
   s.add_dependency "awesome_nested_set"
   s.add_dependency "statesman", "~> 1.3"
-  s.add_dependency "resque_mailer"
   s.add_dependency "rails_autolink"
 
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "mysql2", "~> 0.3.20"
+  s.add_development_dependency "mysql2"
   s.add_development_dependency "pg"
   s.add_development_dependency "enju_leaf", "~> 1.1.0"
   s.add_development_dependency "rspec-rails", "~> 3.4"
@@ -33,5 +32,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "sunspot-rails-tester"
   s.add_development_dependency "annotate"
   s.add_development_dependency "rspec-activemodel-mocks"
-  s.add_development_dependency "appraisal"
+  s.add_development_dependency "coveralls"
+  s.add_development_dependency "resque_mailer"
 end
