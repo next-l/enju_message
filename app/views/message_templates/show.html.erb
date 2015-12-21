@@ -30,6 +30,6 @@
     <%- if policy(@message_template).update? -%>
       <li><%= link_to t('page.edit'), edit_message_template_path(@message_template) -%></li>
     <%- end -%>
-    <li><%= back_to_index(flash[:page_info]) -%></li>
+    <li><%= link_to t('page.back'), :back -%></li>
   </ul>
 </div>
