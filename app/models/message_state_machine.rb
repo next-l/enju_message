@@ -23,14 +23,17 @@ class MessageStateMachine
   end
 
   after_transition(from: :pending, to: :read) do |message|
-    message.index!
+    message.index
+    Sunspot.commit
   end
 
   after_transition(from: :unread, to: :read) do |message|
-    message.index!
+    message.index
+    Sunspot.commit
   end
 
   after_transition(from: :read, to: :unread) do |message|
-    message.index!
+    message.index
+    Sunspot.commit
   end
 end
