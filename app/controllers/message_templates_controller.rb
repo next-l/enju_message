@@ -38,7 +38,7 @@ class MessageTemplatesController < ApplicationController
   # POST /message_templates
   # POST /message_templates.json
   def create
-    @message_template = MessageTemplate.new(params[:message_template])
+    @message_template = MessageTemplate.new(message_template_params)
 
     respond_to do |format|
       if @message_template.save
@@ -60,7 +60,7 @@ class MessageTemplatesController < ApplicationController
     end
 
     respond_to do |format|
-      if @message_template.update_attributes(params[:message_template])
+      if @message_template.update_attributes(message_template_params)
         format.html { redirect_to @message_template, notice:  t('controller.successfully_updated', model:  t('activerecord.models.message_template')) }
         format.json { head :no_content }
       else
@@ -79,5 +79,10 @@ class MessageTemplatesController < ApplicationController
       format.html { redirect_to message_templates_url, notice: t('controller.successfully_deleted', model: t('activerecord.models.message_template')) }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def message_template_params
+    params.require(:message_template).permit(:status, :title, :body, :locale)
   end
 end

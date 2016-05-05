@@ -61,6 +61,7 @@ class MessagesController < ApplicationController
     else
       @message.recipient = parent.sender.username if parent
     end
+    @message.receiver = User.where(username: @message.recipient).first if @message.recipient
 
     respond_to do |format|
       format.html # new.html.erb
@@ -77,10 +78,10 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(params[:message])
+    @message = Message.new(message_params)
     @message.sender = current_user
     get_parent(@message.parent_id)
-    @message.receiver = User.find(@message.recipient) rescue nil
+    @message.receiver = User.where(username: @message.recipient).first
 
     respond_to do |format|
       if @message.save
@@ -98,7 +99,7 @@ class MessagesController < ApplicationController
   def update
     @message = current_user.received_messages.find(params[:id])
 
-    if @message.update_attributes(params[:message])
+    if @message.update_attributes(message_params)
       format.html { redirect_to @message, notice: t('controller.successfully_updated', model: t('activerecord.models.message')) }
       format.json { head :no_content }
     else
@@ -120,17 +121,13 @@ class MessagesController < ApplicationController
   end
 
   def destroy_selected
-    if current_user
-      unless current_user.has_role?('Librarian')
-        access_denied
-      end
-    else
+    unless current_user
       redirect_to new_user_session_url
       return
     end
     respond_to do |format|
       if params[:delete].present?
-        messages = params[:delete].map{|m| Message.find_by_id(m)}
+        messages = params[:delete].map{|m| Message.where(id: m).first}
       end
       if messages.present?
         messages.each do |message|
@@ -146,6 +143,12 @@ class MessagesController < ApplicationController
   end
 
   private
+  def message_params
+    params.require(:message).permit(
+      :subject, :body, :sender, :recipient, :parent_id
+    )
+  end
+
   def get_parent(id)
     parent = Message.where(id: id).first
     unless current_user.has_role?('Librarian')

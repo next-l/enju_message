@@ -1,25 +1,20 @@
 # -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
-  include Statesman::Adapters::ActiveRecordModel
-  attr_accessible :subject, :body, :sender, :recipient
+  include Statesman::Adapters::ActiveRecordQueries
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
   validates_presence_of :subject, :body #, :sender
-  validates_presence_of :recipient, on: :create
-  validates_presence_of :receiver, on: :update
-  before_save :set_receiver
+  validates_presence_of :receiver, message: :invalid
+  before_validation :set_receiver
   after_save :index
   after_destroy :remove_from_index
   after_create :send_notification
 
   acts_as_nested_set
   attr_accessor :recipient
-
-  def state_machine
-    ResourceImportFileStateMachine.new(self, transition_class: ResourceImportFileTransition)
-  end
+  validates :recipient, presence: true, on: :create
 
   delegate :can_transition_to?, :transition_to!, :transition_to, :current_state,
     to: :state_machine
@@ -48,7 +43,7 @@ class Message < ActiveRecord::Base
 
   def set_receiver
     if recipient
-      self.receiver = User.find(recipient)
+      self.receiver = User.where(username: recipient).first
     end
   end
 
@@ -70,6 +65,10 @@ class Message < ActiveRecord::Base
     MessageTransition
   end
 
+  def self.initial_state
+    :pending
+  end
+
   def set_default_state
     transition_to!(:unread)
   end
@@ -83,12 +82,12 @@ end
 #  read_at            :datetime
 #  receiver_id        :integer
 #  sender_id          :integer
-#  subject            :string(255)      not null
+#  subject            :string           not null
 #  body               :text
 #  message_request_id :integer
 #  parent_id          :integer
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  created_at         :datetime
+#  updated_at         :datetime
 #  lft                :integer
 #  rgt                :integer
 #  depth              :integer

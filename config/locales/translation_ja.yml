@@ -11,6 +11,7 @@ ja:
         body: 本文
         sender: 差出人
         receiver: 宛て先
+        recipient: 宛て先
       message_template:
         status: 状態
         locale: 言語

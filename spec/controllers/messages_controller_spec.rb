@@ -105,9 +105,9 @@ describe MessagesController do
       login_fixture_user
 
       it "should show my message" do
-      get :show, :id => messages(:user2_to_user1_1).id
-      response.should be_success
-    end
+        get :show, :id => messages(:user2_to_user1_1).id
+        response.should be_success
+      end
 
       it "should should not show other user's message" do
         lambda{
@@ -229,6 +229,8 @@ describe MessagesController do
     before(:each) do
       @attrs = {:recipient => users(:user1).username, :subject => 'test',:body => 'test'}
       @invalid_attrs = {:recipient => users(:user1).username, :subject => 'test', :body => ''}
+      @invalid_user_attrs = {:recipient => "invalid_user", :subject => 'test', :body => 'test'}
+      @blank_user_attrs   = {:recipient => "", :subject => 'test', :body => 'test'}
     end
 
     describe "When logged in as Administrator" do
@@ -256,6 +258,24 @@ describe MessagesController do
           post :create, :message => @invalid_attrs, :user_id => users(:user1).username
           response.should render_template("new")
           response.should be_success
+        end
+      end
+      describe "with invalid recipient" do
+        it "re-renders the 'new' template" do
+          post :create, :message => @invalid_user_attrs
+          message = assigns(:message)
+          message.should_not be_valid
+          message.errors.should have_key :receiver
+          message.errors.added?(:receiver, :invalid).should be_truthy
+          response.should render_template("new")
+        end
+        it "re-renders the 'new' template" do
+          post :create, :message => @blank_user_attrs
+          message = assigns(:message)
+          message.should_not be_valid
+          message.errors.should have_key :recipient
+          message.errors.added?(:recipient, :blank).should be_truthy
+          response.should render_template("new")
         end
       end
     end
@@ -425,12 +445,22 @@ describe MessagesController do
   end
 
   describe "DELETE destroy" do
+    describe "When logged in as Librarian" do
+      login_fixture_librarian
+
+      it "should destroy own message" do
+        @message = FactoryGirl.create(:message, recipient: @user.username)
+        delete :destroy, :id => @message.id
+        response.should redirect_to messages_url
+      end
+    end
     describe "When logged in as User" do
       login_fixture_user
 
       it "should destroy own message" do
         delete :destroy, :id => 2
         response.should redirect_to messages_url
+        response.should_not be_forbidden
       end
 
       it "should not destroy other user's message" do
@@ -442,11 +472,34 @@ describe MessagesController do
     describe "When not logged in" do
       it "destroys the requested message" do
         delete :destroy, :id => 1
+        response.should redirect_to(new_user_session_url)
       end
 
       it "should be redirected to new_user_session_url" do
         delete :destroy, :id =>  1
         response.should redirect_to(new_user_session_url)
+      end
+    end
+  end
+
+  describe "POST destroy_selected" do
+    describe "When logged in as Librarian" do
+      login_fixture_librarian
+      it "should destroy own message" do
+        message = FactoryGirl.create(:message, recipient: @user.username)
+        post :destroy_selected, delete: [ message.id ]
+        response.should_not be_forbidden
+        response.should redirect_to(messages_url)
+      end
+    end
+
+    describe "When logged in as User" do
+      login_fixture_user
+      it "should destroy own message" do
+        message = FactoryGirl.create(:message, recipient: @user.username)
+        post :destroy_selected, delete: [ message.id ]
+        response.should_not be_forbidden
+        response.should redirect_to(messages_url)
       end
     end
   end

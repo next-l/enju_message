@@ -1,8 +1,6 @@
 require 'erubis'
 class MessageRequest < ActiveRecord::Base
-  include Statesman::Adapters::ActiveRecordModel
-  attr_accessible :body
-  attr_accessible :sender, :receiver, :message_template, :body, as: :admin
+  include Statesman::Adapters::ActiveRecordQueries
   scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}
   scope :sent, -> {in_state(:sent)}
   belongs_to :message_template, validate: true
@@ -74,6 +72,10 @@ class MessageRequest < ActiveRecord::Base
   def self.transition_class
     MessageRequestTransition
   end
+
+  def self.initial_state
+    :pending
+  end
 end
 
 # == Schema Information
@@ -87,6 +89,6 @@ end
 #  sent_at             :datetime
 #  deleted_at          :datetime
 #  body                :text
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
+#  created_at          :datetime
+#  updated_at          :datetime
 #

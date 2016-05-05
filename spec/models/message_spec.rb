@@ -35,6 +35,11 @@ describe Message do
     message.read?.should be_truthy
     message.current_state.should eq 'read'
   end
+
+  it "should require valid recipient" do
+    @message.recipient = 'invalidusername'
+    @message.save.should be_falsy
+  end
 end
 
 # == Schema Information
@@ -45,12 +50,12 @@ end
 #  read_at            :datetime
 #  receiver_id        :integer
 #  sender_id          :integer
-#  subject            :string(255)      not null
+#  subject            :string           not null
 #  body               :text
 #  message_request_id :integer
 #  parent_id          :integer
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  created_at         :datetime
+#  updated_at         :datetime
 #  lft                :integer
 #  rgt                :integer
 #  depth              :integer

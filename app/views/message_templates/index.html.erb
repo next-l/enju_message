@@ -40,6 +40,8 @@
 
 <div id="submenu" class="ui-corner-all ui-widget-content">
   <ul>
-    <li><%= link_to t('page.new', model: t('activerecord.models.message_template')), new_message_template_path -%></li>
+    <%- if can? :create, MessageTemplate -%>
+      <li><%= link_to t('page.new', model: t('activerecord.models.message_template')), new_message_template_path -%></li>
+    <%- end -%>
   </ul>
 </div>
