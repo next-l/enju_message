@@ -16,9 +16,8 @@ namespace :enju_message do
 
   desc "upgrade enju_message"
   task :upgrade => :environment do
-    MessageTemplate.transaction do
-      update_message_template
-    end
+    Rake::Task['statesman:backfill_most_recent'].invoke('Message')
+    Rake::Task['statesman:backfill_most_recent'].invoke('MessageRequest')
     puts 'enju_message: The upgrade completed successfully.'
   end
 end
