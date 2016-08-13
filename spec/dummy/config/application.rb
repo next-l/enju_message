@@ -5,6 +5,8 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 require 'enju_message'
 require 'enju_leaf'
+require 'globalize'
+require 'globalize-accessors'
 require 'resque_mailer'
 
 module Dummy

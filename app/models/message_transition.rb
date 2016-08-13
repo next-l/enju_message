@@ -10,11 +10,12 @@ end
 #
 # Table name: message_transitions
 #
-#  id         :integer          not null, primary key
-#  to_state   :string
-#  metadata   :text             default({})
-#  sort_key   :integer
-#  message_id :integer
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer          not null, primary key
+#  to_state    :string
+#  metadata    :text             default({})
+#  sort_key    :integer
+#  message_id  :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#  most_recent :boolean
 #
