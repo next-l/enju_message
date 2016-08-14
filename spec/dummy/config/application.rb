@@ -7,7 +7,6 @@ require 'enju_message'
 require 'enju_leaf'
 require 'globalize'
 require 'globalize-accessors'
-require 'resque_mailer'
 
 module Dummy
   class Application < Rails::Application
