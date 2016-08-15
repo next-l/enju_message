@@ -627,8 +627,8 @@ ActiveRecord::Schema.define(version: 20160814165332) do
 
   create_table "messages", force: :cascade do |t|
     t.datetime "read_at"
-    t.integer  "receiver_id"
     t.integer  "sender_id"
+    t.integer  "receiver_id"
     t.string   "subject",            null: false
     t.text     "body"
     t.integer  "message_request_id"
