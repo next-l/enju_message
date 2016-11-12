@@ -6,6 +6,6 @@ class User < ActiveRecord::Base
          :lockable, :lock_strategy => :none, :unlock_strategy => :none
 
   # Setup accessible (or protected) attributes for your model
-  include EnjuLeaf::EnjuUser
+  include EnjuSeed::EnjuUser
   include EnjuMessage::EnjuUser
 end

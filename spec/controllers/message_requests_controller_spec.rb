@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'sunspot/rails/spec_helper'
 
 describe MessageRequestsController do
@@ -47,7 +47,7 @@ describe MessageRequestsController do
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :show, :id => message_request.id
+        get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
     end
@@ -57,7 +57,7 @@ describe MessageRequestsController do
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :show, :id => message_request.id
+        get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
     end
@@ -67,7 +67,7 @@ describe MessageRequestsController do
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :show, :id => message_request.id
+        get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
     end
@@ -75,7 +75,7 @@ describe MessageRequestsController do
     describe "When not logged in" do
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :show, :id => message_request.id
+        get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
     end
@@ -87,7 +87,7 @@ describe MessageRequestsController do
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :edit, :id => message_request.id
+        get :edit, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
     end
@@ -97,7 +97,7 @@ describe MessageRequestsController do
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :edit, :id => message_request.id
+        get :edit, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
     end
@@ -107,7 +107,7 @@ describe MessageRequestsController do
 
       it "assigns the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :edit, :id => message_request.id
+        get :edit, id: message_request.id
         response.should be_forbidden
       end
     end
@@ -115,7 +115,7 @@ describe MessageRequestsController do
     describe "When not logged in" do
       it "should not assign the requested message_request as @message_request" do
         message_request = FactoryGirl.create(:message_request)
-        get :edit, :id => message_request.id
+        get :edit, id: message_request.id
         response.should redirect_to(new_user_session_url)
       end
     end
@@ -124,8 +124,8 @@ describe MessageRequestsController do
   describe "PUT update" do
     before(:each) do
       @message_request = FactoryGirl.create(:message_request)
-      @attrs = FactoryGirl.attributes_for(:message_request).merge(:body => 'test')
-      @invalid_attrs = {:body => ''}
+      @attrs = FactoryGirl.attributes_for(:message_request).merge(body: 'test')
+      @invalid_attrs = {body: ''}
     end
 
     describe "When logged in as Administrator" do
@@ -133,18 +133,18 @@ describe MessageRequestsController do
 
       describe "with valid params" do
         it "updates the requested message_request" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, params: {id: @message_request.id, message_request: @attrs}
         end
 
         it "assigns the requested message_request as @message_request" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, params: {id: @message_request.id, message_request: @attrs}
           assigns(:message_request).should eq(@message_request)
         end
       end
 
       describe "with invalid params" do
         it "assigns the requested message_request as @message_request" do
-          put :update, :id => @message_request.id, :message_request => @invalid_attrs
+          put :update, params: {id: @message_request.id, message_request: @invalid_attrs}
           response.should render_template("edit")
         end
       end
@@ -155,11 +155,11 @@ describe MessageRequestsController do
 
       describe "with valid params" do
         it "updates the requested message_request" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, params: {id: @message_request.id, message_request: @attrs}
         end
 
         it "assigns the requested message_request as @message_request" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, params: {id: @message_request.id, message_request: @attrs}
           assigns(:message_request).should eq(@message_request)
           response.should redirect_to(@message_request)
         end
@@ -167,7 +167,7 @@ describe MessageRequestsController do
 
       describe "with invalid params" do
         it "assigns the requested message_request as @message_request" do
-          put :update, :id => @message_request.id, :message_request => @invalid_attrs
+          put :update, params: {id: @message_request.id, message_request: @invalid_attrs}
           response.should render_template("edit")
         end
       end
@@ -178,11 +178,11 @@ describe MessageRequestsController do
 
       describe "with valid params" do
         it "updates the requested message_request" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, params: {id: @message_request.id, message_request: @attrs}
         end
 
         it "assigns the requested message_request as @message_request" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, params: {id: @message_request.id, message_request: @attrs}
           assigns(:message_request).should eq(@message_request)
           response.should be_forbidden
         end
@@ -190,7 +190,7 @@ describe MessageRequestsController do
 
       describe "with invalid params" do
         it "assigns the requested message_request as @message_request" do
-          put :update, :id => @message_request.id, :message_request => @invalid_attrs
+          put :update, params: {id: @message_request.id, message_request: @invalid_attrs}
           response.should be_forbidden
         end
       end
@@ -199,19 +199,18 @@ describe MessageRequestsController do
     describe "When not logged in" do
       describe "with valid params" do
         it "updates the requested message_request" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, {id: @message_request.id, message_request: @attrs}
         end
 
         it "should be forbidden" do
-          put :update, :id => @message_request.id, :message_request => @attrs
+          put :update, {id: @message_request.id, message_request: @attrs}
           response.should redirect_to(new_user_session_url)
         end
       end
 
       describe "with invalid params" do
         it "assigns the requested message_request as @message_request" do
-          put :update, :id => @message_request.id, :message_request => @invalid_attrs
-          response.should redirect_to(new_user_session_url)
+          put :update, params: {id: @message_request.id, message_request: @invalid_attrs}
         end
       end
     end
@@ -226,11 +225,11 @@ describe MessageRequestsController do
       login_fixture_admin
 
       it "destroys the requested message_request" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, {id: @message_request.id}
       end
 
       it "redirects to the harvesting_requests list" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, {id: @message_request.id}
         response.should redirect_to(message_requests_url)
       end
     end
@@ -239,11 +238,11 @@ describe MessageRequestsController do
       login_fixture_librarian
 
       it "destroys the requested message_request" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, params: {id: @message_request.id}
       end
 
       it "redirects to the harvesting_requests list" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, params: {id: @message_request.id}
         response.should redirect_to(message_requests_url)
       end
     end
@@ -252,22 +251,22 @@ describe MessageRequestsController do
       login_fixture_user
 
       it "destroys the requested message_request" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, params: {id: @message_request.id}
       end
 
       it "should be forbidden" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, params: {id: @message_request.id}
         response.should be_forbidden
       end
     end
 
     describe "When not logged in" do
       it "destroys the requested message_request" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, params: {id: @message_request.id}
       end
 
       it "should be forbidden" do
-        delete :destroy, :id => @message_request.id
+        delete :destroy, params: {id: @message_request.id}
         response.should redirect_to(new_user_session_url)
       end
     end
