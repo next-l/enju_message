@@ -17,4 +17,5 @@ end
 #  message_request_id :integer
 #  created_at         :datetime
 #  updated_at         :datetime
+#  most_recent        :boolean
 #
