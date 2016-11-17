@@ -284,7 +284,7 @@ describe MessagesController do
       login_fixture_librarian
 
       it 'should create message without parent_id' do
-        post :create, message: { recipient: 'user2', subject: 'test', body: 'test', parent_id: 2 }
+        post :create, params: { message: { recipient: 'user2', subject: 'test', body: 'test' } }
         response.should redirect_to messages_url
       end
     end
@@ -293,12 +293,12 @@ describe MessagesController do
       login_fixture_user
 
       it 'should not create message without parent_id' do
-        post :create, message: { recipient: 'user2', subject: 'test', body: 'test' }
+        post :create, params: { message: { recipient: 'user2', subject: 'test', body: 'test' } }
         response.should be_forbidden
       end
 
       it 'should not create message with parent_id' do
-        post :create, message: { recipient: 'user2', subject: 'test', body: 'test', parent_id: 2 }
+        post :create, params: { message: { recipient: 'user2', subject: 'test', body: 'test', parent_id: 2 } }
         response.should be_forbidden
       end
     end

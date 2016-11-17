@@ -45,25 +45,23 @@
             th
               = t('message.sent_at')
           - @messages.each do |message|
-            |  <tr class="line
-            = cycle("0", "1")
-            | "> 
-            td
-              - if policy(message).destroy?
-                |  <input id="delete_
-                =h message.id
-                | " name="delete[]" type="checkbox" value="
-                =h message.id
-                | " class="checkbox" /> 
-            td
-              - unless message.read?
-                strong
-                  = link_to message.subject, message
-            td
-              = link_to message.sender.username, message.sender.profile if message.sender.try(:profile)
-            td
-              = l(message.created_at)
-          tr
-            td[colspan="4"]
-              = submit_tag t('message.delete')
+            tr
+              td
+                - if policy(message).destroy?
+                  |  <input id="delete_
+                  =h message.id
+                  | " name="delete[]" type="checkbox" value="
+                  =h message.id
+                  | " class="checkbox" /> 
+              td
+                - unless message.read?
+                  strong
+                    = link_to message.subject, message
+              td
+                = link_to message.sender.username, message.sender.profile if message.sender.try(:profile)
+              td
+                = l(message.created_at)
+            tr
+              td[colspan="4"]
+                = submit_tag t('message.delete')
       = paginate(@messages)
