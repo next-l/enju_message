@@ -48,18 +48,18 @@
     <% mode = params[:mode].to_s %>
     <li>
       <%- if mode == 'unread' -%><strong><%- end -%>
-        <%= link_to t('message.unread'), url_for(params.merge(page: nil, mode: 'unread', only_path: true)) -%>
+        <%= link_to t('message.unread'), url_for(filtered_params.merge(page: nil, mode: 'unread', only_path: true)) -%>
       (<%= @message_facet['false'].to_i -%>)
       <%- if mode == 'unread' -%></strong><%- end -%>
     </li>
     <li>
       <%- if mode == 'read' -%><strong><%- end -%>
-        <%= link_to t('message.read'), url_for(params.merge(page: nil, mode: 'read', only_path: true)) -%>
+        <%= link_to t('message.read'), url_for(filtered_params.merge(page: nil, mode: 'read', only_path: true)) -%>
       (<%= @message_facet['true'].to_i -%>)
       <%- if mode == 'read' -%></strong><%- end -%>
     </li>
     <% if mode.present? %>
-      <li><%= link_to t('page.remove_this_facet'), url_for(params.merge(mode: nil, page: nil, only_path: true)) -%></li>
+      <li><%= link_to t('page.remove_this_facet'), url_for(filtered_params.merge(mode: nil, page: nil, only_path: true)) -%></li>
     <% end %>
   </ul>
 
