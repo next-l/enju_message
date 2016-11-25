@@ -170,4 +170,10 @@ class MessagesController < ApplicationController
       parent
     end
   end
+
+  def filtered_params
+    params.permit([:view, :format, :page, :mode, :sort_by, :per_page])
+  end
+
+  helper_method :filtered_params
 end
