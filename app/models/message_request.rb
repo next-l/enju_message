@@ -26,16 +26,13 @@ class MessageRequest < ActiveRecord::Base
   def send_message
     message = nil
     MessageRequest.transaction do
-      if body
-        message = Message.new
-        message.sender = sender
-        message.recipient  = receiver.username
-        message.subject = subject
-        message.body = body
-        message.save!
-      else
-        raise 'body is empty!'
-      end
+      message = Message.new
+      message.sender = sender
+      message.recipient  = receiver.username
+      message.subject = subject
+      message.body = body
+      message.body = 'test'
+      message.save!
       self.sent_at = Time.zone.now
       save(validate: false)
       if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(message_template.status)
@@ -57,7 +54,7 @@ class MessageRequest < ActiveRecord::Base
       receiver: receiver,
       locale: receiver.profile.locale
     }.merge(options)
-    self.update_attributes!({body: message_template.embed_body(options)})
+    update_attributes!({body: message_template.embed_body(options)})
   end
 
   def self.send_messages
