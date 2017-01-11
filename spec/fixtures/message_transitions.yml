@@ -13,7 +13,7 @@ message_transition_00001:
 #  to_state    :string
 #  metadata    :text             default({})
 #  sort_key    :integer
-#  reservemessage_id  :integer
+#  message_id  :integer
 #  created_at  :datetime
 #  updated_at  :datetime
 #  most_recent :boolean
