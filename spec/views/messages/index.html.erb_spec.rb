@@ -2,16 +2,7 @@ require 'rails_helper'
 
 describe 'messages/index' do
   before(:each) do
-    assign(:messages, Kaminari.paginate_array([
-                                                stub_model(Message,
-                                                           sender_id: 1,
-                                                           receiver_id: 2,
-                                                           created_at: Time.zone.now),
-                                                stub_model(Message,
-                                                           sender_id: 1,
-                                                           receiver_id: 2,
-                                                           created_at: Time.zone.now)
-                                              ]).page(1))
+    assign(:messages, Message.page(1).per(10))
   end
 
   it 'renders a list of messages' do
