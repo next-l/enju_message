@@ -1,5 +1,5 @@
 class MessageTransition < ActiveRecord::Base
-  include Statesman::Adapters::ActiveRecordTransition
+  #include Statesman::Adapters::ActiveRecordTransition
 
   
   belongs_to :message, inverse_of: :message_transitions
@@ -12,10 +12,10 @@ end
 #
 #  id          :integer          not null, primary key
 #  to_state    :string
-#  metadata    :text             default({})
+#  metadata    :jsonb
 #  sort_key    :integer
 #  message_id  :integer
-#  created_at  :datetime
-#  updated_at  :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #  most_recent :boolean
 #
