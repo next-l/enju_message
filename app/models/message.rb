@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordQueries
   scope :unread, -> {in_state('unread')}
@@ -32,7 +31,6 @@ class Message < ActiveRecord::Base
 
   paginates_per 10
   has_many :message_transitions
-  after_create :set_default_state
 
   def state_machine
     @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
@@ -67,10 +65,6 @@ class Message < ActiveRecord::Base
 
   def self.initial_state
     :pending
-  end
-
-  def set_default_state
-    transition_to!(:unread)
   end
 end
 
