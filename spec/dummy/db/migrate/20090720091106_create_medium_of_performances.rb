@@ -1,4 +1,4 @@
-class CreateMediumOfPerformances < ActiveRecord::Migration
+class CreateMediumOfPerformances < ActiveRecord::Migration[5.0]
   def change
     create_table :medium_of_performances do |t|
       t.string :name, :null => false

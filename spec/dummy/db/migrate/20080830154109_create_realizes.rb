@@ -1,4 +1,4 @@
-class CreateRealizes < ActiveRecord::Migration
+class CreateRealizes < ActiveRecord::Migration[5.0]
   def change
     create_table :realizes do |t|
       t.references :agent, :null => false

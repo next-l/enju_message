@@ -1,4 +1,4 @@
-class CreateExemplifies < ActiveRecord::Migration
+class CreateExemplifies < ActiveRecord::Migration[5.0]
   def change
     create_table :exemplifies do |t|
       t.integer :manifestation_id, :null => false

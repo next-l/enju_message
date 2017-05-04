@@ -1,4 +1,4 @@
-class CreateOwns < ActiveRecord::Migration
+class CreateOwns < ActiveRecord::Migration[5.0]
   def change
     create_table :owns do |t|
       t.references :agent, :null => false

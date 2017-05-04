@@ -1,4 +1,4 @@
-class CreateProduces < ActiveRecord::Migration
+class CreateProduces < ActiveRecord::Migration[5.0]
   def change
     create_table :produces do |t|
       t.references :agent, :null => false

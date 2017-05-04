@@ -1,4 +1,4 @@
-class CreateDoiRecords < ActiveRecord::Migration
+class CreateDoiRecords < ActiveRecord::Migration[5.0]
   def change
     create_table :doi_records do |t|
       t.string :body, index: true, null: false

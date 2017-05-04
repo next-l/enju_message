@@ -1,4 +1,4 @@
-class CreateCarrierTypes < ActiveRecord::Migration
+class CreateCarrierTypes < ActiveRecord::Migration[5.0]
   def change
     create_table :carrier_types do |t|
       t.string :name, :null => false

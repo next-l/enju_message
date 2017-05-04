@@ -1,4 +1,4 @@
-class RenameFileNameToFilename < ActiveRecord::Migration
+class RenameFileNameToFilename < ActiveRecord::Migration[5.0]
   def change
     rename_column :agent_import_files, :agent_import_file_name, :agent_import_filename
     rename_column :resource_import_files, :resource_import_file_name, :resource_import_filename
