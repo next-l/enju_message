@@ -1,6 +1,5 @@
 class MessageTemplate < ActiveRecord::Base
   has_many :message_requests
-  translates :body
 
   validates_uniqueness_of :status
   validates_presence_of :status, :title, :body
@@ -32,6 +31,6 @@ end
 #  body       :text             not null
 #  position   :integer
 #  locale     :string           default("en")
-#  created_at :datetime
-#  updated_at :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #

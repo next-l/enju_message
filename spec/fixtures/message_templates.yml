@@ -114,6 +114,6 @@ message_template_00015:
 #  body       :text             not null
 #  position   :integer
 #  locale     :string           default("en")
-#  created_at :datetime
-#  updated_at :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
