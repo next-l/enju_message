@@ -1,4 +1,4 @@
-class CreateCarrierTypeHasCheckoutTypes < ActiveRecord::Migration[5.0]
+class CreateCarrierTypeHasCheckoutTypes < ActiveRecord::Migration[5.1]
   def self.up
     create_table :carrier_type_has_checkout_types do |t|
       t.integer :carrier_type_id, :null => false

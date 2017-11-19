@@ -1,4 +1,4 @@
-class CreateUserGroupHasCheckoutTypes < ActiveRecord::Migration[5.0]
+class CreateUserGroupHasCheckoutTypes < ActiveRecord::Migration[5.1]
   def self.up
     create_table :user_group_has_checkout_types do |t|
       t.integer :user_group_id, :null => false

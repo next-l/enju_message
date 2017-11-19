@@ -1,4 +1,4 @@
-class CreateCheckedItems < ActiveRecord::Migration[5.0]
+class CreateCheckedItems < ActiveRecord::Migration[5.1]
   def self.up
     create_table :checked_items do |t|
       t.integer :item_id, :null => false

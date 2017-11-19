@@ -1,4 +1,4 @@
-class CreateShelves < ActiveRecord::Migration[5.0]
+class CreateShelves < ActiveRecord::Migration[5.1]
   def change
     create_table :shelves do |t|
       t.string :name, index: {unique: true}, null: false

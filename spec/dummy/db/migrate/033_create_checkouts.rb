@@ -1,4 +1,4 @@
-class CreateCheckouts < ActiveRecord::Migration[5.0]
+class CreateCheckouts < ActiveRecord::Migration[5.1]
   def self.up
     create_table :checkouts do |t|
       t.integer :user_id
