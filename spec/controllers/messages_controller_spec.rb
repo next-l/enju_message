@@ -217,7 +217,7 @@ describe MessagesController do
 
     describe 'When not logged in' do
       it 'assigns the requested message as @message' do
-        message = FactoryGirl.create(:message)
+        message = FactoryBot.create(:message)
         get :edit, params: { id: message.id }
         assigns(:message).should eq(message)
         response.should redirect_to new_user_session_url
@@ -333,7 +333,7 @@ describe MessagesController do
   describe 'PUT update' do
     before(:each) do
       @message = messages(:user1_to_user2_1)
-      @attrs = FactoryGirl.attributes_for(:message)
+      @attrs = FactoryBot.attributes_for(:message)
       @invalid_attrs = { sender_id: '' }
     end
 

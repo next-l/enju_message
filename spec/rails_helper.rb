@@ -10,7 +10,7 @@ require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'vcr'
-require 'factory_girl'
+require 'factory_bot'
 require 'sunspot-rails-tester'
 require 'rspec/active_model/mocks'
 require 'pundit/rspec'
@@ -75,6 +75,6 @@ RSpec.configure do |config|
   end
 end
 
-FactoryGirl.definition_file_paths << "#{::Rails.root}/../../spec/factories"
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths << "#{::Rails.root}/../../spec/factories"
+FactoryBot.find_definitions
 
