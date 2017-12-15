@@ -14,7 +14,7 @@ describe MessagesController do
       it 'should get its own messages' do
         get :index
         assigns(:messages).should_not be_nil
-        response.should be_success
+        response.should be_successful
       end
 
       describe 'When user_id is specified' do
@@ -31,7 +31,7 @@ describe MessagesController do
       it 'should get its own messages' do
         get :index
         assigns(:messages).should_not be_nil
-        response.should be_success
+        response.should be_successful
       end
 
       describe 'When user_id is specified' do
@@ -55,13 +55,13 @@ describe MessagesController do
       it 'should get its own messages' do
         get :index
         assigns(:messages).should_not be_nil
-        response.should be_success
+        response.should be_successful
       end
 
       it 'should get index with query' do
         get :index, params: { query: 'you' }
         assigns(:messages).first.receiver.should eq users(:user1)
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -84,7 +84,7 @@ describe MessagesController do
         get :show, params: { id: message.id }
         # }.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_valid
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -106,7 +106,7 @@ describe MessagesController do
 
       it 'should show my message' do
         get :show, params: { id: messages(:user2_to_user1_1).id }
-        response.should be_success
+        response.should be_successful
       end
 
       it "should should not show other user's message" do
@@ -141,7 +141,7 @@ describe MessagesController do
       it 'should not assign the requested message as @message' do
         get :new
         assigns(:message).should_not be_valid
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -257,7 +257,7 @@ describe MessagesController do
         it "re-renders the 'new' template" do
           post :create, params: { message: @invalid_attrs, user_id: users(:user1).username }
           response.should render_template('new')
-          response.should be_success
+          response.should be_successful
         end
       end
       describe 'with invalid recipient' do
