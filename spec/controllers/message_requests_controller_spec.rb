@@ -46,7 +46,7 @@ describe MessageRequestsController do
       login_fixture_admin
 
       it 'assigns the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
@@ -56,7 +56,7 @@ describe MessageRequestsController do
       login_fixture_librarian
 
       it 'assigns the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
@@ -66,7 +66,7 @@ describe MessageRequestsController do
       login_fixture_user
 
       it 'assigns the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
@@ -74,7 +74,7 @@ describe MessageRequestsController do
 
     describe 'When not logged in' do
       it 'assigns the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :show, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
@@ -86,7 +86,7 @@ describe MessageRequestsController do
       login_fixture_admin
 
       it 'assigns the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :edit, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
@@ -96,7 +96,7 @@ describe MessageRequestsController do
       login_fixture_librarian
 
       it 'assigns the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :edit, id: message_request.id
         assigns(:message_request).should eq(message_request)
       end
@@ -106,7 +106,7 @@ describe MessageRequestsController do
       login_fixture_user
 
       it 'assigns the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :edit, id: message_request.id
         response.should be_forbidden
       end
@@ -114,7 +114,7 @@ describe MessageRequestsController do
 
     describe 'When not logged in' do
       it 'should not assign the requested message_request as @message_request' do
-        message_request = FactoryGirl.create(:message_request)
+        message_request = FactoryBot.create(:message_request)
         get :edit, id: message_request.id
         response.should redirect_to(new_user_session_url)
       end
@@ -123,8 +123,8 @@ describe MessageRequestsController do
 
   describe 'PUT update' do
     before(:each) do
-      @message_request = FactoryGirl.create(:message_request)
-      @attrs = FactoryGirl.attributes_for(:message_request).merge(body: 'test')
+      @message_request = FactoryBot.create(:message_request)
+      @attrs = FactoryBot.attributes_for(:message_request).merge(body: 'test')
       @invalid_attrs = { body: '' }
     end
 
@@ -219,7 +219,7 @@ describe MessageRequestsController do
 
   describe 'DELETE destroy' do
     before(:each) do
-      @message_request = FactoryGirl.create(:message_request)
+      @message_request = FactoryBot.create(:message_request)
     end
 
     describe 'When logged in as Administrator' do

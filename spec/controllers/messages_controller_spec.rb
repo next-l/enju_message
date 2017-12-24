@@ -221,7 +221,7 @@ describe MessagesController do
 
     describe 'When not logged in' do
       it 'assigns the requested message as @message' do
-        message = FactoryGirl.create(:message)
+        message = FactoryBot.create(:message)
         get :edit, id: message.id
         assigns(:message).should be_nil
         response.should redirect_to new_user_session_url
@@ -337,7 +337,7 @@ describe MessagesController do
   describe 'PUT update' do
     before(:each) do
       @message = messages(:user1_to_user2_1)
-      @attrs = FactoryGirl.attributes_for(:message)
+      @attrs = FactoryBot.attributes_for(:message)
       @invalid_attrs = { sender_id: '' }
     end
 
@@ -471,7 +471,7 @@ describe MessagesController do
       login_fixture_librarian
 
       it 'should destroy own message' do
-        @message = FactoryGirl.create(:message, recipient: @user.username)
+        @message = FactoryBot.create(:message, recipient: @user.username)
         delete :destroy, id: @message.id
         response.should redirect_to messages_url
       end
@@ -510,7 +510,7 @@ describe MessagesController do
     describe 'When logged in as Librarian' do
       login_fixture_librarian
       it 'should destroy own message' do
-        message = FactoryGirl.create(:message, recipient: @user.username)
+        message = FactoryBot.create(:message, recipient: @user.username)
         post :destroy_selected, delete: [message.id]
         response.should_not be_forbidden
         response.should redirect_to(messages_url)
@@ -520,7 +520,7 @@ describe MessagesController do
     describe 'When logged in as User' do
       login_fixture_user
       it 'should destroy own message' do
-        message = FactoryGirl.create(:message, recipient: @user.username)
+        message = FactoryBot.create(:message, recipient: @user.username)
         post :destroy_selected, delete: [message.id]
         response.should_not be_forbidden
         response.should redirect_to(messages_url)

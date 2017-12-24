@@ -4,7 +4,7 @@ describe Message do
   fixtures :all
 
   before(:each) do
-    @message = FactoryGirl.create(:message)
+    @message = FactoryBot.create(:message)
   end
 
   it 'should require body' do

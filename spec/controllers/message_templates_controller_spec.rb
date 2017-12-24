@@ -48,7 +48,7 @@ describe MessageTemplatesController do
       login_fixture_admin
 
       it 'assigns the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :show, id: message_template.id
         assigns(:message_template).should eq(message_template)
       end
@@ -58,7 +58,7 @@ describe MessageTemplatesController do
       login_fixture_librarian
 
       it 'assigns the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :show, id: message_template.id
         assigns(:message_template).should eq(message_template)
       end
@@ -68,7 +68,7 @@ describe MessageTemplatesController do
       login_fixture_user
 
       it 'assigns the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :show, id: message_template.id
         assigns(:message_template).should eq(message_template)
       end
@@ -76,7 +76,7 @@ describe MessageTemplatesController do
 
     describe 'When not logged in' do
       it 'assigns the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :show, id: message_template.id
         assigns(:message_template).should eq(message_template)
       end
@@ -128,7 +128,7 @@ describe MessageTemplatesController do
       login_fixture_admin
 
       it 'assigns the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :edit, id: message_template.id
         assigns(:message_template).should eq(message_template)
       end
@@ -138,7 +138,7 @@ describe MessageTemplatesController do
       login_fixture_librarian
 
       it 'assigns the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :edit, id: message_template.id
         response.should be_forbidden
       end
@@ -148,7 +148,7 @@ describe MessageTemplatesController do
       login_fixture_user
 
       it 'assigns the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :edit, id: message_template.id
         response.should be_forbidden
       end
@@ -156,7 +156,7 @@ describe MessageTemplatesController do
 
     describe 'When not logged in' do
       it 'should not assign the requested message_template as @message_template' do
-        message_template = FactoryGirl.create(:message_template)
+        message_template = FactoryBot.create(:message_template)
         get :edit, id: message_template.id
         response.should redirect_to(new_user_session_url)
       end
@@ -165,7 +165,7 @@ describe MessageTemplatesController do
 
   describe 'POST create' do
     before(:each) do
-      @attrs = FactoryGirl.attributes_for(:message_template)
+      @attrs = FactoryBot.attributes_for(:message_template)
       @invalid_attrs = { status: '' }
     end
 
@@ -282,8 +282,8 @@ describe MessageTemplatesController do
 
   describe 'PUT update' do
     before(:each) do
-      @message_template = FactoryGirl.create(:message_template)
-      @attrs = FactoryGirl.attributes_for(:message_template)
+      @message_template = FactoryBot.create(:message_template)
+      @attrs = FactoryBot.attributes_for(:message_template)
       @invalid_attrs = { status: '' }
     end
 
@@ -383,7 +383,7 @@ describe MessageTemplatesController do
 
   describe 'DELETE destroy' do
     before(:each) do
-      @message_template = FactoryGirl.create(:message_template)
+      @message_template = FactoryBot.create(:message_template)
     end
 
     describe 'When logged in as Administrator' do
