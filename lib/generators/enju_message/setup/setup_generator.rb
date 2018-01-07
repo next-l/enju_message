@@ -9,5 +9,6 @@ class EnjuMessage::SetupGenerator < Rails::Generators::Base
     inject_into_class "app/models/user.rb", User do
       "  include EnjuMessage::EnjuUser\n"
     end
+    generate("enju_message:update")
   end
 end
