@@ -31,7 +31,7 @@ class Message < ActiveRecord::Base
   end
 
   paginates_per 10
-  has_many :message_transitions
+  has_many :message_transitions, autosave: false
   after_create :set_default_state
 
   def state_machine

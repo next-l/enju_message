@@ -14,7 +14,7 @@ class MessageRequest < ActiveRecord::Base
 
   paginates_per 10
 
-  has_many :message_request_transitions
+  has_many :message_request_transitions, autosave: false
 
   def state_machine
     @state_machine ||= MessageRequestStateMachine.new(self, transition_class: MessageRequestTransition)
