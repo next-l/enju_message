@@ -17,11 +17,12 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/log/*"] - Dir["spec/dummy/solr/{data,pids,default,development,test}/*"] - Dir["spec/dummy/tmp/*"]
 
   s.add_dependency "simple_form"
+  s.add_dependency "statesman"
   s.add_dependency "awesome_nested_set", "~> 3.1"
   s.add_dependency "rails_autolink"
 
   s.add_development_dependency "pg"
-  #s.add_development_dependency "enju_leaf", "~> 1.2.0.beta.1"
+  #s.add_development_dependency "enju_leaf", "~> 2.0.0.beta.1"
   s.add_development_dependency "rspec-rails", "~> 3.5"
   s.add_development_dependency "factory_bot_rails"
   s.add_development_dependency "simplecov"

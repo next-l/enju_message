@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :admin, :class => User do |f|
+    f.profile{FactoryBot.create(:admin_profile)}
     f.sequence(:username){|n| "admin_#{n}"}
     f.sequence(:email){|n| "admin_#{n}@example.jp"}
     f.password 'adminpassword'
@@ -13,6 +14,7 @@ FactoryBot.define do
   end
 
   factory :librarian, :class => User do |f|
+    f.profile{FactoryBot.create(:profile)}
     f.sequence(:username){|n| "librarian_#{n}"}
     f.sequence(:email){|n| "librarian_#{n}@example.jp"}
     f.password 'librarianpassword'
@@ -26,6 +28,7 @@ FactoryBot.define do
   end
 
   factory :user, :class => User do |f|
+    f.profile{FactoryBot.create(:profile)}
     f.sequence(:username){|n| "user_#{n}"}
     f.sequence(:email){|n| "user_#{n}@example.jp"}
     f.password 'userpassword'

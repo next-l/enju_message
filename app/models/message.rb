@@ -1,11 +1,11 @@
 class Message < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordQueries
   scope :unread, -> {in_state('unread')}
-  belongs_to :message_request
+  belongs_to :message_request, optional: true
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
-  validates_presence_of :subject, :body #, :sender
-  validates_presence_of :receiver, message: :invalid
+  validates :subject, presence: true
+  validates :body, presence: true
   before_validation :set_receiver
   after_save :index
   after_destroy :remove_from_index

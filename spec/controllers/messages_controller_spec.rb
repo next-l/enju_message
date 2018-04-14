@@ -266,7 +266,7 @@ describe MessagesController do
           message = assigns(:message)
           message.should_not be_valid
           message.errors.should have_key :receiver
-          message.errors.added?(:receiver, :invalid).should be_truthy
+          message.errors[:receiver].present?.should be_truthy
           response.should render_template('new')
         end
         it "re-renders the 'new' template" do
