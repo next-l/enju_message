@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   s.add_dependency "enju_library", "~> 0.2.4"
   s.add_dependency "awesome_nested_set", "~> 3.1"
 
-  s.add_development_dependency "enju_leaf", "~> 1.2.1"
+  s.add_development_dependency "enju_leaf", "~> 1.2.2"
   s.add_development_dependency "enju_event", "~> 0.2.3"
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "mysql2"
+  s.add_development_dependency "mysql2", "~> 0.4.10"
   s.add_development_dependency "pg"
   s.add_development_dependency "rspec-rails", "~> 3.5"
   s.add_development_dependency "factory_bot_rails"
