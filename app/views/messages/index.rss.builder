@@ -1,4 +1,4 @@
-xml.instruct! :xml, :version=>"1.0"
+xml.instruct! :xml, version: "1.0"
 xml.rss('version' => "2.0",
   'xmlns:opensearch' => "http://a9.com/-/spec/opensearch/1.1/",
   'xmlns:atom' => "http://www.w3.org/2005/Atom"){
@@ -34,7 +34,7 @@ xml.rss('version' => "2.0",
         # rfc822
         xml.pubDate message.created_at.utc.rfc822
         xml.link message_url(message)
-        xml.guid message_url(message), :isPermaLink => "true"
+        xml.guid message_url(message), isPermaLink: "true"
       end
     end
   }
