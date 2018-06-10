@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 class Message < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordQueries
   scope :unread, -> {in_state('unread')}

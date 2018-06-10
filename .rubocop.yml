@@ -8,6 +8,8 @@ Layout/SpaceInsideBlockBraces:
   Enabled: false
 Layout/SpaceBeforeBlockBraces:
   Enabled: false
+Layout/ExtraSpacing:
+  Enabled: false
 Style/WordArray:
   Enabled: false
 Style/Documentation:

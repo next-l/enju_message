@@ -13,13 +13,8 @@ xml.rss('version' => "2.0",
     xml.description "Next-L Enju, an open source integrated library system developed by Project Next-L"
     xml.language @locale.to_s
     xml.ttl "60"
-    if @user
-      xml.tag! "atom:link", rel: 'self', href: messages_url(format: :rss)
-      xml.tag! "atom:link", rel: 'alternate', href: messages_url(format: :rss)
-    else
-      xml.tag! "atom:link", rel: 'self', href: messages_url(format: :rss)
-      xml.tag! "atom:link", rel: 'alternate', href: messages_url
-    end
+    xml.tag! "atom:link", rel: 'self', href: messages_url(format: :rss)
+    xml.tag! "atom:link", rel: 'alternate', href: messages_url
     # xml.tag! "atom:link", rel: 'search', type: 'application/opensearchdescription+xml', href: "http://#{request.host_with_port}/page/opensearch"
     unless params[:query].blank?
       xml.tag! "opensearch:totalResults", @messages.total_entries
