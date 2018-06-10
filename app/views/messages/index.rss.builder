@@ -20,17 +20,17 @@ xml.rss('version' => "2.0",
       xml.tag! "atom:link", rel: 'self', href: messages_url(format: :rss)
       xml.tag! "atom:link", rel: 'alternate', href: messages_url
     end
-    #xml.tag! "atom:link", rel: 'search', type: 'application/opensearchdescription+xml', href: "http://#{request.host_with_port}/page/opensearch"
+    # xml.tag! "atom:link", rel: 'search', type: 'application/opensearchdescription+xml', href: "http://#{request.host_with_port}/page/opensearch"
     unless params[:query].blank?
       xml.tag! "opensearch:totalResults", @messages.total_entries
       xml.tag! "opensearch:startIndex", @messages.offset + 1
       xml.tag! "opensearch:itemsPerPage", @messages.per_page
-      #xml.tag! "opensearch:Query", :role => 'request', :searchTerms => params[:query], :startPage => (params[:page] || 1)
+      # xml.tag! "opensearch:Query", :role => 'request', :searchTerms => params[:query], :startPage => (params[:page] || 1)
     end
     @messages.each do |message|
       xml.item do
         xml.title message.subject
-        #xml.description(message.title)
+        # xml.description(message.title)
         # rfc822
         xml.pubDate message.created_at.utc.rfc822
         xml.link message_url(message)

@@ -1,8 +1,8 @@
 class MessageTemplate < ActiveRecord::Base
   has_many :message_requests
 
-  validates_uniqueness_of :status
-  validates_presence_of :status, :title, :body
+  validates :status, uniqueness: true
+  validates :status, :title, :body, presence: true
 
   acts_as_list
 

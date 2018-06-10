@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
       with(:receiver_id).equal_to user.id
       facet(:is_read)
     end
-    @message_facet =  Hash[*search.execute!.facet_response['facet_fields']['is_read_b']]
+    @message_facet = Hash[*search.execute!.facet_response['facet_fields']['is_read_b']]
     search.build do
       with(:is_read).equal_to is_read unless is_read.nil?
     end
@@ -97,7 +97,7 @@ class MessagesController < ApplicationController
   def update
     @message = current_user.received_messages.find(params[:id])
 
-    if @message.update_attributes(message_params)
+    if @message.update(message_params)
       format.html { redirect_to @message, notice: t('controller.successfully_updated', model: t('activerecord.models.message')) }
       format.json { head :no_content }
     else
@@ -141,6 +141,7 @@ class MessagesController < ApplicationController
   end
 
   private
+
   def set_message
     if current_user
       @message = current_user.received_messages.find(params[:id])

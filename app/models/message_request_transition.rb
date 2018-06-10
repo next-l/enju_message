@@ -3,7 +3,7 @@ class MessageRequestTransition < ActiveRecord::Base
 
   
   belongs_to :message_request, inverse_of: :message_request_transitions
-  #attr_accessible :to_state, :sort_key, :metadata
+  # attr_accessible :to_state, :sort_key, :metadata
 end
 
 # == Schema Information

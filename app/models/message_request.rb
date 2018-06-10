@@ -9,8 +9,8 @@ class MessageRequest < ActiveRecord::Base
   has_many :messages
 
   validates_associated :sender, :receiver, :message_template
-  validates_presence_of :sender, :receiver, :message_template
-  validates_presence_of :body, on: :update
+  validates :sender, :receiver, :message_template, presence: true
+  validates :body, presence: { on: :update }
 
   paginates_per 10
 
@@ -28,7 +28,7 @@ class MessageRequest < ActiveRecord::Base
     MessageRequest.transaction do
       message = Message.new
       message.sender = sender
-      message.recipient  = receiver.username
+      message.recipient = receiver.username
       message.subject = subject
       message.body = body
       message.body = 'test'
@@ -54,7 +54,7 @@ class MessageRequest < ActiveRecord::Base
       receiver: receiver,
       locale: receiver.profile.locale
     }.merge(options)
-    update_attributes!({body: message_template.embed_body(options)})
+    update!({body: message_template.embed_body(options)})
   end
 
   def self.send_messages
@@ -66,6 +66,7 @@ class MessageRequest < ActiveRecord::Base
   end
 
   private
+
   def self.transition_class
     MessageRequestTransition
   end

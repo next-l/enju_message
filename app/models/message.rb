@@ -5,8 +5,8 @@ class Message < ActiveRecord::Base
   belongs_to :message_request
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
-  validates_presence_of :subject, :body #, :sender
-  validates_presence_of :receiver, message: :invalid
+  validates :subject, :body, presence: true # , :sender
+  validates :receiver, presence: { message: :invalid }
   before_validation :set_receiver
   after_save :index
   after_destroy :remove_from_index
@@ -61,6 +61,7 @@ class Message < ActiveRecord::Base
   end
 
   private
+
   def self.transition_class
     MessageTransition
   end

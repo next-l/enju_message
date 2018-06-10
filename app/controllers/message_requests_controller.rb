@@ -38,7 +38,7 @@ class MessageRequestsController < ApplicationController
   # PUT /message_requests/1.json
   def update
     respond_to do |format|
-      if @message_request.update_attributes(message_request_params)
+      if @message_request.update(message_request_params)
         flash[:notice] = t('controller.successfully_updated', model: t('activerecord.models.message_request'))
         format.html { redirect_to(@message_request) }
         format.json { head :no_content }
@@ -62,6 +62,7 @@ class MessageRequestsController < ApplicationController
   end
 
   private
+
   def set_message_request
     @message_request = MessageRequest.find(params[:id])
     authorize @message_request
@@ -74,7 +75,7 @@ class MessageRequestsController < ApplicationController
   def message_request_params
     params.require(:message_request).permit(
       :body,
-      :sender, :receiver, :message_template, :body #, as: :admin
+      :sender, :receiver, :message_template, :body # , as: :admin
     )
   end
 end
