@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "awesome_nested_set", "~> 3.1"
   s.add_dependency "enju_library", "~> 0.2.4"
+  s.add_dependency "erubis"
 
   s.add_development_dependency "coveralls"
   s.add_development_dependency "enju_event", "~> 0.2.3"

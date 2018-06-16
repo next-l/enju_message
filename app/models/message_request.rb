@@ -1,4 +1,3 @@
-require 'erubis'
 class MessageRequest < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordQueries
   scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}

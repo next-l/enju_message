@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Declare your gem's dependencies in enju_message.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -12,3 +13,7 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
+gem 'enju_seed', github: 'next-l/enju_seed', branch: '1.3'
+gem 'enju_leaf', github: 'next-l/enju_leaf', branch: '1.3'
+gem 'enju_library', github: 'next-l/enju_library', branch: '1.3'
+gem 'rails-controller-testing'

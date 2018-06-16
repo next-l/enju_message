@@ -19,7 +19,7 @@ describe MessagesController do
 
       describe 'When user_id is specified' do
         it 'assigns all messages as @messages' do
-          get :index, user_id: @user.username
+          get :index, params: { user_id: @user.username }
           assigns(:messages).should_not be_nil
         end
       end
@@ -36,7 +36,7 @@ describe MessagesController do
 
       describe 'When user_id is specified' do
         it 'assigns all messages as @messages' do
-          get :index, user_id: @user.username
+          get :index, params: { user_id: @user.username }
           assigns(:messages).should_not be_nil
         end
       end
@@ -59,7 +59,7 @@ describe MessagesController do
       end
 
       it 'should get index with query' do
-        get :index, query: 'you'
+        get :index, params: { query: 'you' }
         assigns(:messages).first.receiver.should eq users(:user1)
         response.should be_success
       end
@@ -81,7 +81,7 @@ describe MessagesController do
       it 'assigns the requested message as @message' do
         message = messages(:user1_to_user2_1)
         lambda do
-          get :show, id: message.id
+          get :show, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
         # response.should be_missing
@@ -94,7 +94,7 @@ describe MessagesController do
       it 'assigns the requested message as @message' do
         message = messages(:user1_to_user2_1)
         lambda do
-          get :show, id: message.id
+          get :show, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
         # response.should be_forbidden
@@ -105,13 +105,13 @@ describe MessagesController do
       login_fixture_user
 
       it 'should show my message' do
-        get :show, id: messages(:user2_to_user1_1).id
+        get :show, params: { id: messages(:user2_to_user1_1).id }
         response.should be_success
       end
 
       it "should should not show other user's message" do
         lambda do
-          get :show, id: messages(:user1_to_user2_1).id
+          get :show, params: { id: messages(:user1_to_user2_1).id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         # response.should be_missing
       end
@@ -119,7 +119,7 @@ describe MessagesController do
 
     describe 'When not logged in' do
       it 'assigns the requested message as @message' do
-        get :show, id: messages(:user1_to_user2_1).id
+        get :show, params: { id: messages(:user1_to_user2_1).id }
         response.should redirect_to new_user_session_url
       end
     end
@@ -160,12 +160,12 @@ describe MessagesController do
       end
 
       it 'should not get new template with invalid parent_id' do
-        get :new, parent_id: 1
+        get :new, params: { parent_id: 1 }
         response.should be_forbidden
       end
 
       it 'should not get new template with valid parent_id' do
-        get :new, parent_id: 2
+        get :new, params: { parent_id: 2 }
         response.should be_forbidden
       end
     end
@@ -186,7 +186,7 @@ describe MessagesController do
       it 'assigns the requested message as @message' do
         message = messages(:user1_to_user2_1)
         lambda do
-          get :edit, id: message.id
+          get :edit, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
         response.should be_success
@@ -199,7 +199,7 @@ describe MessagesController do
       it 'assigns the requested message as @message' do
         message = messages(:user1_to_user2_1)
         lambda do
-          get :edit, id: message.id
+          get :edit, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
         response.should be_success
@@ -212,7 +212,7 @@ describe MessagesController do
       it 'assigns the requested message as @message' do
         message = messages(:user1_to_user2_1)
         lambda do
-          get :edit, id: message.id
+          get :edit, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
         response.should be_success
@@ -222,7 +222,7 @@ describe MessagesController do
     describe 'When not logged in' do
       it 'assigns the requested message as @message' do
         message = FactoryBot.create(:message)
-        get :edit, id: message.id
+        get :edit, params: { id: message.id }
         assigns(:message).should be_nil
         response.should redirect_to new_user_session_url
       end
@@ -242,31 +242,31 @@ describe MessagesController do
 
       describe 'with valid params' do
         it 'assigns a newly created message as @message' do
-          post :create, message: @attrs, user_id: users(:user1).username
+          post :create, params: { message: @attrs, user_id: users(:user1).username }
           assigns(:message).should be_valid
         end
 
         it 'redirects to the created message' do
-          post :create, message: @attrs, user_id: users(:user1).username
+          post :create, params: { message: @attrs, user_id: users(:user1).username }
           response.should redirect_to(messages_url)
         end
       end
 
       describe 'with invalid params' do
         it 'assigns a newly created but unsaved message as @message' do
-          post :create, message: @invalid_attrs, user_id: users(:user1).username
+          post :create, params: { message: @invalid_attrs, user_id: users(:user1).username }
           assigns(:message).should_not be_valid
         end
 
         it "re-renders the 'new' template" do
-          post :create, message: @invalid_attrs, user_id: users(:user1).username
+          post :create, params: { message: @invalid_attrs, user_id: users(:user1).username }
           response.should render_template('new')
           response.should be_success
         end
       end
       describe 'with invalid recipient' do
         it "re-renders the 'new' template" do
-          post :create, message: @invalid_user_attrs
+          post :create, params: { message: @invalid_user_attrs }
           message = assigns(:message)
           message.should_not be_valid
           message.errors.should have_key :receiver
@@ -274,7 +274,7 @@ describe MessagesController do
           response.should render_template('new')
         end
         it "re-renders the 'new' template" do
-          post :create, message: @blank_user_attrs
+          post :create, params: { message: @blank_user_attrs }
           message = assigns(:message)
           message.should_not be_valid
           message.errors.should have_key :recipient
@@ -288,7 +288,7 @@ describe MessagesController do
       login_fixture_librarian
 
       it 'should create message without parent_id' do
-        post :create, message: { recipient: 'user2', subject: 'test', body: 'test' }
+        post :create, params: { message: { recipient: 'user2', subject: 'test', body: 'test' } }
         response.should redirect_to messages_url
       end
     end
@@ -297,12 +297,12 @@ describe MessagesController do
       login_fixture_user
 
       it 'should not create message without parent_id' do
-        post :create, message: { recipient: 'user2', subject: 'test', body: 'test' }
+        post :create, params: { message: { recipient: 'user2', subject: 'test', body: 'test' } }
         response.should be_forbidden
       end
 
       it 'should not create message with parent_id' do
-        post :create, message: { recipient: 'user2', subject: 'test', body: 'test', parent_id: 2 }
+        post :create, params: { message: { recipient: 'user2', subject: 'test', body: 'test', parent_id: 2 } }
         response.should be_forbidden
       end
     end
@@ -310,24 +310,24 @@ describe MessagesController do
     describe 'When not logged in' do
       describe 'with valid params' do
         it 'assigns a newly created message as @message' do
-          post :create, message: @attrs
+          post :create, params: { message: @attrs }
           assigns(:message).should be_nil
         end
 
         it 'should redirect to new_user_session_url' do
-          post :create, message: @attrs
+          post :create, params: { message: @attrs }
           response.should redirect_to(new_user_session_url)
         end
       end
 
       describe 'with invalid params' do
         it 'assigns a newly created but unsaved message as @message' do
-          post :create, message: @invalid_attrs
+          post :create, params: { message: @invalid_attrs }
           assigns(:message).should be_nil
         end
 
         it 'should redirect to new_user_session_url' do
-          post :create, message: @invalid_attrs
+          post :create, params: { message: @invalid_attrs }
           response.should redirect_to(new_user_session_url)
         end
       end
@@ -347,13 +347,13 @@ describe MessagesController do
       describe 'with valid params' do
         it 'updates the requested message' do
           lambda do
-            put :update, id: @message.id, message: @attrs
+            put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it 'assigns the requested message as @message' do
           lambda do
-            put :update, id: @message.id, message: @attrs
+            put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           assigns(:message).should be_nil
           # response.should be_missing
@@ -363,13 +363,13 @@ describe MessagesController do
       describe 'with invalid params' do
         it 'assigns the requested message as @message' do
           lambda do
-            put :update, id: @message.id, message: @invalid_attrs
+            put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it "re-renders the 'edit' template" do
           lambda do
-            put :update, id: @message.id, message: @invalid_attrs
+            put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           response.should be_success
         end
@@ -382,13 +382,13 @@ describe MessagesController do
       describe 'with valid params' do
         it 'updates the requested message' do
           lambda do
-            put :update, id: @message.id, message: @attrs
+            put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it 'assigns the requested message as @message' do
           lambda do
-            put :update, id: @message.id, message: @attrs
+            put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           assigns(:message).should be_nil
           response.should be_success
@@ -398,13 +398,13 @@ describe MessagesController do
       describe 'with invalid params' do
         it 'assigns the requested message as @message' do
           lambda do
-            put :update, id: @message.id, message: @invalid_attrs
+            put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it "re-renders the 'edit' template" do
           lambda do
-            put :update, id: @message.id, message: @invalid_attrs
+            put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           response.should be_success
         end
@@ -417,13 +417,13 @@ describe MessagesController do
       describe 'with valid params' do
         it 'updates the requested message' do
           lambda do
-            put :update, id: @message.id, message: @attrs
+            put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it 'assigns the requested message as @message' do
           lambda do
-            put :update, id: @message.id, message: @attrs
+            put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           assigns(:message).should be_nil
           response.should be_success
@@ -433,26 +433,26 @@ describe MessagesController do
       describe 'with invalid params' do
         it 'assigns the requested message as @message' do
           lambda do
-            put :update, id: @message.id, message: @invalid_attrs
+            put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
 
         it "re-renders the 'edit' template" do
           lambda do
-            put :update, id: @message.id, message: @invalid_attrs
+            put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           response.should be_success
         end
       end
 
       it 'should not update my message' do
-        put :update, id: 2, message: {}
+        put :update, params: { id: 2, message: {} }
         response.should be_forbidden
       end
 
       it "should not update other user's message" do
         lambda do
-          put :update, id: 1, message: {}
+          put :update, params: { id: 1, message: {} }
         end.should raise_error(ActiveRecord::RecordNotFound)
         response.should be_success
       end
@@ -460,7 +460,7 @@ describe MessagesController do
 
     describe 'When not logged in' do
       it 'assigns the requested message as @message' do
-        put :update, id: 2, message: {}
+        put :update, params: { id: 2, message: {} }
         response.should redirect_to new_user_session_url
       end
     end
@@ -472,7 +472,7 @@ describe MessagesController do
 
       it 'should destroy own message' do
         @message = FactoryBot.create(:message, recipient: @user.username)
-        delete :destroy, id: @message.id
+        delete :destroy, params: { id: @message.id }
         response.should redirect_to messages_url
       end
     end
@@ -480,14 +480,14 @@ describe MessagesController do
       login_fixture_user
 
       it 'should destroy own message' do
-        delete :destroy, id: 2
+        delete :destroy, params: { id: 2 }
         response.should redirect_to messages_url
         response.should_not be_forbidden
       end
 
       it "should not destroy other user's message" do
         lambda do
-          delete :destroy, id: 1
+          delete :destroy, params: { id: 1 }
         end.should raise_error(ActiveRecord::RecordNotFound)
         response.should be_success
       end
@@ -495,12 +495,12 @@ describe MessagesController do
 
     describe 'When not logged in' do
       it 'destroys the requested message' do
-        delete :destroy, id: 1
+        delete :destroy, params: { id: 1 }
         response.should redirect_to(new_user_session_url)
       end
 
       it 'should be redirected to new_user_session_url' do
-        delete :destroy, id: 1
+        delete :destroy, params: { id: 1 }
         response.should redirect_to(new_user_session_url)
       end
     end
@@ -511,7 +511,7 @@ describe MessagesController do
       login_fixture_librarian
       it 'should destroy own message' do
         message = FactoryBot.create(:message, recipient: @user.username)
-        post :destroy_selected, delete: [message.id]
+        post :destroy_selected, params: { delete: [message.id] }
         response.should_not be_forbidden
         response.should redirect_to(messages_url)
       end
@@ -521,7 +521,7 @@ describe MessagesController do
       login_fixture_user
       it 'should destroy own message' do
         message = FactoryBot.create(:message, recipient: @user.username)
-        post :destroy_selected, delete: [message.id]
+        post :destroy_selected, params: { delete: [message.id] }
         response.should_not be_forbidden
         response.should redirect_to(messages_url)
       end

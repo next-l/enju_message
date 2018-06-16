@@ -49,7 +49,7 @@ describe MessageTemplatesController do
 
       it 'assigns the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :show, id: message_template.id
+        get :show, params: { id: message_template.id }
         assigns(:message_template).should eq(message_template)
       end
     end
@@ -59,7 +59,7 @@ describe MessageTemplatesController do
 
       it 'assigns the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :show, id: message_template.id
+        get :show, params: { id: message_template.id }
         assigns(:message_template).should eq(message_template)
       end
     end
@@ -69,7 +69,7 @@ describe MessageTemplatesController do
 
       it 'assigns the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :show, id: message_template.id
+        get :show, params: { id: message_template.id }
         assigns(:message_template).should eq(message_template)
       end
     end
@@ -77,7 +77,7 @@ describe MessageTemplatesController do
     describe 'When not logged in' do
       it 'assigns the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :show, id: message_template.id
+        get :show, params: { id: message_template.id }
         assigns(:message_template).should eq(message_template)
       end
     end
@@ -129,7 +129,7 @@ describe MessageTemplatesController do
 
       it 'assigns the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :edit, id: message_template.id
+        get :edit, params: { id: message_template.id }
         assigns(:message_template).should eq(message_template)
       end
     end
@@ -139,7 +139,7 @@ describe MessageTemplatesController do
 
       it 'assigns the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :edit, id: message_template.id
+        get :edit, params: { id: message_template.id }
         response.should be_forbidden
       end
     end
@@ -149,7 +149,7 @@ describe MessageTemplatesController do
 
       it 'assigns the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :edit, id: message_template.id
+        get :edit, params: { id: message_template.id }
         response.should be_forbidden
       end
     end
@@ -157,7 +157,7 @@ describe MessageTemplatesController do
     describe 'When not logged in' do
       it 'should not assign the requested message_template as @message_template' do
         message_template = FactoryBot.create(:message_template)
-        get :edit, id: message_template.id
+        get :edit, params: { id: message_template.id }
         response.should redirect_to(new_user_session_url)
       end
     end
@@ -174,24 +174,24 @@ describe MessageTemplatesController do
 
       describe 'with valid params' do
         it 'assigns a newly created message_template as @message_template' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           response.should be_forbidden
         end
       end
 
       describe 'with invalid params' do
         it 'assigns a newly created but unsaved message_template as @message_template' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           response.should be_forbidden
         end
       end
@@ -202,24 +202,24 @@ describe MessageTemplatesController do
 
       describe 'with valid params' do
         it 'assigns a newly created message_template as @message_template' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           response.should be_forbidden
         end
       end
 
       describe 'with invalid params' do
         it 'assigns a newly created but unsaved message_template as @message_template' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           response.should be_forbidden
         end
       end
@@ -230,24 +230,24 @@ describe MessageTemplatesController do
 
       describe 'with valid params' do
         it 'assigns a newly created message_template as @message_template' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           response.should be_forbidden
         end
       end
 
       describe 'with invalid params' do
         it 'assigns a newly created but unsaved message_template as @message_template' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           response.should be_forbidden
         end
       end
@@ -256,24 +256,24 @@ describe MessageTemplatesController do
     describe 'When not logged in' do
       describe 'with valid params' do
         it 'assigns a newly created message_template as @message_template' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @attrs
+          post :create, params: { message_template: @attrs }
           response.should redirect_to(new_user_session_url)
         end
       end
 
       describe 'with invalid params' do
         it 'assigns a newly created but unsaved message_template as @message_template' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           assigns(:message_template).should be_nil
         end
 
         it 'should be forbidden' do
-          post :create, message_template: @invalid_attrs
+          post :create, params: { message_template: @invalid_attrs }
           response.should redirect_to(new_user_session_url)
         end
       end
@@ -292,23 +292,23 @@ describe MessageTemplatesController do
 
       describe 'with valid params' do
         it 'updates the requested message_template' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
         end
 
         it 'assigns the requested message_template as @message_template' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
           assigns(:message_template).should eq(@message_template)
         end
 
         it 'moves its position when specified' do
-          put :update, id: @message_template.id, message_template: @attrs, move: 'lower'
+          put :update, params: { id: @message_template.id, message_template: @attrs, move: 'lower' }
           response.should redirect_to(message_templates_url)
         end
       end
 
       describe 'with invalid params' do
         it 'assigns the requested message_template as @message_template' do
-          put :update, id: @message_template.id, message_template: @invalid_attrs
+          put :update, params: { id: @message_template.id, message_template: @invalid_attrs }
           response.should render_template('edit')
         end
       end
@@ -319,11 +319,11 @@ describe MessageTemplatesController do
 
       describe 'with valid params' do
         it 'updates the requested message_template' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
         end
 
         it 'assigns the requested message_template as @message_template' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
           assigns(:message_template).should eq(@message_template)
           response.should be_forbidden
         end
@@ -331,7 +331,7 @@ describe MessageTemplatesController do
 
       describe 'with invalid params' do
         it 'assigns the requested message_template as @message_template' do
-          put :update, id: @message_template.id, message_template: @invalid_attrs
+          put :update, params: { id: @message_template.id, message_template: @invalid_attrs }
           response.should be_forbidden
         end
       end
@@ -342,11 +342,11 @@ describe MessageTemplatesController do
 
       describe 'with valid params' do
         it 'updates the requested message_template' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
         end
 
         it 'assigns the requested message_template as @message_template' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
           assigns(:message_template).should eq(@message_template)
           response.should be_forbidden
         end
@@ -354,7 +354,7 @@ describe MessageTemplatesController do
 
       describe 'with invalid params' do
         it 'assigns the requested message_template as @message_template' do
-          put :update, id: @message_template.id, message_template: @invalid_attrs
+          put :update, params: { id: @message_template.id, message_template: @invalid_attrs }
           response.should be_forbidden
         end
       end
@@ -363,18 +363,18 @@ describe MessageTemplatesController do
     describe 'When not logged in' do
       describe 'with valid params' do
         it 'updates the requested message_template' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
         end
 
         it 'should be forbidden' do
-          put :update, id: @message_template.id, message_template: @attrs
+          put :update, params: { id: @message_template.id, message_template: @attrs }
           response.should redirect_to(new_user_session_url)
         end
       end
 
       describe 'with invalid params' do
         it 'assigns the requested message_template as @message_template' do
-          put :update, id: @message_template.id, message_template: @invalid_attrs
+          put :update, params: { id: @message_template.id, message_template: @invalid_attrs }
           response.should redirect_to(new_user_session_url)
         end
       end
@@ -390,11 +390,11 @@ describe MessageTemplatesController do
       login_fixture_admin
 
       it 'destroys the requested message_template' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
       end
 
       it 'should be forbidden' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
         response.should be_forbidden
       end
     end
@@ -403,11 +403,11 @@ describe MessageTemplatesController do
       login_fixture_librarian
 
       it 'destroys the requested message_template' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
       end
 
       it 'should be forbidden' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
         response.should be_forbidden
       end
     end
@@ -416,22 +416,22 @@ describe MessageTemplatesController do
       login_fixture_user
 
       it 'destroys the requested message_template' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
       end
 
       it 'should be forbidden' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
         response.should be_forbidden
       end
     end
 
     describe 'When not logged in' do
       it 'destroys the requested message_template' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
       end
 
       it 'should be forbidden' do
-        delete :destroy, id: @message_template.id
+        delete :destroy, params: { id: @message_template.id }
         response.should redirect_to(new_user_session_url)
       end
     end

@@ -1,4 +1,4 @@
-class AddConstraintsToMostRecentForMessageRequestTransitions < ActiveRecord::Migration
+class AddConstraintsToMostRecentForMessageRequestTransitions < ActiveRecord::Migration[4.2]
   disable_ddl_transaction!
 
   def up
