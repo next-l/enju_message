@@ -25,15 +25,14 @@ class MessageRequest < ActiveRecord::Base
   def send_message
     message = nil
     MessageRequest.transaction do
-      message = Message.new
-      message.sender = sender
-      message.recipient = receiver.username
-      message.subject = subject
-      message.body = body
-      message.body = 'test'
-      message.save!
-      self.sent_at = Time.zone.now
-      save(validate: false)
+      message = Message.create!(
+        sender: sender,
+        recipient: receiver.username,
+        subject: subject,
+        body: body,
+        message_request: self
+      )
+      update!(sent_at: Time.zone.now)
       if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(message_template.status)
         self.receiver.reserves.each do |reserve|
           reserve.expiration_notice_to_patron = true
