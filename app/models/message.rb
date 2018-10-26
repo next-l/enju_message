@@ -42,7 +42,7 @@ class Message < ActiveRecord::Base
 
   def set_receiver
     if recipient
-      self.receiver = User.where(username: recipient).first
+      self.receiver = User.find_by(username: recipient)
     end
   end
 

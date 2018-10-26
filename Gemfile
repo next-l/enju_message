@@ -14,3 +14,6 @@ gemspec
 # To use debugger
 # gem 'debugger'
 gem 'rails-controller-testing'
+gem 'mobility'
+gem 'enju_seed', github: 'next-l/enju_seed', branch: '1.4'
+gem 'enju_library', github: 'next-l/enju_library', branch: '1.4'

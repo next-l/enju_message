@@ -14,7 +14,7 @@ describe MessagesController do
       it 'should get its own messages' do
         get :index
         assigns(:messages).should_not be_nil
-        response.should be_success
+        response.should be_successful
       end
 
       describe 'When user_id is specified' do
@@ -31,7 +31,7 @@ describe MessagesController do
       it 'should get its own messages' do
         get :index
         assigns(:messages).should_not be_nil
-        response.should be_success
+        response.should be_successful
       end
 
       describe 'When user_id is specified' do
@@ -55,13 +55,13 @@ describe MessagesController do
       it 'should get its own messages' do
         get :index
         assigns(:messages).should_not be_nil
-        response.should be_success
+        response.should be_successful
       end
 
       it 'should get index with query' do
         get :index, params: { query: 'you' }
         assigns(:messages).first.receiver.should eq users(:user1)
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -106,7 +106,7 @@ describe MessagesController do
 
       it 'should show my message' do
         get :show, params: { id: messages(:user2_to_user1_1).id }
-        response.should be_success
+        response.should be_successful
       end
 
       it "should should not show other user's message" do
@@ -141,7 +141,7 @@ describe MessagesController do
       it 'should not assign the requested message as @message' do
         get :new
         assigns(:message).should_not be_valid
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -189,7 +189,7 @@ describe MessagesController do
           get :edit, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -202,7 +202,7 @@ describe MessagesController do
           get :edit, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -215,7 +215,7 @@ describe MessagesController do
           get :edit, params: { id: message.id }
         end.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:message).should be_nil
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -261,7 +261,7 @@ describe MessagesController do
         it "re-renders the 'new' template" do
           post :create, params: { message: @invalid_attrs, user_id: users(:user1).username }
           response.should render_template('new')
-          response.should be_success
+          response.should be_successful
         end
       end
       describe 'with invalid recipient' do
@@ -270,9 +270,10 @@ describe MessagesController do
           message = assigns(:message)
           message.should_not be_valid
           message.errors.should have_key :receiver
-          message.errors.added?(:receiver, :invalid).should be_truthy
+          message.errors.added?(:receiver, 'は不正な値です。').should be_truthy
           response.should render_template('new')
         end
+
         it "re-renders the 'new' template" do
           post :create, params: { message: @blank_user_attrs }
           message = assigns(:message)
@@ -371,7 +372,7 @@ describe MessagesController do
           lambda do
             put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
-          response.should be_success
+          response.should be_successful
         end
       end
     end
@@ -391,7 +392,7 @@ describe MessagesController do
             put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           assigns(:message).should be_nil
-          response.should be_success
+          response.should be_successful
         end
       end
 
@@ -406,7 +407,7 @@ describe MessagesController do
           lambda do
             put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
-          response.should be_success
+          response.should be_successful
         end
       end
     end
@@ -426,7 +427,7 @@ describe MessagesController do
             put :update, params: { id: @message.id, message: @attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
           assigns(:message).should be_nil
-          response.should be_success
+          response.should be_successful
         end
       end
 
@@ -441,7 +442,7 @@ describe MessagesController do
           lambda do
             put :update, params: { id: @message.id, message: @invalid_attrs }
           end.should raise_error(ActiveRecord::RecordNotFound)
-          response.should be_success
+          response.should be_successful
         end
       end
 
@@ -454,7 +455,7 @@ describe MessagesController do
         lambda do
           put :update, params: { id: 1, message: {} }
         end.should raise_error(ActiveRecord::RecordNotFound)
-        response.should be_success
+        response.should be_successful
       end
     end
 
@@ -489,7 +490,7 @@ describe MessagesController do
         lambda do
           delete :destroy, params: { id: 1 }
         end.should raise_error(ActiveRecord::RecordNotFound)
-        response.should be_success
+        response.should be_successful
       end
     end
 
