@@ -41,6 +41,10 @@ FactoryBot.define do
     end
   end
 
+<<<<<<< HEAD
   factory :invalid_user, class: User do
+=======
+  factory :invalid_user, class: User do |f|
+>>>>>>> update factory files
   end
 end
