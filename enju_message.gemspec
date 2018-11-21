@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/{log,solr,tmp}/**/*"] - Dir["spec/dummy/db/*.sqlite3"]
 
   s.add_dependency "awesome_nested_set", "~> 3.1"
-  s.add_dependency "enju_library", "~> 0.3.0"
+  s.add_dependency "enju_library", "~> 0.3.1"
   s.add_dependency "erubis"
 
   s.add_development_dependency "coveralls"
