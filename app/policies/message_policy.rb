@@ -8,9 +8,9 @@ class MessagePolicy < ApplicationPolicy
     when 'Administrator'
       true
     when 'Librarian'
-      true if record.receiver == user
+      true if record.try(:receiver) == user
     when 'User'
-      true if record.receiver == user
+      true if record.try(:receiver) == user
     end
   end
 
@@ -21,9 +21,9 @@ class MessagePolicy < ApplicationPolicy
   def update?
     case user.try(:role).try(:name)
     when 'Administrator'
-      true if record.receiver == user
+      true if record.try(:receiver) == user
     when 'Librarian'
-      true if record.receiver == user
+      true if record.try(:receiver) == user
     end
   end
 
@@ -32,6 +32,6 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def destroy_selected?
-    show?
+    true if user.try(:has_role?, 'User')
   end
 end

@@ -44,7 +44,7 @@ class MessageTemplatesController < ApplicationController
 
     respond_to do |format|
       if @message_template.save
-        format.html { redirect_to @message_template, notice:  t('controller.successfully_created', model:  t('activerecord.models.message_template')) }
+        format.html { redirect_to @message_template, notice:  t('controller.successfully_created', model: t('activerecord.models.message_template')) }
         format.json { render json: @message_template, status: :created, location: @message_template }
       else
         format.html { render action: "new" }
@@ -62,8 +62,8 @@ class MessageTemplatesController < ApplicationController
     end
 
     respond_to do |format|
-      if @message_template.update_attributes(message_template_params)
-        format.html { redirect_to @message_template, notice:  t('controller.successfully_updated', model:  t('activerecord.models.message_template')) }
+      if @message_template.update(message_template_params)
+        format.html { redirect_to @message_template, notice:  t('controller.successfully_updated', model: t('activerecord.models.message_template')) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -84,10 +84,10 @@ class MessageTemplatesController < ApplicationController
   end
 
   private
+
   def set_message_template
     @message_template = MessageTemplate.find(params[:id])
     authorize @message_template
-    access_denied unless LibraryGroup.site_config.network_access_allowed?(request.ip)
   end
 
   def check_policy

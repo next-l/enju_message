@@ -1,5 +1,6 @@
-class AddManifestationIdToItem < ActiveRecord::Migration[5.1]
+class AddManifestationIdToItem < ActiveRecord::Migration[4.2]
   def change
-    add_reference :items, :manifestation, type: :uuid, foreign_key: true
+    add_column :items, :manifestation_id, :integer
+    add_index :items, :manifestation_id
   end
 end

@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
-  before_action :check_policy, only: [:index, :new, :create]
-  before_action :set_user, only: :index
+  before_action :check_policy, only: [:index, :new, :create, :destroy_selected]
+  before_action :get_user, only: :index
 
   # GET /messages
   # GET /messages.json
@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
       with(:receiver_id).equal_to user.id
       facet(:is_read)
     end
-    @message_facet =  Hash[*search.execute!.facet_response['facet_fields']['is_read_b']]
+    @message_facet = Hash[*search.execute!.facet_response['facet_fields']['is_read_b']]
     search.build do
       with(:is_read).equal_to is_read unless is_read.nil?
     end
@@ -42,7 +42,6 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    #@message = current_user.received_messages.find(params[:id])
     @message.transition_to!(:read) if @message.current_state != 'read'
 
     respond_to do |format|
@@ -98,7 +97,7 @@ class MessagesController < ApplicationController
   def update
     @message = current_user.received_messages.find(params[:id])
 
-    if @message.update_attributes(message_params)
+    if @message.update(message_params)
       format.html { redirect_to @message, notice: t('controller.successfully_updated', model: t('activerecord.models.message')) }
       format.json { head :no_content }
     else
@@ -120,11 +119,7 @@ class MessagesController < ApplicationController
   end
 
   def destroy_selected
-    if current_user
-      unless current_user.has_role?('Librarian')
-        access_denied
-      end
-    else
+    unless current_user
       redirect_to new_user_session_url
       return
     end
@@ -134,7 +129,7 @@ class MessagesController < ApplicationController
       end
       if messages.present?
         messages.each do |message|
-          message.destroy
+          message.destroy if message.receiver == current_user
         end
         flash[:notice] = t('message.messages_were_deleted')
         format.html { redirect_to messages_url }
@@ -146,9 +141,14 @@ class MessagesController < ApplicationController
   end
 
   private
+
   def set_message
-    @message = Message.find(params[:id])
-    authorize @message
+    if current_user
+      @message = current_user.received_messages.find(params[:id])
+      authorize @message
+    else
+      access_denied; return
+    end
   end
 
   def check_policy

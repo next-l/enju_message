@@ -14,6 +14,6 @@ end
 #  body       :text             not null
 #  position   :integer
 #  locale     :string           default("en")
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  created_at :datetime
+#  updated_at :datetime
 #

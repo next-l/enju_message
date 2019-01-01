@@ -4,8 +4,8 @@ class Message < ActiveRecord::Base
   belongs_to :message_request, optional: true
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
-  validates :subject, presence: true
-  validates :body, presence: true
+  validates :subject, :body, presence: true # , :sender
+  validates :receiver, presence: { message: :invalid }
   before_validation :set_receiver
   after_save :index
   after_destroy :remove_from_index
@@ -30,7 +30,8 @@ class Message < ActiveRecord::Base
   end
 
   paginates_per 10
-  has_many :message_transitions
+  has_many :message_transitions, autosave: false
+  after_create :set_default_state
 
   def state_machine
     @state_machine ||= MessageStateMachine.new(self, transition_class: MessageTransition)
@@ -41,7 +42,7 @@ class Message < ActiveRecord::Base
 
   def set_receiver
     if recipient
-      self.receiver = User.where(username: recipient).first
+      self.receiver = User.find_by(username: recipient)
     end
   end
 
@@ -59,6 +60,7 @@ class Message < ActiveRecord::Base
   end
 
   private
+
   def self.transition_class
     MessageTransition
   end
@@ -66,22 +68,26 @@ class Message < ActiveRecord::Base
   def self.initial_state
     :pending
   end
+
+  def set_default_state
+    transition_to!(:unread)
+  end
 end
 
 # == Schema Information
 #
 # Table name: messages
 #
-#  id                 :uuid             not null, primary key
+#  id                 :integer          not null, primary key
 #  read_at            :datetime
 #  receiver_id        :integer
 #  sender_id          :integer
 #  subject            :string           not null
 #  body               :text
 #  message_request_id :integer
-#  parent_id          :uuid
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  parent_id          :integer
+#  created_at         :datetime
+#  updated_at         :datetime
 #  lft                :integer
 #  rgt                :integer
 #  depth              :integer

@@ -1,4 +1,4 @@
-class AddPeriodicalToManifestation < ActiveRecord::Migration[5.1]
+class AddPeriodicalToManifestation < ActiveRecord::Migration[4.2]
   def change
     add_column :manifestations, :periodical, :boolean
   end

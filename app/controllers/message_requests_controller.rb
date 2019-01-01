@@ -31,19 +31,19 @@ class MessageRequestsController < ApplicationController
 
   # GET /message_requests/1/edit
   def edit
-    @message_requests = MessageTemplate.all
+    @message_requests = MessageTemplate.order(:position)
   end
 
   # PUT /message_requests/1
   # PUT /message_requests/1.json
   def update
     respond_to do |format|
-      if @message_request.update_attributes(message_request_params)
+      if @message_request.update(message_request_params)
         flash[:notice] = t('controller.successfully_updated', model: t('activerecord.models.message_request'))
         format.html { redirect_to(@message_request) }
         format.json { head :no_content }
       else
-        @message_requests = MessageTemplate.all
+        @message_requests = MessageTemplate.order(:position)
         format.html { render action: "edit" }
         format.json { render json: @message_request.errors, status: :unprocessable_entity }
       end
@@ -62,10 +62,10 @@ class MessageRequestsController < ApplicationController
   end
 
   private
+
   def set_message_request
     @message_request = MessageRequest.find(params[:id])
     authorize @message_request
-    access_denied unless LibraryGroup.site_config.network_access_allowed?(request.ip)
   end
 
   def check_policy
@@ -75,7 +75,7 @@ class MessageRequestsController < ApplicationController
   def message_request_params
     params.require(:message_request).permit(
       :body,
-      :sender, :receiver, :message_template, :body #, as: :admin
+      :sender, :receiver, :message_template, :body # , as: :admin
     )
   end
 end

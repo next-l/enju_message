@@ -5,7 +5,7 @@ def update_message_template
       status: l["status"], locale: l["locale"]
     ).first
     if template
-      template.update_attributes!(l)
+      template.update!(l)
     else
       MessageTemplate.create!(l)
     end

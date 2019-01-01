@@ -1,4 +1,3 @@
-require 'erubis'
 class MessageRequest < ActiveRecord::Base
   include Statesman::Adapters::ActiveRecordQueries
   scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}
@@ -9,12 +8,12 @@ class MessageRequest < ActiveRecord::Base
   has_many :messages
 
   validates_associated :sender, :receiver, :message_template
-  validates_presence_of :sender, :receiver, :message_template
-  validates_presence_of :body, on: :update
+  validates :sender, :receiver, :message_template, presence: true
+  validates :body, presence: { on: :update }
 
   paginates_per 10
 
-  has_many :message_request_transitions
+  has_many :message_request_transitions, autosave: false
 
   def state_machine
     @state_machine ||= MessageRequestStateMachine.new(self, transition_class: MessageRequestTransition)
@@ -26,15 +25,14 @@ class MessageRequest < ActiveRecord::Base
   def send_message
     message = nil
     MessageRequest.transaction do
-      message = Message.new
-      message.sender = sender
-      message.recipient  = receiver.username
-      message.subject = subject
-      message.body = body
-      message.body = 'test'
-      message.save!
-      self.sent_at = Time.zone.now
-      save(validate: false)
+      message = Message.create!(
+        sender: sender,
+        recipient: receiver.username,
+        subject: subject,
+        body: body,
+        message_request: self
+      )
+      update!(sent_at: Time.zone.now)
       if ['reservation_expired_for_patron', 'reservation_expired_for_patron'].include?(message_template.status)
         self.receiver.reserves.each do |reserve|
           reserve.expiration_notice_to_patron = true
@@ -54,7 +52,7 @@ class MessageRequest < ActiveRecord::Base
       receiver: receiver,
       locale: receiver.profile.locale
     }.merge(options)
-    update_attributes!({body: message_template.embed_body(options)})
+    update!({body: message_template.embed_body(options)})
   end
 
   def self.send_messages
@@ -66,6 +64,7 @@ class MessageRequest < ActiveRecord::Base
   end
 
   private
+
   def self.transition_class
     MessageRequestTransition
   end
@@ -86,6 +85,6 @@ end
 #  sent_at             :datetime
 #  deleted_at          :datetime
 #  body                :text
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
+#  created_at          :datetime
+#  updated_at          :datetime
 #

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Dummy</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Dummy</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-  </head>
+<%= yield %>
 
-  <body>
-    <%= yield %>
-  </body>
+</body>
 </html>

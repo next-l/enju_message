@@ -211,6 +211,7 @@ describe MessageRequestsController do
       describe 'with invalid params' do
         it 'assigns the requested message_request as @message_request' do
           put :update, params: { id: @message_request.id, message_request: @invalid_attrs }
+          response.should redirect_to(new_user_session_url)
         end
       end
     end

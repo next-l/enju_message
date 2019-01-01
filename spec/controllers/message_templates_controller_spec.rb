@@ -27,7 +27,7 @@ describe MessageTemplatesController do
     describe 'When logged in as User' do
       login_fixture_user
 
-      it 'assigns nil as @message_templates' do
+      it 'assigns empty as @message_templates' do
         get :index
         assigns(:message_templates).should be_nil
         response.should be_forbidden
@@ -35,7 +35,7 @@ describe MessageTemplatesController do
     end
 
     describe 'When not logged in' do
-      it 'assigns nil as @message_templates' do
+      it 'assigns empty as @message_templates' do
         get :index
         assigns(:message_templates).should be_nil
         response.should redirect_to(new_user_session_url)

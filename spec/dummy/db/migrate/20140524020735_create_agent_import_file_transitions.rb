@@ -1,11 +1,11 @@
-class CreateAgentImportFileTransitions < ActiveRecord::Migration[5.1]
+class CreateAgentImportFileTransitions < ActiveRecord::Migration[4.2]
   def change
     create_table :agent_import_file_transitions do |t|
       t.string :to_state
       if ActiveRecord::Base.configurations[Rails.env]["adapter"].try(:match, /mysql/)
-        t.jsonb :metadata
+        t.text :metadata
       else
-        t.jsonb :metadata, default: "{}"
+        t.text :metadata, default: "{}"
       end
       t.integer :sort_key
       t.integer :agent_import_file_id

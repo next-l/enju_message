@@ -8,7 +8,7 @@
 
   <div class="field">
     <%= f.label :locale %><br />
-    <%= f.select(:locale, @available_languages.collect{|language| [language.display_name, language.iso_639_1]}) %>
+    <%= f.select(:locale, @available_languages.collect{|language| [language.display_name.localize, language.iso_639_1]}) %>
   </div>
 
   <div class="field">

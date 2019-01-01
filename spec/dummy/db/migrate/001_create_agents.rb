@@ -1,4 +1,4 @@
-class CreateAgents < ActiveRecord::Migration[5.1]
+class CreateAgents < ActiveRecord::Migration[4.2]
   def change
     create_table :agents do |t|
       t.string :last_name
@@ -32,13 +32,13 @@ class CreateAgents < ActiveRecord::Migration[5.1]
       t.text :region
       t.datetime :date_of_birth
       t.datetime :date_of_death
-      t.integer :language_id, :default => 1, :null => false
-      t.integer :country_id, :default => 1, :null => false
-      t.integer :agent_type_id, :default => 1, :null => false
-      t.integer :lock_version, :default => 0, :null => false
+      t.integer :language_id, default: 1, null: false
+      t.integer :country_id, default: 1, null: false
+      t.integer :agent_type_id, default: 1, null: false
+      t.integer :lock_version, default: 0, null: false
       t.text :note
-      t.integer :required_role_id, :default => 1, :null => false
-      t.integer :required_score, :default => 0, :null => false
+      t.integer :required_role_id, default: 1, null: false
+      t.integer :required_score, default: 0, null: false
       t.text :email
       t.text :url
     end

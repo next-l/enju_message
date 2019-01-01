@@ -1,9 +1,9 @@
 FactoryBot.define do
-  factory :message do |f|
-    f.recipient{FactoryBot.create(:user).username}
-    f.sender{FactoryBot.create(:user)}
-    f.message_request{FactoryBot.create(:message_request)}
-    f.subject 'new message'
-    f.body 'new message body is really short'
+  factory :message do
+    recipient{FactoryBot.create(:profile).user.username}
+    sender{FactoryBot.create(:profile).user}
+    subject 'new message'
+    body 'new message body is really short'
+    association :message_request
   end
 end

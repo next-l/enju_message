@@ -46,16 +46,16 @@ end
 #
 # Table name: messages
 #
-#  id                 :uuid             not null, primary key
+#  id                 :integer          not null, primary key
 #  read_at            :datetime
 #  receiver_id        :integer
 #  sender_id          :integer
 #  subject            :string           not null
 #  body               :text
 #  message_request_id :integer
-#  parent_id          :uuid
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  parent_id          :integer
+#  created_at         :datetime
+#  updated_at         :datetime
 #  lft                :integer
 #  rgt                :integer
 #  depth              :integer
