@@ -8,13 +8,13 @@ end
 #
 # Table name: message_requests
 #
-#  id                  :integer          not null, primary key
-#  sender_id           :integer
-#  receiver_id         :integer
-#  message_template_id :integer
+#  id                  :bigint(8)        not null, primary key
+#  sender_id           :bigint(8)
+#  receiver_id         :bigint(8)
+#  message_template_id :bigint(8)
 #  sent_at             :datetime
 #  deleted_at          :datetime
 #  body                :text
-#  created_at          :datetime
-#  updated_at          :datetime
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
