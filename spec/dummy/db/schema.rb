@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_19_144223) do
+ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -425,12 +425,10 @@ ActiveRecord::Schema.define(version: 2019_01_19_144223) do
     t.string "binding_call_number"
     t.datetime "binded_at"
     t.bigint "manifestation_id", null: false
-    t.bigint "shelf_id", null: false
     t.index ["binding_item_identifier"], name: "index_items_on_binding_item_identifier"
     t.index ["bookstore_id"], name: "index_items_on_bookstore_id"
     t.index ["item_identifier"], name: "index_items_on_item_identifier", unique: true
     t.index ["manifestation_id"], name: "index_items_on_manifestation_id"
-    t.index ["shelf_id"], name: "index_items_on_shelf_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -1127,7 +1125,6 @@ ActiveRecord::Schema.define(version: 2019_01_19_144223) do
   add_foreign_key "issn_records", "manifestations"
   add_foreign_key "items", "bookstores"
   add_foreign_key "items", "manifestations"
-  add_foreign_key "items", "shelves"
   add_foreign_key "libraries", "library_groups"
   add_foreign_key "library_group_translations", "library_groups"
   add_foreign_key "library_groups", "users"
