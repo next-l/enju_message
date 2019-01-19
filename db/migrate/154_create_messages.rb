@@ -1,5 +1,5 @@
 class CreateMessages < ActiveRecord::Migration[5.2]
-  def self.up
+  def change
     create_table :messages, force: true do |t|
       t.datetime :read_at
       t.references :sender, index: true
@@ -11,9 +11,5 @@ class CreateMessages < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :messages
   end
 end
