@@ -638,7 +638,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.bigint "receiver_id"
     t.bigint "message_template_id"
     t.datetime "sent_at"
-    t.datetime "deleted_at"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -971,7 +970,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "user_export_file_transitions", force: :cascade do |t|
     t.string "to_state"
-    t.text "metadata", default: "{}"
+    t.jsonb "metadata", default: {}
     t.integer "sort_key"
     t.bigint "user_export_file_id"
     t.datetime "created_at", null: false
@@ -979,7 +978,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.boolean "most_recent", null: false
     t.index ["sort_key", "user_export_file_id"], name: "index_user_export_file_transitions_on_sort_key_and_file_id", unique: true
     t.index ["user_export_file_id", "most_recent"], name: "index_user_export_file_transitions_parent_most_recent", unique: true, where: "most_recent"
-    t.index ["user_export_file_id"], name: "index_user_export_file_transitions_on_file_id"
     t.index ["user_export_file_id"], name: "index_user_export_file_transitions_on_user_export_file_id"
   end
 
@@ -1017,7 +1015,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "user_import_file_transitions", force: :cascade do |t|
     t.string "to_state"
-    t.text "metadata", default: "{}"
+    t.jsonb "metadata", default: {}
     t.integer "sort_key"
     t.bigint "user_import_file_id"
     t.datetime "created_at", null: false

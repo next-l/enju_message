@@ -13,7 +13,6 @@ end
 #  receiver_id         :bigint(8)
 #  message_template_id :bigint(8)
 #  sent_at             :datetime
-#  deleted_at          :datetime
 #  body                :text
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
