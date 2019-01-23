@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "accepts", force: :cascade do |t|
     t.bigint "basket_id"
-    t.bigint "item_id"
+    t.uuid "item_id"
     t.bigint "librarian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "birth_date"
     t.string "death_date"
     t.string "agent_identifier"
-    t.bigint "profile_id"
+    t.uuid "profile_id"
     t.index ["agent_identifier"], name: "index_agents_on_agent_identifier"
     t.index ["country_id"], name: "index_agents_on_country_id"
     t.index ["full_name"], name: "index_agents_on_full_name"
@@ -278,7 +278,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "donates", force: :cascade do |t|
     t.bigint "agent_id", null: false
-    t.bigint "item_id", null: false
+    t.uuid "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["agent_id"], name: "index_donates_on_agent_id"
@@ -338,7 +338,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.bigint "profile_id"
+    t.uuid "profile_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "provider"
@@ -411,7 +411,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["manifestation_id"], name: "index_issn_records_on_manifestation_id"
   end
 
-  create_table "items", force: :cascade do |t|
+  create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "call_number"
     t.string "item_identifier"
     t.datetime "created_at", null: false
@@ -676,14 +676,14 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["sort_key", "message_id"], name: "index_message_transitions_on_sort_key_and_message_id", unique: true
   end
 
-  create_table "messages", force: :cascade do |t|
+  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "read_at"
     t.bigint "sender_id"
     t.bigint "receiver_id"
     t.string "subject", null: false
     t.text "body"
     t.bigint "message_request_id"
-    t.bigint "parent_id"
+    t.uuid "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "lft"
@@ -697,7 +697,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "owns", force: :cascade do |t|
     t.bigint "agent_id", null: false
-    t.bigint "item_id", null: false
+    t.uuid "item_id", null: false
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -746,8 +746,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["manifestation_id"], name: "index_produces_on_manifestation_id"
   end
 
-  create_table "profiles", force: :cascade do |t|
-    t.bigint "user_group_id"
+  create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_group_id", null: false
     t.bigint "library_id"
     t.string "locale"
     t.string "user_number"
@@ -864,7 +864,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   create_table "resource_import_results", force: :cascade do |t|
     t.bigint "resource_import_file_id"
     t.bigint "manifestation_id"
-    t.bigint "item_id"
+    t.uuid "item_id"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -998,8 +998,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["user_id"], name: "index_user_export_files_on_user_id"
   end
 
-  create_table "user_groups", force: :cascade do |t|
-    t.string "name"
+  create_table "user_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
     t.jsonb "display_name", default: {}, null: false
     t.text "note"
     t.integer "position", default: 1, null: false
@@ -1046,7 +1046,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.datetime "updated_at", null: false
     t.string "user_encoding"
     t.bigint "default_library_id"
-    t.bigint "default_user_group_id"
+    t.uuid "default_user_group_id"
     t.index ["default_library_id"], name: "index_user_import_files_on_default_library_id"
     t.index ["default_user_group_id"], name: "index_user_import_files_on_default_user_group_id"
     t.index ["user_id"], name: "index_user_import_files_on_user_id"
@@ -1082,7 +1082,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "unlock_token"
     t.datetime "locked_at"
     t.datetime "confirmed_at"
-    t.bigint "profile_id"
+    t.uuid "profile_id"
     t.index ["email"], name: "index_users_on_email"
     t.index ["profile_id"], name: "index_users_on_profile_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -1111,6 +1111,9 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["librarian_id"], name: "index_withdraws_on_librarian_id"
   end
 
+  add_foreign_key "accepts", "baskets"
+  add_foreign_key "accepts", "items"
+  add_foreign_key "accepts", "users", column: "librarian_id"
   add_foreign_key "agent_import_files", "users"
   add_foreign_key "agent_import_results", "agent_import_files"
   add_foreign_key "agent_merges", "agents"
@@ -1134,13 +1137,13 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   add_foreign_key "library_groups", "users"
   add_foreign_key "manifestation_relationships", "manifestations", column: "child_id"
   add_foreign_key "manifestation_relationships", "manifestations", column: "parent_id"
+  add_foreign_key "messages", "messages", column: "parent_id"
   add_foreign_key "resource_export_files", "users"
   add_foreign_key "resource_import_files", "users"
   add_foreign_key "resource_import_results", "resource_import_files"
   add_foreign_key "series_statement_merges", "series_statement_merge_lists"
   add_foreign_key "series_statement_merges", "series_statements"
   add_foreign_key "series_statements", "manifestations"
-  add_foreign_key "subscribes", "manifestations", column: "work_id"
   add_foreign_key "subscribes", "subscriptions"
   add_foreign_key "user_has_roles", "roles"
   add_foreign_key "user_has_roles", "users"

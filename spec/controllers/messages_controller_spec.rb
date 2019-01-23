@@ -447,13 +447,13 @@ describe MessagesController do
       end
 
       it 'should not update my message' do
-        put :update, params: { id: 2, message: {} }
+        put :update, params: { id: messages(:user2_to_user1_1), message: {} }
         response.should be_forbidden
       end
 
       it "should not update other user's message" do
         lambda do
-          put :update, params: { id: 1, message: {} }
+          put :update, params: { id: messages(:user1_to_user2_1), message: {} }
         end.should raise_error(ActiveRecord::RecordNotFound)
         response.should be_successful
       end
@@ -461,7 +461,7 @@ describe MessagesController do
 
     describe 'When not logged in' do
       it 'assigns the requested message as @message' do
-        put :update, params: { id: 2, message: {} }
+        put :update, params: { id: messages(:user2_to_user1_1), message: {} }
         response.should redirect_to new_user_session_url
       end
     end
@@ -481,14 +481,14 @@ describe MessagesController do
       login_fixture_user
 
       it 'should destroy own message' do
-        delete :destroy, params: { id: 2 }
+        delete :destroy, params: { id: messages(:user2_to_user1_1) }
         response.should redirect_to messages_url
         response.should_not be_forbidden
       end
 
       it "should not destroy other user's message" do
         lambda do
-          delete :destroy, params: { id: 1 }
+          delete :destroy, params: { id: messages(:user1_to_user2_1) }
         end.should raise_error(ActiveRecord::RecordNotFound)
         response.should be_successful
       end
@@ -496,12 +496,12 @@ describe MessagesController do
 
     describe 'When not logged in' do
       it 'destroys the requested message' do
-        delete :destroy, params: { id: 1 }
+        delete :destroy, params: { id: messages(:user1_to_user2_1) }
         response.should redirect_to(new_user_session_url)
       end
 
       it 'should be redirected to new_user_session_url' do
-        delete :destroy, params: { id: 1 }
+        delete :destroy, params: { id: messages(:user1_to_user2_1) }
         response.should redirect_to(new_user_session_url)
       end
     end
