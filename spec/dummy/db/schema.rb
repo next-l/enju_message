@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_budget_types_on_name", unique: true
   end
 
   create_table "carrier_types", force: :cascade do |t|
@@ -452,7 +453,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["name"], name: "index_languages_on_name", unique: true
   end
 
-  create_table "libraries", force: :cascade do |t|
+  create_table "libraries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.jsonb "display_name", default: {}, null: false
     t.string "short_display_name", null: false
@@ -748,7 +749,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_group_id", null: false
-    t.bigint "library_id"
+    t.uuid "library_id"
     t.string "locale"
     t.string "user_number"
     t.text "full_name"
@@ -878,10 +879,10 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "name", null: false
     t.jsonb "display_name", default: {}, null: false
     t.text "note"
-    t.integer "score", default: 0, null: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
   create_table "search_engines", force: :cascade do |t|
@@ -937,11 +938,11 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["series_statement_identifier"], name: "index_series_statements_on_series_statement_identifier"
   end
 
-  create_table "shelves", force: :cascade do |t|
+  create_table "shelves", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.jsonb "display_name", default: {}, null: false
     t.text "note"
-    t.bigint "library_id", null: false
+    t.uuid "library_id", null: false
     t.integer "items_count", default: 0, null: false
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
@@ -952,7 +953,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "subscribes", force: :cascade do |t|
     t.bigint "subscription_id", null: false
-    t.bigint "work_id", null: false
+    t.uuid "work_id", null: false
     t.datetime "start_at", null: false
     t.datetime "end_at", null: false
     t.datetime "created_at", null: false
@@ -1007,6 +1008,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.datetime "updated_at", null: false
     t.integer "valid_period_for_new_user", default: 0, null: false
     t.datetime "expired_at"
+    t.index ["name"], name: "index_user_groups_on_name", unique: true
   end
 
   create_table "user_has_roles", force: :cascade do |t|
@@ -1045,7 +1047,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "user_encoding"
-    t.bigint "default_library_id"
+    t.uuid "default_library_id"
     t.uuid "default_user_group_id"
     t.index ["default_library_id"], name: "index_user_import_files_on_default_library_id"
     t.index ["default_user_group_id"], name: "index_user_import_files_on_default_user_group_id"
@@ -1102,7 +1104,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "withdraws", force: :cascade do |t|
     t.bigint "basket_id"
-    t.bigint "item_id"
+    t.uuid "item_id"
     t.bigint "librarian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1112,7 +1114,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   add_foreign_key "accepts", "baskets"
-  add_foreign_key "accepts", "items"
   add_foreign_key "accepts", "users", column: "librarian_id"
   add_foreign_key "agent_import_files", "users"
   add_foreign_key "agent_import_results", "agent_import_files"
@@ -1120,6 +1121,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   add_foreign_key "agent_relationships", "agents", column: "child_id"
   add_foreign_key "agent_relationships", "agents", column: "parent_id"
   add_foreign_key "agents", "profiles"
+  add_foreign_key "baskets", "users"
+  add_foreign_key "colors", "library_groups"
   add_foreign_key "doi_records", "manifestations"
   add_foreign_key "donates", "agents"
   add_foreign_key "donates", "items"
@@ -1144,8 +1147,16 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   add_foreign_key "series_statement_merges", "series_statement_merge_lists"
   add_foreign_key "series_statement_merges", "series_statements"
   add_foreign_key "series_statements", "manifestations"
+  add_foreign_key "shelves", "libraries"
   add_foreign_key "subscribes", "subscriptions"
+  add_foreign_key "subscriptions", "users"
+  add_foreign_key "user_export_files", "users"
   add_foreign_key "user_has_roles", "roles"
   add_foreign_key "user_has_roles", "users"
+  add_foreign_key "user_import_files", "users"
+  add_foreign_key "user_import_results", "user_import_files"
+  add_foreign_key "user_import_results", "users"
   add_foreign_key "users", "profiles", on_delete: :cascade
+  add_foreign_key "withdraws", "baskets"
+  add_foreign_key "withdraws", "users", column: "librarian_id"
 end
