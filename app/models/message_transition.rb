@@ -13,7 +13,7 @@ end
 #  to_state    :string
 #  metadata    :jsonb
 #  sort_key    :integer
-#  message_id  :bigint(8)
+#  message_id  :uuid
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  most_recent :boolean          not null

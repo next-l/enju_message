@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "agent_import_results", force: :cascade do |t|
     t.bigint "agent_import_file_id", null: false
-    t.bigint "agent_id"
+    t.uuid "agent_id"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "agent_merges", force: :cascade do |t|
-    t.bigint "agent_id", null: false
+    t.uuid "agent_id", null: false
     t.bigint "agent_merge_list_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -94,8 +94,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "agent_relationships", force: :cascade do |t|
-    t.bigint "parent_id", null: false
-    t.bigint "child_id", null: false
+    t.uuid "parent_id", null: false
+    t.uuid "child_id", null: false
     t.bigint "agent_relationship_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "agents", force: :cascade do |t|
+  create_table "agents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "last_name"
     t.string "middle_name"
     t.string "first_name"
@@ -206,10 +206,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "attachment_file_name"
-    t.string "attachment_content_type"
-    t.bigint "attachment_file_size"
-    t.datetime "attachment_updated_at"
+    t.index ["name"], name: "index_carrier_types_on_name", unique: true
   end
 
   create_table "colors", force: :cascade do |t|
@@ -255,8 +252,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "creates", force: :cascade do |t|
-    t.bigint "agent_id", null: false
-    t.bigint "work_id", null: false
+    t.uuid "agent_id", null: false
+    t.uuid "work_id", null: false
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -270,7 +267,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "display_body", null: false
     t.string "source"
     t.jsonb "response", default: {}, null: false
-    t.bigint "manifestation_id", null: false
+    t.uuid "manifestation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_doi_records_on_body", unique: true
@@ -278,7 +275,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "donates", force: :cascade do |t|
-    t.bigint "agent_id", null: false
+    t.uuid "agent_id", null: false
     t.uuid "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -326,7 +323,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   create_table "identifiers", force: :cascade do |t|
     t.string "body", null: false
     t.integer "identifier_type_id", null: false
-    t.bigint "manifestation_id", null: false
+    t.uuid "manifestation_id", null: false
     t.boolean "primary"
     t.integer "position"
     t.datetime "created_at", null: false
@@ -362,8 +359,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "import_requests", force: :cascade do |t|
-    t.string "isbn"
-    t.bigint "manifestation_id"
+    t.string "isbn", null: false
+    t.uuid "manifestation_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -374,7 +371,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "isbn_record_and_manifestations", force: :cascade do |t|
     t.bigint "isbn_record_id", null: false
-    t.bigint "manifestation_id", null: false
+    t.uuid "manifestation_id", null: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -393,7 +390,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "issn_record_and_manifestations", force: :cascade do |t|
     t.bigint "issn_record_id", null: false
-    t.bigint "manifestation_id", null: false
+    t.uuid "manifestation_id", null: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -405,11 +402,9 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "body", null: false
     t.string "issn_type"
     t.string "source"
-    t.bigint "manifestation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_issn_records_on_body", unique: true
-    t.index ["manifestation_id"], name: "index_issn_records_on_manifestation_id"
   end
 
   create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -417,7 +412,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "item_identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "shelf_id"
+    t.uuid "shelf_id"
     t.boolean "include_supplements", default: false, null: false
     t.text "note"
     t.string "url"
@@ -430,7 +425,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "binding_item_identifier"
     t.string "binding_call_number"
     t.datetime "binded_at"
-    t.bigint "manifestation_id", null: false
+    t.uuid "manifestation_id", null: false
     t.index ["binding_item_identifier"], name: "index_items_on_binding_item_identifier"
     t.index ["bookstore_id"], name: "index_items_on_bookstore_id"
     t.index ["item_identifier"], name: "index_items_on_item_identifier", unique: true
@@ -513,10 +508,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.integer "pub_year_facet_range_interval", default: 10
     t.bigint "user_id"
     t.boolean "csv_charset_conversion", default: false, null: false
-    t.string "header_logo_file_name"
-    t.string "header_logo_content_type"
-    t.bigint "header_logo_file_size"
-    t.datetime "header_logo_updated_at"
     t.text "header_logo_meta"
     t.jsonb "login_banner", default: {}, null: false
     t.jsonb "footer_banner", default: {}, null: false
@@ -544,8 +535,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "manifestation_relationships", force: :cascade do |t|
-    t.bigint "parent_id", null: false
-    t.bigint "child_id", null: false
+    t.uuid "parent_id", null: false
+    t.uuid "child_id", null: false
     t.bigint "manifestation_relationship_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -554,7 +545,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.index ["parent_id"], name: "index_manifestation_relationships_on_parent_id"
   end
 
-  create_table "manifestations", force: :cascade do |t|
+  create_table "manifestations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "original_title", null: false
     t.text "title_alternative"
     t.text "title_transcription"
@@ -584,10 +575,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.integer "required_role_id", default: 1, null: false
     t.integer "frequency_id", default: 1, null: false
     t.boolean "subscription_master", default: false, null: false
-    t.string "attachment_file_name"
-    t.string "attachment_content_type"
-    t.integer "attachment_file_size"
-    t.datetime "attachment_updated_at"
     t.text "title_alternative_transcription"
     t.text "description"
     t.text "abstract"
@@ -603,7 +590,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.integer "serial_number"
     t.integer "content_type_id", default: 1
     t.integer "year_of_publication"
-    t.text "attachment_meta"
     t.integer "month_of_publication"
     t.boolean "fulltext_content"
     t.boolean "serial"
@@ -697,7 +683,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "owns", force: :cascade do |t|
-    t.bigint "agent_id", null: false
+    t.uuid "agent_id", null: false
     t.uuid "item_id", null: false
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
@@ -707,7 +693,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "picture_files", force: :cascade do |t|
-    t.bigint "picture_attachable_id", null: false
+    t.uuid "picture_attachable_id", null: false
     t.string "picture_attachable_type", null: false
     t.string "content_type"
     t.text "title"
@@ -737,8 +723,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "produces", force: :cascade do |t|
-    t.bigint "agent_id", null: false
-    t.bigint "manifestation_id", null: false
+    t.uuid "agent_id", null: false
+    t.uuid "manifestation_id", null: false
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -775,8 +761,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   end
 
   create_table "realizes", force: :cascade do |t|
-    t.bigint "agent_id", null: false
-    t.bigint "expression_id", null: false
+    t.uuid "agent_id", null: false
+    t.uuid "expression_id", null: false
     t.integer "position", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -818,10 +804,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "resource_export_files", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "resource_export_file_name"
-    t.string "resource_export_content_type"
-    t.bigint "resource_export_file_size"
-    t.datetime "resource_export_updated_at"
     t.datetime "executed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -857,14 +839,14 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.string "resource_import_fingerprint"
     t.text "error_message"
     t.string "user_encoding"
-    t.bigint "default_shelf_id"
+    t.uuid "default_shelf_id"
     t.index ["default_shelf_id"], name: "index_resource_import_files_on_default_shelf_id"
     t.index ["user_id"], name: "index_resource_import_files_on_user_id"
   end
 
   create_table "resource_import_results", force: :cascade do |t|
     t.bigint "resource_import_file_id"
-    t.bigint "manifestation_id"
+    t.uuid "manifestation_id"
     t.uuid "item_id"
     t.text "body"
     t.datetime "created_at", null: false
@@ -925,14 +907,14 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.text "title_transcription"
     t.text "title_alternative"
     t.string "series_statement_identifier"
-    t.bigint "manifestation_id"
+    t.uuid "manifestation_id"
     t.text "note"
     t.text "title_subseries_transcription"
     t.text "creator_string"
     t.text "volume_number_string"
     t.text "volume_number_transcription_string"
     t.boolean "series_master"
-    t.integer "root_manifestation_id"
+    t.uuid "root_manifestation_id"
     t.index ["manifestation_id"], name: "index_series_statements_on_manifestation_id"
     t.index ["root_manifestation_id"], name: "index_series_statements_on_root_manifestation_id"
     t.index ["series_statement_identifier"], name: "index_series_statements_on_series_statement_identifier"
@@ -989,10 +971,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
 
   create_table "user_export_files", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "user_export_file_name"
-    t.string "user_export_content_type"
-    t.bigint "user_export_file_size"
-    t.datetime "user_export_updated_at"
     t.datetime "executed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1037,11 +1015,6 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
     t.bigint "user_id"
     t.text "note"
     t.datetime "executed_at"
-    t.string "user_import_file_name"
-    t.string "user_import_content_type"
-    t.integer "user_import_file_size"
-    t.datetime "user_import_updated_at"
-    t.string "user_import_fingerprint"
     t.string "edit_mode"
     t.text "error_message"
     t.datetime "created_at", null: false
@@ -1123,16 +1096,18 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   add_foreign_key "agents", "profiles"
   add_foreign_key "baskets", "users"
   add_foreign_key "colors", "library_groups"
+  add_foreign_key "creates", "agents"
+  add_foreign_key "creates", "manifestations", column: "work_id"
   add_foreign_key "doi_records", "manifestations"
   add_foreign_key "donates", "agents"
   add_foreign_key "donates", "items"
   add_foreign_key "identifiers", "manifestations"
+  add_foreign_key "import_requests", "manifestations"
   add_foreign_key "import_requests", "users"
   add_foreign_key "isbn_record_and_manifestations", "isbn_records"
   add_foreign_key "isbn_record_and_manifestations", "manifestations"
   add_foreign_key "issn_record_and_manifestations", "issn_records"
   add_foreign_key "issn_record_and_manifestations", "manifestations"
-  add_foreign_key "issn_records", "manifestations"
   add_foreign_key "items", "bookstores"
   add_foreign_key "items", "manifestations"
   add_foreign_key "libraries", "library_groups"
@@ -1141,6 +1116,10 @@ ActiveRecord::Schema.define(version: 2019_01_02_034126) do
   add_foreign_key "manifestation_relationships", "manifestations", column: "child_id"
   add_foreign_key "manifestation_relationships", "manifestations", column: "parent_id"
   add_foreign_key "messages", "messages", column: "parent_id"
+  add_foreign_key "produces", "agents"
+  add_foreign_key "produces", "manifestations"
+  add_foreign_key "realizes", "agents"
+  add_foreign_key "realizes", "manifestations", column: "expression_id"
   add_foreign_key "resource_export_files", "users"
   add_foreign_key "resource_import_files", "users"
   add_foreign_key "resource_import_results", "resource_import_files"
