@@ -14,7 +14,7 @@ gemspec
 # To use debugger
 # gem 'debugger'
 gem 'rails-controller-testing'
-gem 'mobility'
+gem 'json_translate'
 gem 'enju_seed', github: 'next-l/enju_seed'
 gem 'enju_leaf', github: 'next-l/enju_leaf'
 gem 'enju_library', github: 'next-l/enju_library'
