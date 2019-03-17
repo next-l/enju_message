@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_135957) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "accepts", force: :cascade do |t|
+  create_table "accepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "basket_id"
     t.uuid "item_id"
     t.bigint "librarian_id"
@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_135957) do
     t.index ["user_id"], name: "index_baskets_on_user_id"
   end
 
-  create_table "bookstores", force: :cascade do |t|
+  create_table "bookstores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "name", null: false
     t.string "zip_code"
     t.text "address"
@@ -433,7 +433,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_135957) do
     t.integer "lock_version", default: 0, null: false
     t.integer "required_role_id", default: 1, null: false
     t.datetime "acquired_at"
-    t.bigint "bookstore_id"
+    t.uuid "bookstore_id"
     t.integer "budget_type_id"
     t.string "binding_item_identifier"
     t.string "binding_call_number"
@@ -488,17 +488,6 @@ ActiveRecord::Schema.define(version: 2019_02_08_135957) do
     t.index ["country_id"], name: "index_libraries_on_country_id"
     t.index ["library_group_id"], name: "index_libraries_on_library_group_id"
     t.index ["name"], name: "index_libraries_on_name", unique: true
-  end
-
-  create_table "library_group_translations", force: :cascade do |t|
-    t.text "login_banner"
-    t.text "footer_banner"
-    t.string "locale", null: false
-    t.bigint "library_group_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["library_group_id", "locale"], name: "index_library_group_translations_on_library_group_and_locale", unique: true
-    t.index ["locale"], name: "index_library_group_translations_on_locale"
   end
 
   create_table "library_groups", force: :cascade do |t|
@@ -1071,7 +1060,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_135957) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "withdraws", force: :cascade do |t|
+  create_table "withdraws", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "basket_id"
     t.uuid "item_id"
     t.bigint "librarian_id"
@@ -1109,7 +1098,6 @@ ActiveRecord::Schema.define(version: 2019_02_08_135957) do
   add_foreign_key "items", "bookstores"
   add_foreign_key "items", "manifestations"
   add_foreign_key "libraries", "library_groups"
-  add_foreign_key "library_group_translations", "library_groups"
   add_foreign_key "library_groups", "users"
   add_foreign_key "manifestation_relationships", "manifestations", column: "child_id"
   add_foreign_key "manifestation_relationships", "manifestations", column: "parent_id"

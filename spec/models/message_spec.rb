@@ -56,4 +56,7 @@ end
 #  parent_id          :uuid
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  lft                :integer
+#  rgt                :integer
+#  depth              :integer
 #
