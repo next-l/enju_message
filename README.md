@@ -1,4 +1,4 @@
-# EnjuSubject
+# EnjuMessage
 [![CircleCI](https://circleci.com/gh/next-l/enju_message.svg?style=svg)](https://circleci.com/gh/next-l/enju_message)
 [![Coverage Status](https://coveralls.io/repos/github/next-l/enju_message/badge.svg?branch=master)](https://coveralls.io/github/next-l/enju_message?branch=master)
 [![security](https://hakiri.io/github/next-l/enju_message/master.svg)](https://hakiri.io/github/next-l/enju_message/master)
