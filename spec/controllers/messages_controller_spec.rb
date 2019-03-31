@@ -271,7 +271,7 @@ describe MessagesController do
           message = assigns(:message)
           message.should_not be_valid
           message.errors.should have_key :receiver
-          message.errors.added?(:receiver, 'is invalid').should be_truthy
+          message.errors.added?(:receiver, :blank).should be_truthy
           response.should render_template('new')
         end
 
