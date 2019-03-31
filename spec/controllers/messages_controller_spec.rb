@@ -264,6 +264,7 @@ describe MessagesController do
           response.should be_successful
         end
       end
+
       describe 'with invalid recipient' do
         it "re-renders the 'new' template" do
           post :create, params: { message: @invalid_user_attrs }
