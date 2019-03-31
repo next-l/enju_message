@@ -264,15 +264,17 @@ describe MessagesController do
           response.should be_successful
         end
       end
+
       describe 'with invalid recipient' do
         it "re-renders the 'new' template" do
           post :create, params: { message: @invalid_user_attrs }
           message = assigns(:message)
           message.should_not be_valid
           message.errors.should have_key :receiver
-          message.errors.added?(:receiver, :invalid).should be_truthy
+          message.errors.added?(:receiver, 'is invalid').should be_truthy
           response.should render_template('new')
         end
+
         it "re-renders the 'new' template" do
           post :create, params: { message: @blank_user_attrs }
           message = assigns(:message)
