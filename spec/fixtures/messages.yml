@@ -1,5 +1,5 @@
 user1_to_user2_1:
-  id: 60496b1e-66c5-44a4-8a6a-4439d28260ea
+  id: 1
   sender_id: 3
   receiver_id: 4
   subject: 'First Message'
@@ -9,7 +9,7 @@ user1_to_user2_1:
   lft: 1
   rgt: 2
 user2_to_user1_1:
-  id: e9bacd1a-1b7f-4047-9ae7-6d2a9d6165ec
+  id: 2
   sender_id: 4
   receiver_id: 3
   subject: 'RE: First Message'
@@ -18,7 +18,7 @@ user2_to_user1_1:
   lft: 3
   rgt: 4
 user1_to_librarian_2:
-  id: 0a9b93d9-50d2-4e9d-81df-b762ff8f249d
+  id: 3
   sender_id: 3
   receiver_id: 4
   subject: 'Second Message'
@@ -27,7 +27,7 @@ user1_to_librarian_2:
   lft: 5
   rgt: 6
 librarian2_to_user2:
-  id: 07cce69a-52bd-4668-93e5-941ad2f17455
+  id: 4
   sender_id: 4
   receiver_id: 5
   subject: 'Dad!'
@@ -40,14 +40,14 @@ librarian2_to_user2:
 #
 # Table name: messages
 #
-#  id                 :uuid             not null, primary key
+#  id                 :bigint(8)        not null, primary key
 #  read_at            :datetime
 #  sender_id          :bigint(8)
 #  receiver_id        :bigint(8)
 #  subject            :string           not null
 #  body               :text
 #  message_request_id :bigint(8)
-#  parent_id          :uuid
+#  parent_id          :bigint(8)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  lft                :integer

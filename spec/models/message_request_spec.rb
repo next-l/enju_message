@@ -8,7 +8,7 @@ end
 #
 # Table name: message_requests
 #
-#  id                  :uuid             not null, primary key
+#  id                  :bigint(8)        not null, primary key
 #  sender_id           :bigint(8)
 #  receiver_id         :bigint(8)
 #  message_template_id :bigint(8)
