@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "coveralls"
   s.add_development_dependency "enju_event", "~> 0.3.1"
-  s.add_development_dependency "enju_leaf", "~> 1.3.1"
+  s.add_development_dependency "enju_leaf", "~> 1.3.2"
   s.add_development_dependency "factory_bot_rails", "~> 4.11"
   s.add_development_dependency "mysql2"
   s.add_development_dependency "pg"
