@@ -9,7 +9,7 @@ end
 # Table name: message_requests
 #
 #  id                  :integer          not null, primary key
-#  sender_id           :integer
+#  sender_id           :bigint
 #  receiver_id         :integer
 #  message_template_id :integer
 #  sent_at             :datetime

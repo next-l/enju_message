@@ -48,8 +48,8 @@ end
 #
 #  id                 :integer          not null, primary key
 #  read_at            :datetime
+#  sender_id          :bigint
 #  receiver_id        :integer
-#  sender_id          :integer
 #  subject            :string           not null
 #  body               :text
 #  message_request_id :integer
