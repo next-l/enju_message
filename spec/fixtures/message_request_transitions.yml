@@ -9,12 +9,12 @@ message_request_transition_00001:
 #
 # Table name: message_request_transitions
 #
-#  id                 :bigint(8)        not null, primary key
+#  id                 :integer          not null, primary key
 #  to_state           :string
-#  metadata           :jsonb
+#  metadata           :text             default({})
 #  sort_key           :integer
-#  message_request_id :bigint(8)
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  message_request_id :bigint
+#  created_at         :datetime
+#  updated_at         :datetime
 #  most_recent        :boolean          not null
 #

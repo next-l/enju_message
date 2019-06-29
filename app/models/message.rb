@@ -78,14 +78,14 @@ end
 #
 # Table name: messages
 #
-#  id                 :bigint(8)        not null, primary key
+#  id                 :bigint           not null, primary key
 #  read_at            :datetime
-#  sender_id          :bigint(8)
-#  receiver_id        :bigint(8)
+#  sender_id          :bigint
+#  receiver_id        :bigint
 #  subject            :string           not null
 #  body               :text
-#  message_request_id :bigint(8)
-#  parent_id          :bigint(8)
+#  message_request_id :bigint
+#  parent_id          :bigint
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  lft                :integer

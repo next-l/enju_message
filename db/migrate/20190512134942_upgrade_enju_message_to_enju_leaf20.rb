@@ -22,12 +22,6 @@ class UpgradeEnjuMessageToEnjuLeaf20 < ActiveRecord::Migration[5.2]
           t.change :receiver_id, :bigint
           t.change :sender_id, :bigint
         end
-
-        add_index :message_requests, :message_template_id
-        add_index :message_requests, :receiver_id
-        add_index :message_requests, :sender_id
-
-        add_foreign_key :messages, "messages", column: 'parent_id'
       }
 
       dir.down {

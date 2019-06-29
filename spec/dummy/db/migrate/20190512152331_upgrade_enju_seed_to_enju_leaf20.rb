@@ -13,10 +13,6 @@ class UpgradeEnjuSeedToEnjuLeaf20 < ActiveRecord::Migration[5.2]
           t.change :user_id, :bigint
         end
 
-        change_table :users do |t|
-          t.references :profile, index: {unique: true} #, foreign_key: {on_delete: :cascade}
-        end
-
         add_index :roles, :name, unique: true
         change_column :roles, :position, :integer, default: 1
 
