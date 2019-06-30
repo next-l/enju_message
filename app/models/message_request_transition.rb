@@ -1,5 +1,5 @@
 class MessageRequestTransition < ActiveRecord::Base
-
+  include Statesman::Adapters::ActiveRecordTransition
   
   belongs_to :message_request, inverse_of: :message_request_transitions
   # attr_accessible :to_state, :sort_key, :metadata
@@ -11,7 +11,7 @@ end
 #
 #  id                 :bigint           not null, primary key
 #  to_state           :string
-#  metadata           :jsonb
+#  metadata           :text             default("{}")
 #  sort_key           :integer
 #  message_request_id :bigint
 #  created_at         :datetime         not null

@@ -11,7 +11,7 @@ message_request_transition_00001:
 #
 #  id                 :bigint           not null, primary key
 #  to_state           :string
-#  metadata           :jsonb
+#  metadata           :text             default("{}")
 #  sort_key           :integer
 #  message_request_id :bigint
 #  created_at         :datetime         not null

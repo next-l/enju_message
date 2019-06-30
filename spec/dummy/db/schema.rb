@@ -665,7 +665,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
 
   create_table "message_request_transitions", force: :cascade do |t|
     t.string "to_state"
-    t.jsonb "metadata", default: {}
+    t.text "metadata", default: "{}"
     t.integer "sort_key"
     t.bigint "message_request_id"
     t.datetime "created_at", null: false
@@ -702,7 +702,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
 
   create_table "message_transitions", force: :cascade do |t|
     t.string "to_state"
-    t.jsonb "metadata", default: {}
+    t.text "metadata", default: "{}"
     t.integer "sort_key"
     t.bigint "message_id"
     t.datetime "created_at", null: false
