@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_12_152331) do
+ActiveRecord::Schema.define(version: 2019_02_08_135957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "accepts", id: :serial, force: :cascade do |t|
-    t.bigint "basket_id"
-    t.bigint "item_id"
-    t.bigint "librarian_id"
+    t.integer "basket_id"
+    t.integer "item_id"
+    t.integer "librarian_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["basket_id"], name: "index_accepts_on_basket_id"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   end
 
   create_table "baskets", id: :serial, force: :cascade do |t|
-    t.bigint "user_id"
+    t.integer "user_id"
     t.text "note"
     t.integer "lock_version", default: 0, null: false
     t.datetime "created_at"
@@ -213,13 +213,12 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   end
 
   create_table "budget_types", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.text "display_name", null: false
+    t.string "name"
+    t.text "display_name"
     t.text "note"
     t.integer "position", default: 1, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["name"], name: "index_budget_types_on_name", unique: true
   end
 
   create_table "carrier_types", id: :serial, force: :cascade do |t|
@@ -236,9 +235,9 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   end
 
   create_table "colors", id: :serial, force: :cascade do |t|
-    t.bigint "library_group_id"
-    t.string "property", null: false
-    t.string "code", null: false
+    t.integer "library_group_id"
+    t.string "property"
+    t.string "code"
     t.integer "position", default: 1, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -500,10 +499,10 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.text "note"
     t.integer "call_number_rows", default: 1, null: false
     t.string "call_number_delimiter", default: "|", null: false
-    t.bigint "library_group_id", null: false
+    t.integer "library_group_id", null: false
     t.integer "users_count", default: 0, null: false
     t.integer "position", default: 1, null: false
-    t.bigint "country_id"
+    t.integer "country_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
@@ -511,9 +510,8 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.string "isil"
     t.float "latitude"
     t.float "longitude"
-    t.index ["country_id"], name: "index_libraries_on_country_id"
     t.index ["library_group_id"], name: "index_libraries_on_library_group_id"
-    t.index ["name"], name: "index_libraries_on_name", unique: true
+    t.index ["name"], name: "index_libraries_on_name"
   end
 
   create_table "library_group_translations", force: :cascade do |t|
@@ -545,7 +543,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.integer "max_number_of_results", default: 500
     t.boolean "family_name_first", default: true
     t.integer "pub_year_facet_range_interval", default: 10
-    t.bigint "user_id"
+    t.integer "user_id"
     t.boolean "csv_charset_conversion", default: false, null: false
     t.string "header_logo_file_name"
     t.string "header_logo_content_type"
@@ -554,7 +552,6 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.text "header_logo_meta"
     t.jsonb "login_banner_translations", default: {}, null: false
     t.jsonb "footer_banner_translations", default: {}, null: false
-    t.index ["name"], name: "index_library_groups_on_name", unique: true
     t.index ["short_name"], name: "index_library_groups_on_short_name"
     t.index ["user_id"], name: "index_library_groups_on_user_id"
   end
@@ -784,14 +781,14 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
 
   create_table "profiles", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.bigint "user_group_id", null: false
-    t.bigint "library_id"
+    t.integer "user_group_id"
+    t.integer "library_id"
     t.string "locale"
     t.string "user_number"
     t.text "full_name"
     t.text "note"
     t.text "keyword_list"
-    t.bigint "required_role_id", null: false
+    t.integer "required_role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "expired_at"
@@ -920,8 +917,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "score", default: 0, null: false
-    t.integer "position", default: 1, null: false
-    t.index ["name"], name: "index_roles_on_name", unique: true
+    t.integer "position"
   end
 
   create_table "search_engines", id: :serial, force: :cascade do |t|
@@ -992,8 +988,8 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   end
 
   create_table "subscribes", id: :serial, force: :cascade do |t|
-    t.bigint "subscription_id", null: false
-    t.bigint "work_id", null: false
+    t.integer "subscription_id", null: false
+    t.integer "work_id", null: false
     t.datetime "start_at", null: false
     t.datetime "end_at", null: false
     t.datetime "created_at"
@@ -1005,8 +1001,8 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   create_table "subscriptions", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.text "note"
-    t.bigint "user_id"
-    t.bigint "order_list_id"
+    t.integer "user_id"
+    t.integer "order_list_id"
     t.datetime "deleted_at"
     t.integer "subscribes_count", default: 0, null: false
     t.datetime "created_at"
@@ -1019,17 +1015,18 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.string "to_state"
     t.text "metadata", default: "{}"
     t.integer "sort_key"
-    t.bigint "user_export_file_id"
+    t.integer "user_export_file_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "most_recent", null: false
     t.index ["sort_key", "user_export_file_id"], name: "index_user_export_file_transitions_on_sort_key_and_file_id", unique: true
     t.index ["user_export_file_id", "most_recent"], name: "index_user_export_file_transitions_parent_most_recent", unique: true, where: "most_recent"
+    t.index ["user_export_file_id"], name: "index_user_export_file_transitions_on_file_id"
     t.index ["user_export_file_id"], name: "index_user_export_file_transitions_on_user_export_file_id"
   end
 
   create_table "user_export_files", id: :serial, force: :cascade do |t|
-    t.bigint "user_id"
+    t.integer "user_id"
     t.string "user_export_file_name"
     t.string "user_export_content_type"
     t.integer "user_export_file_size"
@@ -1041,7 +1038,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   end
 
   create_table "user_groups", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.text "display_name"
     t.text "note"
     t.integer "position", default: 1, null: false
@@ -1050,12 +1047,11 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.datetime "deleted_at"
     t.integer "valid_period_for_new_user", default: 0, null: false
     t.datetime "expired_at"
-    t.index ["name"], name: "index_user_groups_on_name", unique: true
   end
 
   create_table "user_has_roles", id: :serial, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "role_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["user_id", "role_id"], name: "index_user_has_roles_on_user_id_and_role_id", unique: true
@@ -1065,7 +1061,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.string "to_state"
     t.text "metadata", default: "{}"
     t.integer "sort_key"
-    t.bigint "user_import_file_id"
+    t.integer "user_import_file_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "most_recent", null: false
@@ -1075,7 +1071,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   end
 
   create_table "user_import_files", id: :serial, force: :cascade do |t|
-    t.bigint "user_id"
+    t.integer "user_id"
     t.text "note"
     t.datetime "executed_at"
     t.string "user_import_file_name"
@@ -1088,14 +1084,14 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "user_encoding"
-    t.bigint "default_library_id"
-    t.bigint "default_user_group_id"
+    t.integer "default_library_id"
+    t.integer "default_user_group_id"
     t.index ["user_id"], name: "index_user_import_files_on_user_id"
   end
 
   create_table "user_import_results", id: :serial, force: :cascade do |t|
-    t.bigint "user_import_file_id"
-    t.bigint "user_id"
+    t.integer "user_import_file_id"
+    t.integer "user_id"
     t.text "body"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1143,9 +1139,9 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   end
 
   create_table "withdraws", id: :serial, force: :cascade do |t|
-    t.bigint "basket_id"
-    t.bigint "item_id"
-    t.bigint "librarian_id"
+    t.integer "basket_id"
+    t.integer "item_id"
+    t.integer "librarian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["basket_id"], name: "index_withdraws_on_basket_id"
@@ -1153,11 +1149,7 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
     t.index ["librarian_id"], name: "index_withdraws_on_librarian_id"
   end
 
-  add_foreign_key "accepts", "baskets"
-  add_foreign_key "accepts", "users", column: "librarian_id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "baskets", "users"
-  add_foreign_key "colors", "library_groups"
   add_foreign_key "doi_records", "manifestations"
   add_foreign_key "isbn_record_and_manifestations", "isbn_records"
   add_foreign_key "isbn_record_and_manifestations", "manifestations"
@@ -1167,19 +1159,8 @@ ActiveRecord::Schema.define(version: 2019_05_12_152331) do
   add_foreign_key "libraries", "library_groups"
   add_foreign_key "library_groups", "users"
   add_foreign_key "messages", "messages", column: "parent_id"
-  add_foreign_key "profiles", "libraries"
-  add_foreign_key "profiles", "user_groups"
   add_foreign_key "profiles", "users"
-  add_foreign_key "shelves", "libraries"
-  add_foreign_key "subscribes", "subscriptions"
-  add_foreign_key "subscriptions", "users"
-  add_foreign_key "user_export_files", "users"
   add_foreign_key "user_has_roles", "roles"
   add_foreign_key "user_has_roles", "users"
-  add_foreign_key "user_import_files", "users"
-  add_foreign_key "user_import_results", "user_import_files"
-  add_foreign_key "user_import_results", "users"
   add_foreign_key "users", "profiles", on_delete: :cascade
-  add_foreign_key "withdraws", "baskets"
-  add_foreign_key "withdraws", "users", column: "librarian_id"
 end
