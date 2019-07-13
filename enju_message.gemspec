@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Message management for Next-L Enju"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/{log,solr,tmp}/**/*"] - Dir["spec/dummy/db/*.sqlite3"]
+  s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/{log,solr,tmp}/**/*"]
 
   s.add_dependency "awesome_nested_set", "~> 3.1"
   s.add_dependency "enju_library", "~> 0.4.0.beta.1"
@@ -28,5 +28,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec-rails", "~> 3.8"
   s.add_development_dependency "simplecov"
   s.add_development_dependency "annotate"
-  s.add_development_dependency "sunspot_solr", "~> 2.4"
+  s.add_development_dependency "sunspot_solr", "~> 2.5"
 end
