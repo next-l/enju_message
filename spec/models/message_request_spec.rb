@@ -1,7 +1,16 @@
 require 'rails_helper'
 
 describe MessageRequest do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  fixtures :all
+
+  before(:each) do
+    @message_request = FactoryBot.create(:message_request)
+  end
+
+  it 'should send_message' do
+    @message_request.send_message.should be_truthy
+  end
+
 end
 
 # == Schema Information
