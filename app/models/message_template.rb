@@ -1,4 +1,4 @@
-class MessageTemplate < ActiveRecord::Base
+class MessageTemplate < ApplicationRecord
   has_many :message_requests
 
   validates :status, uniqueness: true

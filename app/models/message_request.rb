@@ -1,4 +1,4 @@
-class MessageRequest < ActiveRecord::Base
+class MessageRequest < ApplicationRecord
   include Statesman::Adapters::ActiveRecordQueries
   scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}
   scope :sent, -> {in_state(:sent)}

@@ -1,4 +1,4 @@
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
   include Statesman::Adapters::ActiveRecordQueries
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request, optional: true
