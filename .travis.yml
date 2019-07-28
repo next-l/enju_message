@@ -4,17 +4,20 @@ rvm:
   - 2.3.8
   - 2.4.6
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-  - psql -c 'create database enju_message_dummy_test;' -U postgres
-  - psql enju_message_dummy_test -c 'CREATE EXTENSION pgcrypto'
+  - mysql -e 'create database enju_test DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;'
+  - psql -c 'create database enju_test;' -U postgres
   - bundle exec rake db:migrate
   - bundle exec rake app:sunspot:solr:start
+services:
+  - redis-server
+  - mysql
+  - postgresql
+env:
+  - DB=sqlite
+  - DB=mysql
+  - DB=postgresql
 script:
   - bundle exec rspec
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:
   slack:
     secure: fRmrMSClIcaF14h4mqbiGT46zYVTKGw7KfyLEHilkz0ny9WEiMYHqQtlbdEfF0r7SE37jghzGTM7Prji3LoZiYlw3DpWh69XLfeBm7gMOv0OxIh/YHYjTHyNGVcEtL6Ab87sApI1BRwf4dHpQxtyENIL49Tce6awzY7l17p0AWg=
