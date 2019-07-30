@@ -9,11 +9,11 @@ message_request_transition_00001:
 #
 # Table name: message_request_transitions
 #
-#  id                 :bigint           not null, primary key
+#  id                 :integer          not null, primary key
 #  to_state           :string
 #  metadata           :text             default({})
 #  sort_key           :integer
-#  message_request_id :bigint
+#  message_request_id :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  most_recent        :boolean          not null

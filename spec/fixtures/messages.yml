@@ -40,14 +40,14 @@ librarian2_to_user2:
 #
 # Table name: messages
 #
-#  id                 :bigint           not null, primary key
+#  id                 :integer          not null, primary key
 #  read_at            :datetime
-#  sender_id          :bigint
-#  receiver_id        :bigint
+#  sender_id          :integer
+#  receiver_id        :integer
 #  subject            :string           not null
 #  body               :text
-#  message_request_id :bigint
-#  parent_id          :bigint
+#  message_request_id :integer
+#  parent_id          :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  lft                :integer

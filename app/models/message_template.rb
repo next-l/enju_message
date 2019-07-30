@@ -25,7 +25,7 @@ end
 #
 # Table name: message_templates
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  status     :string           not null
 #  title      :text             not null
 #  body       :text             not null
