@@ -32,4 +32,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "sunspot_solr", "~> 2.5"
   s.add_development_dependency "annotate"
+  s.add_development_dependency "rails", "~> 5.2"
 end
