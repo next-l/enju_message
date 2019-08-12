@@ -1,4 +1,4 @@
-# EnjuEvent
+# EnjuMessage
 [![Travis CI](https://travis-ci.com/next-l/enju_message.svg?branch=1.3)](https://travis-ci.com/next-l/enju_message)
 [![Coverage Status](https://coveralls.io/repos/github/next-l/enju_message/badge.svg?branch=1.3)](https://coveralls.io/github/next-l/enju_message?branch=1.3)
 [![security](https://hakiri.io/github/next-l/enju_message/1.3.svg)](https://hakiri.io/github/next-l/enju_message/1.3)
