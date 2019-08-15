@@ -59,7 +59,7 @@ class MessagesController < ApplicationController
     else
       @message.recipient = parent.sender.username if parent
     end
-    @message.receiver = User.where(username: @message.recipient).first if @message.recipient
+    @message.receiver = User.find_by(username: @message.recipient) if @message.recipient
 
     respond_to do |format|
       format.html # new.html.erb
@@ -163,12 +163,12 @@ class MessagesController < ApplicationController
 
   def get_parent(id)
     parent = Message.where(id: id).first
-    unless current_user.has_role?('Librarian')
+    if current_user.has_role?('Librarian')
+      parent
+    else
       unless parent.try(:receiver) == current_user
         access_denied; return
       end
-    else
-      parent
     end
   end
 
