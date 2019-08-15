@@ -1,4 +1,4 @@
-# EnjuSeed
+# EnjuMessage
 [![CircleCI](https://circleci.com/gh/next-l/enju_message/tree/2.x.svg?style=svg)](https://circleci.com/gh/next-l/enju_message/tree/2.x)
 [![Coverage Status](https://coveralls.io/repos/github/next-l/enju_message/badge.svg?branch=2.x)](https://coveralls.io/github/next-l/enju_message?branch=2.x)
 
