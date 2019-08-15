@@ -13,10 +13,9 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
-gem 'enju_seed', github: 'next-l/enju_seed'
-gem 'enju_leaf', github: 'next-l/enju_leaf'
-gem 'enju_library', github: 'next-l/enju_library'
-gem 'enju_biblio', github: 'next-l/enju_biblio'
+gem 'enju_leaf', github: 'next-l/enju_leaf', branch: '2.x'
+gem 'enju_library', github: 'next-l/enju_library', branch: '2.x'
+gem 'enju_biblio', github: 'next-l/enju_biblio', branch: '2.x'
 gem 'paper_trail'
 gem 'rails-i18n'
 group :test do
