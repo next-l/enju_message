@@ -83,7 +83,6 @@ end
 #  receiver_id         :integer
 #  message_template_id :integer
 #  sent_at             :datetime
-#  deleted_at          :datetime
 #  body                :text
 #  created_at          :datetime
 #  updated_at          :datetime
