@@ -1,4 +1,4 @@
-class CreateMessageRequests < ActiveRecord::Migration[4.2]
+class CreateMessageRequests < ActiveRecord::Migration[5.2]
   def change
     create_table :message_requests do |t|
       t.references :sender

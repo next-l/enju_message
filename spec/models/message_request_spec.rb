@@ -17,12 +17,12 @@ end
 #
 # Table name: message_requests
 #
-#  id                  :integer          not null, primary key
-#  sender_id           :integer
-#  receiver_id         :integer
-#  message_template_id :integer
+#  id                  :bigint           not null, primary key
+#  sender_id           :bigint
+#  receiver_id         :bigint
+#  message_template_id :bigint
 #  sent_at             :datetime
 #  body                :text
-#  created_at          :datetime
-#  updated_at          :datetime
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
