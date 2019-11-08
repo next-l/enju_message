@@ -1,5 +1,8 @@
 class MessageRequest < ApplicationRecord
-  include Statesman::Adapters::ActiveRecordQueries
+  include Statesman::Adapters::ActiveRecordQueries[
+    transition_class: MessageRequestTransition,
+    initial_state: :pending
+  ]
   scope :not_sent, -> {in_state(:pending).where('sent_at IS NULL')}
   scope :sent, -> {in_state(:sent)}
   belongs_to :message_template, validate: true
