@@ -1,5 +1,8 @@
 class Message < ApplicationRecord
-  include Statesman::Adapters::ActiveRecordQueries
+  include Statesman::Adapters::ActiveRecordQueries[
+    transition_class: MessageTransition,
+    initial_state: :pending
+  ]
   scope :unread, -> {in_state('unread')}
   belongs_to :message_request, optional: true
   belongs_to :sender, class_name: 'User'
