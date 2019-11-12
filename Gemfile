@@ -13,7 +13,6 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
-gem 'paper_trail'
 gem 'rails-i18n'
 gem 'sprockets', '~> 3.7'
 group :test do
