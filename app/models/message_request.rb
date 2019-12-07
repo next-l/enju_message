@@ -65,16 +65,6 @@ class MessageRequest < ApplicationRecord
     end
     logger.info "#{Time.zone.now} sent #{count} messages!"
   end
-
-  private
-
-  def self.transition_class
-    MessageRequestTransition
-  end
-
-  def self.initial_state
-    :pending
-  end
 end
 
 # == Schema Information
