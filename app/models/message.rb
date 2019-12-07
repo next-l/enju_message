@@ -64,14 +64,6 @@ class Message < ApplicationRecord
 
   private
 
-  def self.transition_class
-    MessageTransition
-  end
-
-  def self.initial_state
-    :pending
-  end
-
   def set_default_state
     transition_to!(:unread)
   end
