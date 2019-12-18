@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <title><%= t('message.user_message', login_name: current_user.username) -%></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <%= render 'page/include' -%>
     <%= auto_discovery_link_tag(:rss, messages_url(format: :rss), title: (t('message.user_message', login_name: current_user.username) + " (RSS)")) %>
     <%= auto_discovery_link_tag(:atom, messages_url(format: :atom), title: (t('message.user_message', login_name: current_user.username) + " (Atom)")) %>
