@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "enju_message plugin"
   s.description = "Message management for Next-L Enju"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/{log,solr,tmp}/**/*"] - Dir["spec/dummy/db/*.sqlite3"]
 
   s.add_dependency "awesome_nested_set", "~> 3.1"
