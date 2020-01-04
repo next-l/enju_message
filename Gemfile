@@ -14,6 +14,7 @@ gemspec
 # To use debugger
 # gem 'debugger'
 gem 'rails-i18n'
+gem 'rails', '~> 5.2'
 gem 'sprockets', '~> 3.7'
 group :test do
   gem 'rails-controller-testing'

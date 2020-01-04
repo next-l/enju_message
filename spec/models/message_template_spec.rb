@@ -8,12 +8,12 @@ end
 #
 # Table name: message_templates
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  status     :string           not null
 #  title      :text             not null
 #  body       :text             not null
 #  position   :integer
 #  locale     :string           default("en")
-#  created_at :datetime
-#  updated_at :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
