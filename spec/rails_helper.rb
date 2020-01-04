@@ -11,7 +11,7 @@ SimpleCov.start 'rails'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../dummy/config/environment", __FILE__)
 require 'rspec/rails'
-require 'factory_bot'
+require 'factory_bot_rails'
 require 'rspec/active_model/mocks'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -40,6 +40,3 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 end
-
-FactoryBot.definition_file_paths << "#{::Rails.root}/../../spec/factories"
-FactoryBot.find_definitions
