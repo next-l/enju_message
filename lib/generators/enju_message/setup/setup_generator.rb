@@ -5,7 +5,6 @@ class EnjuMessage::SetupGenerator < Rails::Generators::Base
   def copy_setup_files
     directory("db/fixtures", "db/fixtures/enju_message")
     return if file == 'fixture'
-    rake("enju_message_engine:install:migrations")
     inject_into_class "app/models/user.rb", User do
       "  include EnjuMessage::EnjuUser\n"
     end
