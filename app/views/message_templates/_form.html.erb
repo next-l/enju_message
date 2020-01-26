@@ -1,27 +1,27 @@
 <%= simple_form_for(@message_template, validate: true) do |f| %>
   <%= f.error_notification %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :status %><br />
-    <%= f.text_field :status, class: 'resource_title' %>
+    <%= f.text_field :status, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :locale %><br />
     <%= f.select(:locale, @available_languages.collect{|language| [language.display_name, language.iso_639_1]}) %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :title %><br />
-    <%= f.text_field :title, class: 'resource_title' %>
+    <%= f.text_field :title, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :body %><br />
-    <%= f.text_area :body, class: 'resource_textarea' %>
+    <%= f.text_area :body, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
