@@ -20,7 +20,6 @@ ja:
         position: 位置
       message_request:
         sent_at: 送信時刻
-        deleted_at: 削除時刻
 
   message:
     user_message: "%{login_name} さんのメッセージ"

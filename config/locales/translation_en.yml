@@ -20,7 +20,6 @@ en:
         position: Position
       message_request:
         sent_at: Sent at
-        deleted_at: Deleted at
 
   message:
     user_message: "%{login_name}'s messages"
