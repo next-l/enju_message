@@ -31,7 +31,7 @@ class MessageRequestsController < ApplicationController
 
   # GET /message_requests/1/edit
   def edit
-    @message_requests = MessageTemplate.order(:position)
+    @message_templates = MessageTemplate.order(:position)
   end
 
   # PUT /message_requests/1
@@ -43,7 +43,7 @@ class MessageRequestsController < ApplicationController
         format.html { redirect_to(@message_request) }
         format.json { head :no_content }
       else
-        @message_requests = MessageTemplate.order(:position)
+        @message_templates = MessageTemplate.order(:position)
         format.html { render action: "edit" }
         format.json { render json: @message_request.errors, status: :unprocessable_entity }
       end
