@@ -5,12 +5,12 @@
 
 <p>
   <strong><%= t('message.sender') -%>:</strong>
-  <%= link_to @message_request.sender.username, @message_request.sender -%>
+  <%= link_to @message_request.sender.username, @message_request.sender.profile -%>
 </p>
 
 <p>
   <strong><%= t('message.receiver') -%>:</strong>
-  <%= link_to @message_request.receiver.username, @message_request.receiver -%>
+  <%= link_to @message_request.receiver.username, @message_request.receiver.profile -%>
 </p>
 
 <p>
