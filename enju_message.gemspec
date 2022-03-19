@@ -17,17 +17,17 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/{log,solr,tmp}/**/*"] - Dir["spec/dummy/db/*.sqlite3"]
 
   s.add_dependency "awesome_nested_set", "~> 3.1"
-  s.add_dependency "enju_library", "~> 0.3.8"
+  s.add_dependency "enju_library", "~> 0.3.9"
   s.add_dependency "erubis"
 
   s.add_development_dependency "coveralls", "~> 0.8.23"
-  s.add_development_dependency "enju_event", "~> 0.3.1"
-  s.add_development_dependency "enju_leaf", "~> 1.3.4"
+  s.add_development_dependency "enju_event", "~> 0.3.5"
+  s.add_development_dependency "enju_leaf", "~> 1.3.5"
   s.add_development_dependency "factory_bot_rails"
   s.add_development_dependency "mysql2"
   s.add_development_dependency "pg"
   s.add_development_dependency "rspec-activemodel-mocks"
-  s.add_development_dependency "rspec-rails", "~> 4.0"
+  s.add_development_dependency "rspec-rails", "~> 5.0"
   s.add_development_dependency "simplecov"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "sunspot_solr", "~> 2.5"
